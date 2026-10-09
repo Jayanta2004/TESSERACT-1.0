@@ -49,8 +49,6 @@ export default function QuizView() {
       timerRef.current = setInterval(() => {
         setSecondsRemaining((prev) => {
           if (prev <= 1) {
-            clearInterval(timerRef.current);
-            handleAutoSubmitOnTimeout();
             return 0;
           }
           return prev - 1;
@@ -65,6 +63,14 @@ export default function QuizView() {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [screen]);
+
+  // Handle timeout auto-submission cleanly outside of state updater
+  useEffect(() => {
+    if (screen === 'running' && secondsRemaining === 0 && totalTimeElapsed > 0) {
+      alert('Time has expired! Your quiz answers have been automatically submitted.');
+      finishQuiz();
+    }
+  }, [screen, secondsRemaining, totalTimeElapsed]);
 
   // Open Quiz Instructions
   const handleSelectQuiz = (quiz) => {
@@ -120,11 +126,6 @@ export default function QuizView() {
     }
   };
 
-  // Timeout auto-submit (PRD 12.4: Auto-submit on timeout)
-  const handleAutoSubmitOnTimeout = () => {
-    alert('Time has expired! Your quiz answers have been automatically submitted.');
-    finishQuiz();
-  };
 
   const finishQuiz = () => {
     if (timerRef.current) clearInterval(timerRef.current);
