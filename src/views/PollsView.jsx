@@ -10,7 +10,8 @@ import {
   EyeOff,
   BarChart3,
   ShieldAlert,
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 
 export default function PollsView() {
@@ -22,8 +23,8 @@ export default function PollsView() {
     setIsAuthModalOpen
   } = useApp();
 
-  const [selectedOptions, setSelectedOptions] = useState({}); // { [pollId]: optionId }
-  const [anonymousPreferences, setAnonymousPreferences] = useState({}); // { [pollId]: boolean }
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [anonymousPreferences, setAnonymousPreferences] = useState({});
 
   const handleSelectOption = (pollId, optionId) => {
     setSelectedOptions(prev => ({
@@ -49,7 +50,7 @@ export default function PollsView() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800/80">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-code bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 mb-2">
             <Vote className="w-3.5 h-3.5" />
@@ -64,15 +65,15 @@ export default function PollsView() {
         </div>
 
         {accountState === 'guest' && (
-          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200">
+          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200 shadow-lg">
             <Lock className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
-              <span className="font-semibold block">IITM Student Vote Requirement</span>
+              <span className="font-semibold block font-mono-code">IITM Student Vote Requirement</span>
               <span>1 vote per verified student limit strictly enforced.</span>
             </div>
             <button
               onClick={() => setIsAuthModalOpen(true)}
-              className="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-black font-semibold shrink-0"
+              className="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-heading font-bold text-xs uppercase shrink-0"
             >
               Sign In
             </button>
@@ -90,12 +91,13 @@ export default function PollsView() {
           return (
             <div
               key={poll.id}
-              className="group rounded-3xl bg-[#0d121d] border border-slate-800 hover:border-emerald-500/40 p-7 flex flex-col justify-between space-y-6 shadow-xl transition-all"
+              className="group rounded-3xl glass-card p-7 flex flex-col justify-between space-y-6"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono-code font-bold uppercase bg-emerald-950 text-emerald-400 border border-emerald-500/30">
-                    ● Active Society Vote
+                  <span className="px-3 py-1 rounded-full text-xs font-mono-code font-bold uppercase bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    Active Society Vote
                   </span>
                   <span className="text-xs font-mono-code text-slate-400 flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-cyan-400" />
@@ -125,10 +127,10 @@ export default function PollsView() {
                         className={`relative overflow-hidden p-4 rounded-2xl border transition-all ${
                           hasVoted
                             ? isVoted
-                              ? 'bg-emerald-950/30 border-emerald-500/50 text-white'
+                              ? 'bg-emerald-950/40 border-emerald-500/60 text-white shadow-md'
                               : 'bg-slate-900/60 border-slate-800 text-slate-300'
                             : isSelected
-                            ? 'bg-cyan-950/40 border-cyan-400 text-white cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                            ? 'bg-cyan-950/50 border-cyan-400 text-white cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.25)]'
                             : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 cursor-pointer'
                         }`}
                       >
@@ -137,7 +139,7 @@ export default function PollsView() {
                           <div
                             className={`absolute top-0 bottom-0 left-0 transition-all duration-700 ${
                               isVoted
-                                ? 'bg-emerald-500/20'
+                                ? 'bg-emerald-500/25 border-r-2 border-emerald-400'
                                 : 'bg-slate-800/40'
                             }`}
                             style={{ width: `${percentage}%` }}
@@ -163,7 +165,7 @@ export default function PollsView() {
 
                           {(hasVoted || poll.showResultsLive) && (
                             <div className="text-right shrink-0 font-mono-code text-xs">
-                              <span className="font-bold text-white">{percentage}%</span>
+                              <span className="font-bold text-white text-sm">{percentage}%</span>
                               <span className="text-slate-500 ml-1.5">({option.votes} votes)</span>
                             </div>
                           )}
@@ -178,7 +180,7 @@ export default function PollsView() {
               <div className="pt-4 border-t border-slate-800 space-y-4">
                 {poll.allowAnonymous && !hasVoted && (
                   <div className="flex items-center justify-between text-xs text-slate-400">
-                    <label className="flex items-center gap-2 cursor-pointer">
+                    <label className="flex items-center gap-2 cursor-pointer font-mono-code">
                       <input
                         type="checkbox"
                         checked={anonymousPreferences[poll.id] || false}
@@ -194,20 +196,20 @@ export default function PollsView() {
                 )}
 
                 <div className="flex items-center justify-between">
-                  <div className="text-xs text-slate-500 font-mono-code flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5" />
-                    <span>{totalVotes} total verified votes</span>
+                  <div className="text-xs text-slate-400 font-mono-code flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>{totalVotes} total verified student votes</span>
                   </div>
 
                   {hasVoted ? (
-                    <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono-code font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/30">
+                    <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono-code font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span>Vote Recorded (1-vote limit)</span>
+                      <span>Vote Logged (1-Vote Limit)</span>
                     </div>
                   ) : (
                     <button
                       onClick={() => handleCastVote(poll.id)}
-                      className="px-6 py-2.5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider text-black bg-emerald-400 hover:bg-emerald-300 transition-colors shadow flex items-center gap-1.5"
+                      className="px-6 py-2.5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider text-black bg-emerald-400 hover:bg-emerald-300 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center gap-1.5 active:scale-95"
                     >
                       <span>Submit My Vote</span>
                       <ArrowRight className="w-3.5 h-3.5" />

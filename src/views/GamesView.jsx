@@ -14,7 +14,10 @@ import {
   CheckCircle2,
   Filter,
   Flame,
-  Search
+  Search,
+  Sparkles,
+  Layers,
+  ChevronRight
 } from 'lucide-react';
 
 export default function GamesView() {
@@ -44,7 +47,7 @@ export default function GamesView() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800/80">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-code bg-purple-950/60 text-purple-300 border border-purple-500/30 mb-2">
             <Gamepad2 className="w-3.5 h-3.5" />
@@ -60,15 +63,15 @@ export default function GamesView() {
 
         {/* Guest Warning Pill if guest */}
         {accountState === 'guest' && (
-          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200">
+          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200 shadow-lg">
             <Lock className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
-              <span className="font-semibold block">Student Login Required</span>
+              <span className="font-semibold block font-mono-code">Student Login Required</span>
               <span>Full game lobbies & competitions require an active IITM account.</span>
             </div>
             <button
               onClick={() => setIsAuthModalOpen(true)}
-              className="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-black font-semibold shrink-0"
+              className="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-heading font-bold text-xs uppercase shrink-0"
             >
               Sign In
             </button>
@@ -80,14 +83,14 @@ export default function GamesView() {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         {/* Category Pills */}
         <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          {['All', 'Esports', 'Casual / Party', 'Mind Games'].map(cat => (
+          {categories.map(cat => (
             <button
               key={cat}
               onClick={() => setFilterCategory(cat)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
                 filterCategory === cat
-                  ? 'bg-purple-600 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]'
-                  : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+                  ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)] font-bold'
+                  : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 border border-slate-800'
               }`}
             >
               {cat}
@@ -97,38 +100,38 @@ export default function GamesView() {
 
         {/* Search Bar */}
         <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
           <input
             type="text"
-            placeholder="Search games..."
+            placeholder="Search titles..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 shadow-inner"
           />
         </div>
       </div>
 
       {/* Games Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
         {filteredGames.map((game) => (
           <div
             key={game.id}
-            className="group rounded-3xl bg-[#0d121d] border border-slate-800 hover:border-purple-500/50 overflow-hidden transition-all duration-300 flex flex-col shadow-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.2)]"
+            className="group rounded-3xl glass-card overflow-hidden flex flex-col justify-between"
           >
             {/* Card Artwork */}
-            <div className="relative h-52 w-full overflow-hidden bg-slate-900">
+            <div className="relative h-56 w-full overflow-hidden bg-slate-900">
               <img
                 src={game.artwork}
                 alt={game.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0d121d] via-black/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090d18] via-black/20 to-transparent"></div>
               
               <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full text-[11px] font-mono-code font-bold uppercase bg-purple-600/90 text-white shadow">
+                <span className="px-3 py-1 rounded-full text-[10px] font-mono-code font-bold uppercase bg-purple-600/95 text-white shadow-lg">
                   {game.category}
                 </span>
-                <span className="px-2.5 py-1 rounded-full text-[11px] font-mono-code bg-black/60 text-slate-300 backdrop-blur-md border border-white/10">
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-mono-code bg-black/70 text-slate-200 backdrop-blur-md border border-white/10">
                   {game.mode}
                 </span>
               </div>
@@ -150,16 +153,16 @@ export default function GamesView() {
                 </p>
               </div>
 
-              {/* Card Footer / View CTA */}
+              {/* Card Footer */}
               <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
                 <span className="text-xs font-mono-code text-slate-500">
                   {game.rules?.length || 3} Official Rules
                 </span>
                 <button
                   onClick={() => setSelectedGameForModal(game)}
-                  className="px-4 py-2 rounded-xl text-xs font-heading font-bold uppercase tracking-wider text-purple-300 hover:text-white bg-purple-950/60 hover:bg-purple-600 border border-purple-500/40 transition-all flex items-center gap-1.5 shadow"
+                  className="px-4 py-2 rounded-xl text-xs font-heading font-bold uppercase tracking-wider text-purple-300 hover:text-white bg-purple-950/80 hover:bg-purple-600 border border-purple-500/40 transition-all flex items-center gap-1.5 shadow"
                 >
-                  <span>View Game CTA</span>
+                  <span>View Game Rules</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -168,18 +171,18 @@ export default function GamesView() {
         ))}
       </div>
 
-      {/* GAME DETAIL MODAL (PRD Section 9: "A game detail page may include game information, rules and upcoming Tesseract competitions related to that game.") */}
+      {/* GAME DETAIL MODAL */}
       {selectedGameForModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl bg-[#0d121d] border border-purple-500/40 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+          <div className="relative w-full max-w-2xl bg-[#0a0f1d] border border-purple-500/50 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
             {/* Header banner */}
-            <div className="relative h-48 w-full overflow-hidden shrink-0">
+            <div className="relative h-52 w-full overflow-hidden shrink-0">
               <img
                 src={selectedGameForModal.artwork}
                 alt={selectedGameForModal.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0d121d] via-[#0d121d]/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-[#0a0f1d]/70 to-transparent"></div>
               
               <button
                 onClick={() => setSelectedGameForModal(null)}
@@ -189,7 +192,7 @@ export default function GamesView() {
               </button>
 
               <div className="absolute bottom-4 left-6">
-                <span className="px-3 py-1 rounded-full text-xs font-mono-code font-bold uppercase bg-purple-600 text-white shadow mb-2 inline-block">
+                <span className="px-3 py-0.5 rounded-full text-xs font-mono-code font-bold uppercase bg-purple-600 text-white shadow mb-2 inline-block">
                   {selectedGameForModal.category}
                 </span>
                 <h2 className="font-heading text-2xl sm:text-3xl font-black text-white">
@@ -210,7 +213,7 @@ export default function GamesView() {
               </div>
 
               {/* Rules Section */}
-              <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
+              <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
                 <h4 className="text-xs font-heading font-bold text-white tracking-wider uppercase flex items-center gap-2">
                   <Shield className="w-4 h-4 text-cyan-400" />
                   <span>Official Tesseract Competition Rules</span>

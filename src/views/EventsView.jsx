@@ -61,7 +61,6 @@ export default function EventsView() {
     if (!registrationModalEvent) return;
     registerForEvent(registrationModalEvent.id);
     setHasConfirmedRegistration(true);
-    // In production opens Google Form in a new tab:
     if (registrationModalEvent.googleFormUrl) {
       window.open(registrationModalEvent.googleFormUrl, '_blank');
     }
@@ -70,14 +69,14 @@ export default function EventsView() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800/80">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-code bg-cyan-950/60 text-cyan-300 border border-cyan-500/30 mb-2">
             <Calendar className="w-3.5 h-3.5" />
             <span>PRD SECTIONS 10 & 11 • TOURNAMENTS & ACTIVITIES</span>
           </div>
           <h1 className="font-heading text-3xl sm:text-5xl font-black text-white">
-            Tesseract Events & Tournaments
+            Tesseract Tournaments & Events
           </h1>
           <p className="mt-2 text-sm sm:text-base text-slate-300 max-w-2xl">
             Register for inter-house cups, esports invitationals, live casting workshops, and gaming festivals.
@@ -86,15 +85,15 @@ export default function EventsView() {
 
         {/* Guest prompt */}
         {accountState === 'guest' && (
-          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200">
+          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200 shadow-lg">
             <Lock className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
-              <span className="font-semibold block">Verified Student Access Required</span>
+              <span className="font-semibold block font-mono-code">Verified Student Access Required</span>
               <span>Sign in with your IITM student email to register for events.</span>
             </div>
             <button
               onClick={() => setIsAuthModalOpen(true)}
-              className="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-black font-semibold shrink-0"
+              className="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-heading font-bold text-xs uppercase shrink-0"
             >
               Sign In
             </button>
@@ -111,8 +110,8 @@ export default function EventsView() {
               onClick={() => setActiveFilter(cat)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
                 activeFilter === cat
-                  ? 'bg-cyan-500 text-black shadow-[0_0_15px_rgba(6,182,212,0.4)] font-bold'
-                  : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
+                  ? 'bg-cyan-500 text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] font-bold'
+                  : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 border border-slate-800'
               }`}
             >
               {cat}
@@ -121,13 +120,13 @@ export default function EventsView() {
         </div>
 
         <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
           <input
             type="text"
             placeholder="Search events, games..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 shadow-inner"
           />
         </div>
       </div>
@@ -140,22 +139,22 @@ export default function EventsView() {
           return (
             <div
               key={event.id}
-              className="group rounded-3xl bg-[#0d121d] border border-slate-800 hover:border-cyan-500/50 overflow-hidden transition-all duration-300 flex flex-col shadow-xl hover:shadow-[0_0_30px_rgba(6,182,212,0.15)]"
+              className="group rounded-3xl glass-card overflow-hidden flex flex-col justify-between"
             >
               {/* Event Banner */}
-              <div className="relative h-56 w-full overflow-hidden bg-slate-900">
+              <div className="relative h-60 w-full overflow-hidden bg-slate-900">
                 <img
                   src={event.banner}
                   alt={event.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0d121d] via-black/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#090d18] via-black/20 to-transparent"></div>
 
                 <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono-code font-bold uppercase bg-cyan-500 text-black shadow">
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono-code font-bold uppercase bg-cyan-500 text-black shadow">
                     {event.eventType}
                   </span>
-                  <span className="px-2.5 py-1 rounded-full text-xs font-mono-code bg-black/70 text-slate-200 backdrop-blur-md border border-white/10">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono-code bg-black/70 text-slate-200 backdrop-blur-md border border-white/10">
                     {event.game}
                   </span>
                 </div>
@@ -187,7 +186,7 @@ export default function EventsView() {
                       Format: <strong className="text-slate-200">{event.format}</strong>
                     </span>
                     <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800">
-                      Reg Deadline: <strong className="text-amber-300">{event.registrationDeadline}</strong>
+                      Deadline: <strong className="text-amber-300">{event.registrationDeadline}</strong>
                     </span>
                   </div>
                 </div>
@@ -198,7 +197,7 @@ export default function EventsView() {
                     onClick={() => setSelectedEventForModal(event)}
                     className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-700 transition-colors"
                   >
-                    Event Details & Rules
+                    Details & Rules
                   </button>
 
                   {isUserRegistered ? (
@@ -209,7 +208,7 @@ export default function EventsView() {
                   ) : (
                     <button
                       onClick={() => handleStartRegistration(event)}
-                      className="px-5 py-2.5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider text-black bg-gradient-to-r from-cyan-400 to-sky-300 hover:opacity-95 shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all flex items-center gap-1.5"
+                      className="px-5 py-2.5 rounded-xl btn-cyber-primary text-xs uppercase tracking-wider flex items-center gap-1.5 shadow"
                     >
                       <span>Register Now</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -222,17 +221,17 @@ export default function EventsView() {
         })}
       </div>
 
-      {/* EVENT DETAIL MODAL (PRD Section 10: Event detail pages should contain overview, schedule, eligibility, rules, prize pool and registration CTA) */}
+      {/* EVENT DETAIL MODAL */}
       {selectedEventForModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl bg-[#0d121d] border border-cyan-500/40 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
-            <div className="relative h-56 w-full overflow-hidden shrink-0">
+          <div className="relative w-full max-w-3xl bg-[#0a0f1d] border border-cyan-500/40 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+            <div className="relative h-60 w-full overflow-hidden shrink-0">
               <img
                 src={selectedEventForModal.banner}
                 alt={selectedEventForModal.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0d121d] via-[#0d121d]/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-[#0a0f1d]/60 to-transparent"></div>
 
               <button
                 onClick={() => setSelectedEventForModal(null)}
@@ -257,7 +256,7 @@ export default function EventsView() {
                 </div>
                 <div className="hidden sm:block text-right">
                   <div className="text-xs font-mono-code text-slate-400 uppercase">Prize Pool</div>
-                  <div className="font-heading text-xl font-black text-amber-400">
+                  <div className="font-heading text-2xl font-black text-amber-400">
                     {selectedEventForModal.prizePool}
                   </div>
                 </div>
@@ -276,14 +275,14 @@ export default function EventsView() {
               </div>
 
               {/* Prize Pool Breakdown */}
-              <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/40 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Trophy className="w-6 h-6 text-amber-400 shrink-0" />
                   <div>
                     <span className="text-xs font-heading font-bold text-white uppercase block">
                       Prize Distribution
                     </span>
-                    <span className="text-xs text-amber-200">
+                    <span className="text-xs text-amber-200 font-mono-code">
                       {selectedEventForModal.prizeBreakdown || selectedEventForModal.prizePool}
                     </span>
                   </div>
@@ -296,7 +295,7 @@ export default function EventsView() {
                   <Clock className="w-4 h-4 text-cyan-400" />
                   <span>Tournament Schedule</span>
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono-code">
                   {selectedEventForModal.schedule?.map((step, idx) => (
                     <div key={idx} className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">
                       {step}
@@ -331,7 +330,7 @@ export default function EventsView() {
                     setSelectedEventForModal(null);
                     handleStartRegistration(ev);
                   }}
-                  className="flex-1 py-3 px-5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider text-black bg-cyan-400 hover:bg-cyan-300 transition-colors shadow flex items-center justify-center gap-2"
+                  className="flex-1 py-3 px-5 rounded-xl btn-cyber-primary text-xs uppercase tracking-wider flex items-center justify-center gap-2"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Register via Official Google Form</span>
@@ -348,11 +347,10 @@ export default function EventsView() {
         </div>
       )}
 
-      {/* GOOGLE FORM REGISTRATION SIMULATOR MODAL (PRD Section 11:
-          Flow: Event -> Login check -> Verified student -> Register Now -> Google Form) */}
+      {/* GOOGLE FORM REGISTRATION SIMULATOR MODAL (PRD Section 11) */}
       {registrationModalEvent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-lg bg-[#0d121d] border border-cyan-500/50 rounded-3xl overflow-hidden shadow-2xl p-6 sm:p-7 space-y-5 animate-in zoom-in-95">
+          <div className="relative w-full max-w-lg bg-[#0a0f1d] border border-cyan-500/50 rounded-3xl overflow-hidden shadow-2xl p-6 sm:p-7 space-y-5 animate-in zoom-in-95">
             <button
               onClick={() => setRegistrationModalEvent(null)}
               className="absolute top-4 right-4 p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white"
@@ -375,11 +373,11 @@ export default function EventsView() {
             </div>
 
             <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2 text-xs">
-              <div className="text-slate-400">Target Event:</div>
+              <div className="text-slate-400">Target Tournament:</div>
               <div className="font-heading text-base font-bold text-white">
                 {registrationModalEvent.title}
               </div>
-              <div className="text-slate-400 flex items-center gap-2">
+              <div className="text-slate-400 flex items-center gap-2 font-mono-code">
                 <span>Date: {registrationModalEvent.date}</span>
                 <span>•</span>
                 <span>Prize: {registrationModalEvent.prizePool}</span>
@@ -390,7 +388,7 @@ export default function EventsView() {
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-mono-code">
                 <span className="text-slate-400">Verified Student Credentials:</span>
-                <span className="text-emerald-400 flex items-center gap-1">
+                <span className="text-emerald-400 flex items-center gap-1 font-semibold">
                   <ShieldCheck className="w-3.5 h-3.5" /> IITM Verified
                 </span>
               </div>
@@ -434,7 +432,7 @@ export default function EventsView() {
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   onClick={handleProceedToGoogleForm}
-                  className="flex-1 py-3 px-5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider text-black bg-cyan-400 hover:bg-cyan-300 transition-colors shadow flex items-center justify-center gap-2"
+                  className="flex-1 py-3 px-5 rounded-xl btn-cyber-primary text-xs uppercase tracking-wider flex items-center justify-center gap-2"
                 >
                   <span>Proceed to Google Form</span>
                   <ExternalLink className="w-4 h-4" />

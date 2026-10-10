@@ -72,7 +72,7 @@ export default function TeamView() {
         {filteredTeam.map((member) => (
           <div
             key={member.id}
-            className="group rounded-3xl bg-[#0d121d] border border-slate-800 hover:border-purple-500/50 p-6 flex flex-col justify-between space-y-5 shadow-xl hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all"
+            className="group rounded-3xl glass-card p-6 flex flex-col justify-between space-y-5"
           >
             <div className="space-y-4">
               {/* Photo & Badge */}

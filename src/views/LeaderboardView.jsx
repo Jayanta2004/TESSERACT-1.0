@@ -8,7 +8,9 @@ import {
   Search,
   Filter,
   Sparkles,
-  Award
+  Award,
+  Crown,
+  ChevronDown
 } from 'lucide-react';
 
 export default function LeaderboardView() {
@@ -33,64 +35,73 @@ export default function LeaderboardView() {
   const remaining = filteredEntries.slice(3);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800/80">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-code bg-amber-950/60 text-amber-300 border border-amber-500/30 mb-2">
             <Trophy className="w-3.5 h-3.5 text-amber-400" />
-            <span>PRD SECTION 13 • QUIZ LEADERBOARD</span>
+            <span>PRD SECTION 13 • COMPETITIVE LEADERBOARD</span>
           </div>
           <h1 className="font-heading text-3xl sm:text-5xl font-black text-white">
-            Competitive Leaderboard
+            Society Rankings & Standings
           </h1>
           <p className="mt-2 text-sm sm:text-base text-slate-300 max-w-2xl">
-            Official rankings of verified IIT Madras BS students. Tie-breakers decided by higher score first, followed by shortest completion time.
+            Official rankings of verified IIT Madras BS students. Tie-breakers are resolved by <strong className="text-amber-300 font-semibold">higher score first</strong>, followed by <strong className="text-cyan-300 font-semibold">lowest completion time</strong>.
           </p>
         </div>
 
-        {/* Filter controls */}
+        {/* Filter & Search Bar */}
         <div className="flex flex-col sm:flex-row gap-3">
-          <select
-            value={selectedQuizId}
-            onChange={(e) => setSelectedQuizId(e.target.value)}
-            className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-amber-400"
-          >
-            <option value="all">All Quizzes & Challenges</option>
-            {quizzes.map(q => (
-              <option key={q.id} value={q.id}>{q.title}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              value={selectedQuizId}
+              onChange={(e) => setSelectedQuizId(e.target.value)}
+              className="appearance-none w-full sm:w-64 pl-4 pr-10 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-xs font-mono-code text-slate-200 focus:outline-none focus:border-amber-400 shadow-md"
+            >
+              <option value="all">All Quizzes & Challenges</option>
+              {quizzes.map(q => (
+                <option key={q.id} value={q.id}>{q.title}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-3.5 top-3 w-4 h-4 text-slate-400 pointer-events-none" />
+          </div>
 
-          <input
-            type="text"
-            placeholder="Search student or email..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-amber-400 sm:w-60"
-          />
+          <div className="relative">
+            <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
+            <input
+              type="text"
+              placeholder="Search student or email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full sm:w-60 pl-9 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-amber-400 shadow-md"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Top 3 Podium Cards */}
+      {/* Top 3 Championship Podium */}
       {top3.length >= 3 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end pt-4 max-w-5xl mx-auto">
           {/* 2nd Place Silver */}
-          <div className="order-2 md:order-1 p-6 rounded-3xl bg-[#0d121d] border border-slate-700/80 flex flex-col items-center text-center space-y-3 relative overflow-hidden shadow-xl mt-0 md:mt-6">
-            <div className="w-12 h-12 rounded-full bg-slate-700/50 border border-slate-500 flex items-center justify-center font-heading font-black text-lg text-slate-200 shadow">
-              #2
+          <div className="order-2 md:order-1 p-6 rounded-3xl glass-card border-slate-500/40 flex flex-col items-center text-center space-y-4 relative overflow-hidden shadow-xl">
+            <div className="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-400 flex items-center justify-center font-heading font-black text-xl text-slate-200 shadow-lg">
+              2nd
             </div>
             <div className="space-y-1">
-              <h3 className="font-heading text-lg font-bold text-white">
+              <span className="px-3 py-0.5 rounded-full text-[10px] font-mono-code font-bold uppercase bg-slate-800 text-slate-300 border border-slate-600">
+                🥈 Silver Runner-Up
+              </span>
+              <h3 className="font-heading text-lg font-bold text-white pt-1">
                 {top3[1]?.student}
               </h3>
               <p className="text-xs text-slate-400 font-mono-code truncate max-w-[200px]">
                 {top3[1]?.email}
               </p>
             </div>
-            <div className="p-3 w-full rounded-2xl bg-slate-900 border border-slate-800 flex justify-around font-mono-code text-xs">
+            <div className="p-3.5 w-full rounded-2xl bg-black/50 border border-slate-800 flex justify-around font-mono-code text-xs">
               <div>
-                <span className="text-slate-500 block text-[10px]">SCORE</span>
+                <span className="text-slate-500 block text-[10px]">POINTS</span>
                 <span className="text-white font-bold text-base">{top3[1]?.score}</span>
               </div>
               <div>
@@ -100,51 +111,62 @@ export default function LeaderboardView() {
             </div>
           </div>
 
-          {/* 1st Place Gold Champion */}
-          <div className="order-1 md:order-2 p-7 rounded-3xl bg-gradient-to-b from-[#1c180b] to-[#0d121d] border border-amber-500/60 flex flex-col items-center text-center space-y-4 relative overflow-hidden shadow-[0_0_35px_rgba(245,158,11,0.25)] scale-105">
+          {/* 1st Place Gold Champion (Elevated) */}
+          <div className="order-1 md:order-2 p-8 rounded-3xl bg-gradient-to-b from-[#221c0b] via-[#151208] to-[#0a0d18] border-2 border-amber-400/80 flex flex-col items-center text-center space-y-5 relative overflow-hidden shadow-[0_0_45px_rgba(245,158,11,0.3)] md:-translate-y-4">
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500"></div>
-            <div className="w-16 h-16 rounded-full bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center font-heading font-black text-2xl text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.5)]">
-              👑
-            </div>
-            <div className="space-y-1">
-              <span className="px-3 py-0.5 rounded-full text-[10px] font-mono-code font-bold uppercase bg-amber-400 text-black">
-                Rank #1 Champion
+            
+            <div className="relative">
+              <div className="w-20 h-20 rounded-3xl bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center font-heading font-black text-3xl text-amber-300 shadow-[0_0_30px_rgba(245,158,11,0.5)]">
+                👑
+              </div>
+              <span className="absolute -bottom-2 -right-1 px-2 py-0.5 rounded-full text-[9px] font-mono-code font-bold bg-amber-400 text-black shadow">
+                1st PLACE
               </span>
-              <h3 className="font-heading text-xl font-black text-white pt-1">
+            </div>
+
+            <div className="space-y-1">
+              <span className="px-3 py-1 rounded-full text-[10px] font-mono-code font-bold uppercase bg-amber-400 text-black shadow">
+                🥇 Champion
+              </span>
+              <h3 className="font-heading text-xl sm:text-2xl font-black text-white pt-1">
                 {top3[0]?.student}
               </h3>
-              <p className="text-xs text-slate-400 font-mono-code truncate max-w-[220px]">
+              <p className="text-xs text-slate-300 font-mono-code truncate max-w-[220px]">
                 {top3[0]?.email}
               </p>
             </div>
-            <div className="p-3 w-full rounded-2xl bg-amber-950/40 border border-amber-500/40 flex justify-around font-mono-code text-xs">
+
+            <div className="p-4 w-full rounded-2xl bg-amber-950/40 border border-amber-500/40 flex justify-around font-mono-code text-xs">
               <div>
-                <span className="text-amber-400/80 block text-[10px]">SCORE</span>
-                <span className="text-amber-300 font-black text-lg">{top3[0]?.score}</span>
+                <span className="text-amber-400/80 block text-[10px]">TOTAL SCORE</span>
+                <span className="text-amber-300 font-black text-xl">{top3[0]?.score} pts</span>
               </div>
               <div>
-                <span className="text-amber-400/80 block text-[10px]">COMPLETION TIME</span>
-                <span className="text-cyan-300 font-black text-lg">{top3[0]?.time}</span>
+                <span className="text-amber-400/80 block text-[10px]">TIME TAKEN</span>
+                <span className="text-cyan-300 font-black text-xl">{top3[0]?.time}</span>
               </div>
             </div>
           </div>
 
           {/* 3rd Place Bronze */}
-          <div className="order-3 md:order-3 p-6 rounded-3xl bg-[#0d121d] border border-amber-900/50 flex flex-col items-center text-center space-y-3 relative overflow-hidden shadow-xl mt-0 md:mt-8">
-            <div className="w-12 h-12 rounded-full bg-amber-900/40 border border-amber-700 flex items-center justify-center font-heading font-black text-lg text-amber-400 shadow">
-              #3
+          <div className="order-3 md:order-3 p-6 rounded-3xl glass-card border-amber-800/40 flex flex-col items-center text-center space-y-4 relative overflow-hidden shadow-xl">
+            <div className="w-14 h-14 rounded-2xl bg-amber-950/50 border border-amber-700 flex items-center justify-center font-heading font-black text-xl text-amber-400 shadow-lg">
+              3rd
             </div>
             <div className="space-y-1">
-              <h3 className="font-heading text-lg font-bold text-white">
+              <span className="px-3 py-0.5 rounded-full text-[10px] font-mono-code font-bold uppercase bg-amber-950/80 text-amber-400 border border-amber-700/50">
+                🥉 Bronze Medal
+              </span>
+              <h3 className="font-heading text-lg font-bold text-white pt-1">
                 {top3[2]?.student}
               </h3>
               <p className="text-xs text-slate-400 font-mono-code truncate max-w-[200px]">
                 {top3[2]?.email}
               </p>
             </div>
-            <div className="p-3 w-full rounded-2xl bg-slate-900 border border-slate-800 flex justify-around font-mono-code text-xs">
+            <div className="p-3.5 w-full rounded-2xl bg-black/50 border border-slate-800 flex justify-around font-mono-code text-xs">
               <div>
-                <span className="text-slate-500 block text-[10px]">SCORE</span>
+                <span className="text-slate-500 block text-[10px]">POINTS</span>
                 <span className="text-white font-bold text-base">{top3[2]?.score}</span>
               </div>
               <div>
@@ -156,15 +178,15 @@ export default function LeaderboardView() {
         </div>
       )}
 
-      {/* Full Leaderboard Table (PRD Section 13 Table format) */}
-      <div className="p-6 rounded-3xl bg-[#0d121d] border border-slate-800 shadow-xl overflow-hidden space-y-4">
+      {/* Full Leaderboard Table (PRD Section 13) */}
+      <div className="p-6 sm:p-8 rounded-3xl glass-panel shadow-2xl space-y-4">
         <div className="flex items-center justify-between pb-4 border-b border-slate-800">
           <h3 className="font-heading text-base font-bold text-white flex items-center gap-2">
             <Medal className="w-4 h-4 text-amber-400" />
-            <span>Full Rankings Table</span>
+            <span>Complete Contestant Standings</span>
           </h3>
           <span className="text-xs font-mono-code text-slate-400">
-            Total participants: {filteredEntries.length}
+            Total records: <strong className="text-white">{filteredEntries.length}</strong>
           </span>
         </div>
 
@@ -173,7 +195,7 @@ export default function LeaderboardView() {
             <thead>
               <tr className="border-b border-slate-800 text-[11px] font-mono-code uppercase tracking-wider text-slate-400">
                 <th className="py-3 px-4">Rank</th>
-                <th className="py-3 px-4">Student</th>
+                <th className="py-3 px-4">Student Name</th>
                 <th className="py-3 px-4">IITM Email</th>
                 <th className="py-3 px-4 text-right">Score</th>
                 <th className="py-3 px-4 text-right">Time</th>
@@ -188,31 +210,33 @@ export default function LeaderboardView() {
                     key={index}
                     className={`hover:bg-slate-800/40 transition-colors ${
                       rank === 1
-                        ? 'bg-amber-950/20 text-amber-200'
-                        : rank <= 3
-                        ? 'bg-cyan-950/10'
+                        ? 'bg-amber-950/20 text-amber-200 font-semibold'
+                        : rank === 2
+                        ? 'bg-slate-800/20'
+                        : rank === 3
+                        ? 'bg-amber-950/10'
                         : ''
                     }`}
                   >
-                    <td className="py-3.5 px-4 font-heading font-bold">
+                    <td className="py-4 px-4 font-heading font-bold text-sm">
                       {rank === 1 ? '🥇 #1' : rank === 2 ? '🥈 #2' : rank === 3 ? '🥉 #3' : `#${rank}`}
                     </td>
-                    <td className="py-3.5 px-4 font-sans font-semibold text-white">
+                    <td className="py-4 px-4 font-sans font-semibold text-white">
                       {item.student}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-400">
+                    <td className="py-4 px-4 text-slate-400">
                       <div className="flex items-center gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                         <span>{item.email}</span>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 text-right font-bold text-white text-sm">
+                    <td className="py-4 px-4 text-right font-bold text-white text-sm">
                       {item.score}
                     </td>
-                    <td className="py-3.5 px-4 text-right text-cyan-300">
+                    <td className="py-4 px-4 text-right text-cyan-300 font-semibold">
                       {item.time}
                     </td>
-                    <td className="py-3.5 px-4 text-right text-slate-500">
+                    <td className="py-4 px-4 text-right text-slate-500">
                       {item.date || '2026-10-08'}
                     </td>
                   </tr>
@@ -223,8 +247,8 @@ export default function LeaderboardView() {
         </div>
 
         {/* Tie-breaker footnote */}
-        <div className="pt-4 border-t border-slate-800 text-[11px] text-slate-500 font-mono-code text-center">
-          PRD Section 13 Rule: Recommended tie-breaker: higher score first, then lower completion time.
+        <div className="pt-4 border-t border-slate-800/80 text-[11px] text-slate-500 font-mono-code text-center">
+          PRD Section 13 Tie-Breaker Rule: Higher score first, then lower completion time. Verified with official IITM BS accounts.
         </div>
       </div>
     </div>

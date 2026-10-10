@@ -55,7 +55,7 @@ export default function AboutView() {
       </div>
 
       {/* Story & Manifesto */}
-      <div className="p-8 sm:p-10 rounded-3xl bg-[#0d121d] border border-cyan-500/30 space-y-6 shadow-xl">
+      <div className="p-8 sm:p-10 rounded-3xl glass-panel border-cyan-500/35 space-y-6 shadow-2xl">
         <div className="flex items-center gap-3">
           <img
             src="/tesseract-logo.webp"

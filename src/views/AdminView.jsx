@@ -220,32 +220,32 @@ export default function AdminView() {
       {adminTab === 'overview' && (
         <div className="space-y-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="p-6 rounded-3xl bg-[#0d121d] border border-cyan-500/30 space-y-2">
+            <div className="p-6 rounded-3xl glass-card border-cyan-500/30 space-y-2">
               <span className="text-xs font-mono-code text-cyan-400 uppercase">Registered Students</span>
               <div className="font-heading text-3xl font-black text-white">1,250+</div>
               <span className="text-[11px] text-slate-500 font-mono-code">100% Verified IITM BS</span>
             </div>
 
-            <div className="p-6 rounded-3xl bg-[#0d121d] border border-purple-500/30 space-y-2">
+            <div className="p-6 rounded-3xl glass-card border-purple-500/30 space-y-2">
               <span className="text-xs font-mono-code text-purple-400 uppercase">Active Tournaments</span>
               <div className="font-heading text-3xl font-black text-white">{events.length}</div>
               <span className="text-[11px] text-slate-500 font-mono-code">Google Form Connected</span>
             </div>
 
-            <div className="p-6 rounded-3xl bg-[#0d121d] border border-amber-500/30 space-y-2">
+            <div className="p-6 rounded-3xl glass-card border-amber-500/30 space-y-2">
               <span className="text-xs font-mono-code text-amber-400 uppercase">Live Quizzes</span>
               <div className="font-heading text-3xl font-black text-white">{quizzes.length}</div>
               <span className="text-[11px] text-slate-500 font-mono-code">Timed MCQ Engine</span>
             </div>
 
-            <div className="p-6 rounded-3xl bg-[#0d121d] border border-emerald-500/30 space-y-2">
+            <div className="p-6 rounded-3xl glass-card border-emerald-500/30 space-y-2">
               <span className="text-xs font-mono-code text-emerald-400 uppercase">Society Polls</span>
               <div className="font-heading text-3xl font-black text-white">{polls.length}</div>
               <span className="text-[11px] text-slate-500 font-mono-code">1-Vote Strict Enforcement</span>
             </div>
           </div>
 
-          <div className="p-6 rounded-3xl bg-[#0d121d] border border-slate-800 space-y-4">
+          <div className="p-6 rounded-3xl glass-panel space-y-4">
             <h3 className="font-heading text-base font-bold text-white flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-cyan-400" />
               <span>PRD Compliance Status Checklist</span>
