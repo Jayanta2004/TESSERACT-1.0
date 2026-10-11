@@ -2,39 +2,15 @@
 
 @layer base {
   :root {
-    --font-heading: 'Space Grotesk', 'Orbitron', sans-serif;
-    --font-body: 'Hanken Grotesk', 'Inter', sans-serif;
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Hanken Grotesk', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    
-    /* Stitch Color Tokens */
-    --color-surface-lowest: #0c0e14;
-    --color-surface: #111319;
-    --color-surface-low: #191b22;
-    --color-surface-container: #1d1f26;
-    --color-surface-high: #282a31;
-    --color-surface-highest: #33343c;
-    
-    --color-primary: #00f0ff;
-    --color-primary-dim: #00dbe9;
-    --color-primary-light: #dbfcff;
-    
-    --color-carbon-border: #1E2638;
-    --color-border-subtle: rgba(255, 255, 255, 0.08);
-    
-    --color-emerald: #00E676;
-    --color-amber: #FFB800;
-    --color-crimson: #FF3366;
-    --color-purple: #6807ba;
-    
-    --color-text-bright: #F4F7FB;
-    --color-text-main: #e2e2eb;
-    --color-text-dim: #8A99AD;
   }
 
   body {
     font-family: var(--font-body);
-    background-color: #0c0e14;
-    color: var(--color-text-main);
+    background-color: #07090e;
+    color: #e2e8f0;
     overflow-x: hidden;
     min-height: 100vh;
   }
@@ -44,6 +20,10 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 85% 35%, rgba(147, 51, 234, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
   }
 }
 
@@ -64,7 +44,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* Stitch Typography Classes */
+/* Typography Classes */
 .font-heading {
   font-family: 'Space Grotesk', sans-serif;
   letter-spacing: -0.02em;
@@ -78,89 +58,159 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Stitch Container & Surface Utilities */
-.stitch-surface {
-  background-color: #111319;
-  border: 1px solid #1E2638;
-}
+/* =========================================================================
+   PREMIUM GLASSMORPHISM DESIGN SYSTEM
+   ========================================================================= */
 
-.stitch-surface-container {
-  background-color: #1d1f26;
+.glass-card {
+  background: rgba(13, 18, 30, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  border-radius: 1rem;
 }
 
-.stitch-card {
-  background-color: #111319;
-  border: 1px solid #1E2638;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.stitch-card:hover {
-  border-color: #00f0ff;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+.glass-card-hover:hover {
+  background: rgba(19, 27, 44, 0.85);
+  border-color: rgba(6, 182, 212, 0.35);
+  box-shadow: 0 16px 48px -8px rgba(6, 182, 212, 0.15);
   transform: translateY(-2px);
 }
 
-.stitch-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.glass-panel {
+  background: rgba(10, 14, 24, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
 }
 
-.stitch-btn-primary {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background-color: #00f0ff;
-  color: #00363a;
-  box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
+.glass-pill {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+
+.glass-input {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
+  color: #f8fafc;
   transition: all 0.2s ease;
 }
 
-.stitch-btn-primary:hover {
-  background-color: #7df4ff;
-  box-shadow: 0 0 35px rgba(0, 240, 255, 0.55);
-  transform: translateY(-1px);
+.glass-input:focus {
+  outline: none;
+  border-color: #06b6d4;
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.25);
 }
 
-.stitch-btn-secondary {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
-  background-color: #1d1f26;
-  border: 1px solid #1E2638;
-  color: #e2e2eb;
-  transition: all 0.2s ease;
+/* Compatibility aliases so existing classes seamlessly look glassmorphic */
+.stitch-card,
+.bg-surface-container,
+.bg-surface-container-low,
+.bg-surface-container-high,
+.bg-surface-container-highest {
+  background: rgba(13, 18, 30, 0.7) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 1rem;
 }
 
-.stitch-btn-secondary:hover {
-  background-color: #282a31;
-  border-color: #00f0ff;
-  color: #00f0ff;
+.bg-surface {
+  background: transparent !important;
+}
+
+.border-carbon-border {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.text-text-bright {
+  color: #ffffff !important;
+}
+
+.text-text-dim {
+  color: #94a3b8 !important;
+}
+
+.text-on-surface-variant {
+  color: #cbd5e1 !important;
+}
+
+.text-primary-container {
+  color: #22d3ee !important;
+}
+
+.bg-primary-container {
+  background-color: #06b6d4 !important;
+  color: #020617 !important;
+}
+
+.text-verified-emerald {
+  color: #10b981 !important;
+}
+
+.text-alert-crimson {
+  color: #f43f5e !important;
+}
+
+.text-admin-amber {
+  color: #f59e0b !important;
+}
+
+.px-margin {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.gap-space-sm {
+  gap: 0.75rem !important;
+}
+
+.gap-space-md {
+  gap: 1.25rem !important;
+}
+
+.gap-space-lg {
+  gap: 1.75rem !important;
+}
+
+.gap-space-xl {
+  gap: 2.5rem !important;
+}
+
+.p-space-lg {
+  padding: 1.5rem !important;
+}
+
+.p-space-md {
+  padding: 1.25rem !important;
+}
+
+.p-space-sm {
+  padding: 0.75rem !important;
+}
+
+.py-space-xl {
+  padding-top: 3.5rem !important;
+  padding-bottom: 3.5rem !important;
 }
 
 /* Animations */
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-ticker {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: marquee 30s linear infinite;
-}
-
-.animate-ticker:hover {
-  animation-play-state: paused;
-}
-
 @keyframes pulse-ring {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(0, 230, 118, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
 .animate-pulse-ring {

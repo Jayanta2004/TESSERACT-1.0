@@ -97,41 +97,41 @@ export default function EventsView() {
           </div>
 
           {/* Hero Header Title & Narrative */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg mb-space-xl">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-primary-container/10 text-primary-container font-label-sm text-label-sm uppercase tracking-widest mb-space-sm border border-primary-container/20">
-                <span className="material-symbols-outlined text-[14px]">sports_esports</span>
-                OFFICIAL SANCTIONED TOURNAMENTS // IITM BS S03
-              </div>
-              <h1 className="font-headline-xl text-3xl sm:text-headline-xl text-text-bright tracking-tight uppercase leading-none mb-space-sm">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+            <div className="max-w-2xl">
+              <span className="glass-pill px-3 py-1 text-cyan-400 font-mono-code text-xs uppercase tracking-widest inline-flex items-center gap-1.5 mb-3 font-semibold">
+                <span className="material-symbols-outlined text-[15px]">sports_esports</span>
+                SANCTIONED TOURNAMENTS • SEASON 03
+              </span>
+              <h1 className="font-heading text-3xl sm:text-4xl font-black text-white tracking-tight uppercase leading-tight mb-2">
                 CHAMPIONSHIP ARENA &amp; QUALIFIERS
               </h1>
-              <p className="font-body-lg text-body-lg text-text-dim max-w-2xl">
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
                 Official inter-house championships, open campus showdowns, and semester qualifiers. Verified registration gateway powered by institutional IITM Student Identity.
               </p>
             </div>
 
             {/* Metric HUD Chips */}
-            <div className="grid grid-cols-3 gap-space-sm sm:gap-space-md shrink-0">
-              <div className="bg-surface-container-low p-space-md rounded-xl shadow-sm min-w-[100px] text-center border border-carbon-border">
-                <span className="block font-label-sm text-label-sm text-text-dim uppercase tracking-wider">Prize Total</span>
-                <span className="font-headline-md text-headline-md text-admin-amber tracking-tight font-bold">₹37,500</span>
+            <div className="grid grid-cols-3 gap-3 shrink-0">
+              <div className="glass-card p-4 rounded-2xl text-center min-w-[100px]">
+                <span className="block text-xs font-mono-code text-slate-400 uppercase tracking-wider">Prize Total</span>
+                <span className="font-heading text-xl sm:text-2xl font-black text-amber-400">₹37,500</span>
               </div>
-              <div className="bg-surface-container-low p-space-md rounded-xl shadow-sm min-w-[100px] text-center border border-carbon-border">
-                <span className="block font-label-sm text-label-sm text-text-dim uppercase tracking-wider">Houses</span>
-                <span className="font-headline-md text-headline-md text-primary-container tracking-tight font-bold">04 RIVALS</span>
+              <div className="glass-card p-4 rounded-2xl text-center min-w-[100px]">
+                <span className="block text-xs font-mono-code text-slate-400 uppercase tracking-wider">Houses</span>
+                <span className="font-heading text-xl sm:text-2xl font-black text-cyan-400">04 Rivals</span>
               </div>
-              <div className="bg-surface-container-low p-space-md rounded-xl shadow-sm min-w-[100px] text-center border border-carbon-border">
-                <span className="block font-label-sm text-label-sm text-text-dim uppercase tracking-wider">Active Teams</span>
-                <span className="font-headline-md text-headline-md text-verified-emerald tracking-tight font-bold">118 SQD</span>
+              <div className="glass-card p-4 rounded-2xl text-center min-w-[100px]">
+                <span className="block text-xs font-mono-code text-slate-400 uppercase tracking-wider">Active Teams</span>
+                <span className="font-heading text-xl sm:text-2xl font-black text-emerald-400">118 SQD</span>
               </div>
             </div>
           </div>
 
           {/* Tactical Filtering & Control Switcher Bar */}
-          <div className="bg-surface-container-low rounded-xl p-space-sm shadow-md mb-space-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md border border-carbon-border">
+          <div className="glass-panel p-2.5 rounded-2xl mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
             {/* Category Filter Tabs */}
-            <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
               {[
                 { id: 'all', label: `All Events (${events.length})` },
                 { id: 'interhouse', label: 'Flagship Inter-House' },
@@ -142,10 +142,10 @@ export default function EventsView() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveCategory(tab.id)}
-                  className={`filter-pill whitespace-nowrap px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all cursor-pointer ${
+                  className={`whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono-code uppercase font-semibold transition-all cursor-pointer ${
                     activeCategory === tab.id
-                      ? 'bg-primary-container text-on-primary-container font-bold shadow-sm'
-                      : 'text-text-dim hover:text-on-surface hover:bg-surface-container'
+                      ? 'bg-cyan-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(0,240,255,0.3)]'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                   }`}
                 >
                   {tab.label}
@@ -154,13 +154,13 @@ export default function EventsView() {
             </div>
 
             {/* Search & Sorters */}
-            <div className="flex items-center gap-space-sm shrink-0">
+            <div className="flex items-center gap-3 shrink-0">
               <div className="relative flex-1 md:w-56">
-                <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-text-dim text-[16px]">search</span>
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[16px]">search</span>
                 <input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-surface-container text-on-surface placeholder:text-text-dim text-body-sm font-body-sm pl-8 pr-3 py-1.5 rounded-lg focus:outline-none focus:bg-surface-container-high transition-colors border border-carbon-border"
+                  className="w-full glass-input pl-9 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 rounded-xl font-mono-code"
                   placeholder="Search tournaments..."
                   type="text"
                 />
@@ -169,127 +169,127 @@ export default function EventsView() {
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-surface-container text-on-surface font-label-sm text-label-sm px-3 py-1.5 rounded-lg appearance-none pr-8 cursor-pointer focus:outline-none border border-carbon-border"
+                  className="glass-input text-xs font-mono-code text-slate-200 px-3 py-1.5 rounded-xl appearance-none pr-8 cursor-pointer"
                 >
-                  <option value="closing">Closing Soonest</option>
-                  <option value="prize">Prize Pool: High to Low</option>
-                  <option value="date">Earliest Start Date</option>
+                  <option value="closing" className="bg-slate-900">Closing Soonest</option>
+                  <option value="prize" className="bg-slate-900">Prize Pool: High to Low</option>
+                  <option value="date" className="bg-slate-900">Earliest Start Date</option>
                 </select>
-                <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-text-dim text-[16px] pointer-events-none">expand_more</span>
+                <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 text-[16px] pointer-events-none">expand_more</span>
               </div>
             </div>
           </div>
 
           {/* TOURNAMENT EVENT CARDS GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg mb-space-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {filteredEvents.map((evt) => {
-              const capacityPercent = Math.min(100, Math.round((evt.registeredTeams / evt.maxTeams) * 100));
+              const registered = evt.registeredTeams || 24;
+              const max = evt.maxTeams || 32;
+              const capacityPercent = Math.min(100, Math.round((registered / max) * 100));
               const isClosed = evt.status === 'Completed';
 
               return (
                 <div
                   key={evt.id}
-                  className="tournament-card group flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-xl transition-all duration-300 hover:translate-y-[-2px] hover:shadow-2xl border border-carbon-border"
+                  className="glass-card glass-card-hover rounded-2xl overflow-hidden flex flex-col justify-between"
                 >
                   {/* Card Image Banner & Badges */}
-                  <div className="relative h-56 w-full overflow-hidden">
+                  <div className="relative h-52 w-full overflow-hidden">
                     <img
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                       src={evt.banner || "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200"}
                       alt={evt.title}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
 
                     {/* Top Floating Badges */}
-                    <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                      <span className={`px-2 py-0.5 rounded font-label-sm text-label-sm font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm ${
+                    <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                      <span className={`glass-pill px-3 py-1 text-[11px] font-mono-code font-bold uppercase tracking-wider flex items-center gap-1.5 ${
                         evt.status === 'Live'
-                          ? 'bg-verified-emerald text-on-tertiary-fixed'
+                          ? 'text-emerald-400 border-emerald-500/40 bg-emerald-950/40'
                           : isClosed
-                          ? 'bg-surface-container text-text-dim'
-                          : 'bg-alert-crimson text-on-error'
+                          ? 'text-slate-400'
+                          : 'text-rose-400 border-rose-500/40 bg-rose-950/40'
                       }`}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                        <span className={`w-1.5 h-1.5 rounded-full ${evt.status === 'Live' ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}`}></span>
                         {evt.status === 'Live' ? 'LIVE NOW' : isClosed ? 'CONCLUDED' : 'Closing Soon'}
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-surface-container-lowest/90 backdrop-blur-sm text-primary-container font-label-sm text-label-sm uppercase tracking-wider border border-primary-container/20">
+                      <span className="glass-pill px-2.5 py-1 text-cyan-400 text-[11px] font-mono-code uppercase font-bold">
                         {evt.game}
                       </span>
                     </div>
 
                     {/* Prize Pool Callout Ribbon */}
-                    <div className="absolute top-3 right-3 bg-admin-amber text-on-tertiary-fixed font-label-md text-label-md px-3 py-1 rounded shadow-md flex items-center gap-1.5 font-bold">
+                    <div className="absolute top-3 right-3 glass-pill px-3 py-1 text-amber-400 font-mono-code text-xs font-bold flex items-center gap-1.5">
                       <span className="material-symbols-outlined text-[16px]">emoji_events</span>
-                      {evt.prizePool} PRIZE POOL
+                      {evt.prizePool} PRIZE
                     </div>
 
                     {/* Bottom Banner Metas */}
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-label-sm font-label-sm">
-                      <span className="text-text-bright font-bold uppercase tracking-wide bg-surface-glass px-2 py-0.5 rounded backdrop-blur-md border border-carbon-border">
+                    <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-mono-code">
+                      <span className="text-white font-bold uppercase tracking-wide glass-pill px-2.5 py-1">
                         {evt.format}
                       </span>
-                      <span className="text-verified-emerald font-bold uppercase tracking-wider bg-surface-glass px-2 py-0.5 rounded backdrop-blur-md flex items-center gap-1 border border-carbon-border">
-                        <span className="material-symbols-outlined text-[12px]">verified_user</span> Institutional Verified
+                      <span className="text-emerald-400 font-bold uppercase tracking-wider glass-pill px-2.5 py-1 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[13px]">verified_user</span> Institutional Verified
                       </span>
                     </div>
                   </div>
 
                   {/* Card Content Body */}
-                  <div className="p-space-lg flex flex-col flex-1 justify-between">
+                  <div className="p-6 flex flex-col flex-1 justify-between gap-5">
                     <div>
-                      <div className="flex items-start justify-between gap-space-sm mb-space-xs">
-                        <h2 className="font-headline-lg text-headline-lg text-text-bright tracking-tight uppercase group-hover:text-primary-container transition-colors">
-                          {evt.title}
-                        </h2>
-                      </div>
-                      <p className="font-body-md text-body-md text-text-dim mb-space-md">
+                      <h2 className="font-heading font-black text-xl text-white tracking-tight uppercase mb-2">
+                        {evt.title}
+                      </h2>
+                      <p className="text-slate-300 text-sm leading-relaxed mb-4 line-clamp-2">
                         {evt.description}
                       </p>
 
                       {/* Tournament Telemetry Data Grid */}
-                      <div className="grid grid-cols-2 gap-space-sm bg-surface-container rounded-lg p-space-md mb-space-md border border-carbon-border">
+                      <div className="grid grid-cols-2 gap-3 glass-panel p-4 rounded-xl mb-4 text-xs font-mono-code">
                         <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-text-dim text-[18px]">calendar_month</span>
+                          <span className="material-symbols-outlined text-cyan-400 text-[18px]">calendar_month</span>
                           <div>
-                            <span className="block font-label-sm text-[11px] text-text-dim uppercase leading-none">Schedule</span>
-                            <span className="font-label-md text-label-md text-text-bright">{evt.date}</span>
+                            <span className="block text-[10px] text-slate-400 uppercase">Schedule</span>
+                            <span className="text-white font-semibold">{evt.date}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-text-dim text-[18px]">schedule</span>
+                          <span className="material-symbols-outlined text-cyan-400 text-[18px]">schedule</span>
                           <div>
-                            <span className="block font-label-sm text-[11px] text-text-dim uppercase leading-none">Match Time</span>
-                            <span className="font-label-md text-label-md text-text-bright">{evt.time}</span>
+                            <span className="block text-[10px] text-slate-400 uppercase">Match Time</span>
+                            <span className="text-white font-semibold">{evt.time}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-text-dim text-[18px]">account_tree</span>
+                          <span className="material-symbols-outlined text-cyan-400 text-[18px]">account_tree</span>
                           <div>
-                            <span className="block font-label-sm text-[11px] text-text-dim uppercase leading-none">Format</span>
-                            <span className="font-label-md text-label-md text-text-bright">{evt.format}</span>
+                            <span className="block text-[10px] text-slate-400 uppercase">Format</span>
+                            <span className="text-white font-semibold truncate block max-w-[130px]">{evt.format}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-text-dim text-[18px]">payments</span>
+                          <span className="material-symbols-outlined text-amber-400 text-[18px]">payments</span>
                           <div>
-                            <span className="block font-label-sm text-[11px] text-text-dim uppercase leading-none">Prize</span>
-                            <span className="font-label-md text-label-md text-admin-amber font-bold">{evt.prizePool}</span>
+                            <span className="block text-[10px] text-slate-400 uppercase">Prize</span>
+                            <span className="text-amber-400 font-bold">{evt.prizePool}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Slots Registration Gauge Progress */}
-                      <div className="mb-space-lg">
-                        <div className="flex justify-between items-center text-label-sm font-label-sm mb-1.5">
-                          <span className="text-text-dim uppercase">Slots Filled (Max {evt.maxTeams})</span>
-                          <span className="text-text-bright font-bold">
-                            {evt.registeredTeams} / {evt.maxTeams} Squads{' '}
-                            <span className="text-primary-container">({capacityPercent}%)</span>
+                      <div>
+                        <div className="flex justify-between items-center text-xs font-mono-code mb-1.5">
+                          <span className="text-slate-400">Slots Filled (Max {max})</span>
+                          <span className="text-white font-bold">
+                            {registered} / {max} Squads{' '}
+                            <span className="text-cyan-400">({capacityPercent}%)</span>
                           </span>
                         </div>
-                        <div className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+                        <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                           <div
-                            className="h-full rounded-full bg-gradient-to-r from-primary-container to-surface-tint transition-all"
+                            className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 transition-all"
                             style={{ width: `${capacityPercent}%` }}
                           ></div>
                         </div>
@@ -297,29 +297,29 @@ export default function EventsView() {
                     </div>
 
                     {/* Dual CTA Action Block */}
-                    <div className="flex items-center gap-space-sm pt-space-xs">
+                    <div className="flex items-center gap-3 pt-2 border-t border-white/10">
                       <button
                         onClick={() => setActiveDetailsModal(evt)}
-                        className="flex-1 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md text-center flex items-center justify-center gap-1.5 border border-carbon-border cursor-pointer"
+                        className="flex-1 px-4 py-2.5 rounded-xl glass-card hover:bg-slate-800/60 transition-colors text-xs font-mono-code text-white font-semibold flex items-center justify-center gap-1.5 cursor-pointer"
                       >
                         <span className="material-symbols-outlined text-[16px]">menu_book</span>
-                        View Rules &amp; Schedule
+                        Rules &amp; Schedule
                       </button>
 
                       {isClosed ? (
                         <button
                           disabled
-                          className="flex-1 px-4 py-2 rounded-lg bg-surface-container text-text-dim font-label-md text-label-md text-center cursor-not-allowed opacity-60"
+                          className="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 text-slate-500 text-xs font-mono-code cursor-not-allowed"
                         >
                           Concluded
                         </button>
                       ) : (
                         <button
                           onClick={() => handleOpenGateway(evt)}
-                          className="flex-1 px-4 py-2 rounded-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary transition-all font-label-md text-label-md font-bold text-center flex items-center justify-center gap-1.5 shadow-md shadow-primary-container/20 cursor-pointer"
+                          className="flex-1 px-4 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-heading font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,240,255,0.3)] cursor-pointer"
                         >
                           <span className="material-symbols-outlined text-[16px]">how_to_reg</span>
-                          Register Squad [IITM]
+                          Register Squad
                         </button>
                       )}
                     </div>
