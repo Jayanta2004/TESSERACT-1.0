@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 export default function HomeView() {
@@ -11,6 +12,8 @@ export default function HomeView() {
     setSelectedEventForModal,
     setSelectedGameForModal
   } = useApp();
+
+  const navigate = useNavigate();
 
   // Interactive Countdown Timer
   const [timeLeft, setTimeLeft] = useState({
@@ -48,12 +51,12 @@ export default function HomeView() {
   return (
     <div className="w-full flex flex-col">
       {/* SECTION 1: HERO VIEWPORT & ASYMMETRIC GRID */}
-      <section className="relative w-full pt-8 pb-16 px-margin overflow-hidden">
+      <section className="relative w-full py-12 md:py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Cyber Grid & Ambient Glow Background */}
         <div className="absolute inset-0 pointer-events-none opacity-25">
-          <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary-container filter blur-[100px]"></div>
-          <div className="absolute top-1/2 right-10 w-80 h-80 rounded-full bg-secondary-container filter blur-[120px]"></div>
-          <svg className="w-full h-full stroke-surface-container-highest/40 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]" height="100%" width="100%">
+          <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-cyan-500 filter blur-[100px]"></div>
+          <div className="absolute top-1/2 right-10 w-80 h-80 rounded-full bg-purple-600 filter blur-[120px]"></div>
+          <svg className="w-full h-full stroke-slate-800/40 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]" height="100%" width="100%">
             <defs>
               <pattern height="40" id="cyber-grid" patternUnits="userSpaceOnUse" width="40">
                 <path d="M 40 0 L 0 0 0 40" fill="none" strokeWidth="0.8"></path>
@@ -63,56 +66,56 @@ export default function HomeView() {
           </svg>
         </div>
 
-        <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+        <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column (Cols 1-7) */}
-          <div className="lg:col-span-7 flex flex-col gap-space-lg z-10">
+          <div className="lg:col-span-7 flex flex-col gap-6 z-10">
             {/* Monospace Tag & Announcement Trigger */}
-            <div className="flex items-center gap-space-sm flex-wrap">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high text-primary-container font-label-sm text-label-sm tracking-wider uppercase shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
-                [ OFFICIAL SOCIETY • IIT MADRAS BS DEGREE • EST. 2022 ]
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-cyan-400 font-mono-code text-xs tracking-wider uppercase shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                IIT MADRAS BS DEGREE • OFFICIAL ESPORTS SOCIETY
               </span>
               <button
                 onClick={() => setIsAnnouncementOpen(true)}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-alert-crimson/15 text-alert-crimson font-label-sm text-label-sm uppercase hover:bg-alert-crimson/25 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-400 font-mono-code text-xs uppercase hover:bg-rose-500/25 transition-colors cursor-pointer"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-alert-crimson animate-ping"></span>
-                <span>Dispatch Broadcast</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
+                <span>Active Broadcast</span>
                 <span className="material-symbols-outlined text-[14px]">notifications_active</span>
               </button>
             </div>
 
-            {/* Brutalist Headline */}
+            {/* Headline */}
             <div className="flex flex-col">
-              <h1 className="font-headline-xl text-3xl sm:text-5xl lg:text-headline-xl tracking-tight uppercase text-text-bright leading-tight sm:leading-none">
-                WHERE IITM STUDENTS<br />
-                <span className="bg-gradient-to-r from-text-bright via-primary-container to-surface-tint bg-clip-text text-transparent">
-                  PLAY, COMPETE &amp; CONNECT.
+              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight uppercase text-white leading-tight">
+                WHERE CODE MEETS <br />
+                <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-400 bg-clip-text text-transparent">
+                  COMPETITION.
                 </span>
               </h1>
             </div>
 
-            {/* Editorial Subtitle */}
-            <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
-              The premier collegiate battleground engineered exclusively for the IIT Madras BS in Data Science &amp; Electronic Systems community. Direct student governance, verified collegiate tournaments, and in-house competitive arenas.
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+              The premier collegiate gaming hub built for IIT Madras BS students in Data Science &amp; Electronic Systems. Sanctioned scrims, inter-house championships, and verified competitive gaming.
             </p>
 
             {/* Primary Action Cluster */}
-            <div className="flex flex-wrap items-center gap-space-md pt-space-xs">
-              <button
-                onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
-                className="inline-flex items-center gap-2 px-space-lg py-3 rounded-lg bg-primary-container text-on-primary-container font-label-lg text-label-lg uppercase tracking-wider transition-all duration-200 hover:bg-primary hover:shadow-[0_0_24px_rgba(0,240,255,0.45)] hover:-translate-y-0.5 font-bold cursor-pointer"
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link
+                to="/events"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-cyan-400 text-slate-950 font-bold uppercase tracking-wider text-sm transition-all duration-200 hover:bg-cyan-300 hover:shadow-[0_0_24px_rgba(0,240,255,0.4)] hover:-translate-y-0.5 cursor-pointer"
               >
                 <span>EXPLORE TOURNAMENTS</span>
-                <span className="material-symbols-outlined text-[18px]">north_east</span>
-              </button>
-              <button
-                onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
-                className="inline-flex items-center gap-2 px-space-lg py-3 rounded-lg bg-surface-container text-primary-container font-label-lg text-label-lg uppercase tracking-wider transition-all duration-200 hover:bg-surface-container-high hover:text-text-bright hover:-translate-y-0.5 border border-carbon-border cursor-pointer"
+                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </Link>
+              <Link
+                to="/games"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700 text-cyan-300 font-bold uppercase tracking-wider text-sm transition-all duration-200 hover:bg-slate-800 hover:text-white hover:-translate-y-0.5 cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[18px]">sports_esports</span>
                 <span>GAMES DIRECTORY</span>
-              </button>
+              </Link>
             </div>
 
             {/* Community Channel Pills */}
@@ -304,16 +307,16 @@ export default function HomeView() {
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
             <div className="flex flex-col gap-1">
-              <span className="font-label-sm text-label-sm text-primary-container uppercase tracking-widest">[ 02 // SCHEDULED CONTESTS ]</span>
-              <h2 className="font-headline-xl text-2xl sm:text-headline-xl text-text-bright uppercase">ACTIVE &amp; UPCOMING COMPETITIVE CIRCUIT</h2>
+              <span className="font-mono-code text-xs text-cyan-400 uppercase tracking-widest font-semibold">SCHEDULED CONTESTS</span>
+              <h2 className="font-heading text-2xl sm:text-3xl font-black text-white uppercase">ACTIVE &amp; UPCOMING COMPETITIVE CIRCUIT</h2>
             </div>
-            <button
-              onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
-              className="inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:text-text-bright transition-colors uppercase tracking-wider cursor-pointer"
+            <Link
+              to="/events"
+              className="inline-flex items-center gap-1.5 font-mono-code text-xs text-cyan-400 hover:text-white transition-colors uppercase tracking-wider font-bold cursor-pointer"
             >
               <span>VIEW FULL CIRCUIT SCHEDULE</span>
               <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-            </button>
+            </Link>
           </div>
 
           {/* 2 Side-by-Side Featured Cards */}
@@ -412,21 +415,21 @@ export default function HomeView() {
                 Why rely on clunky third-party forms? Tesseract hosts proprietary low-latency quiz showdowns directly on-platform with instantaneous tie-breaker resolution, anti-cheat detection, and live screen leaderboards for gaming lore, anime, and tech trivia.
               </p>
 
-              <div className="flex flex-wrap items-center gap-space-md pt-space-xs">
-                <button
-                  onClick={() => { setCurrentView('quiz'); window.scrollTo(0, 0); }}
-                  className="px-space-lg py-3 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md tracking-wider uppercase font-bold hover:bg-primary transition-all flex items-center gap-2 cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link
+                  to="/quizzes"
+                  className="px-6 py-3 rounded-xl bg-cyan-400 text-slate-950 font-mono-code text-xs tracking-wider uppercase font-bold hover:bg-cyan-300 transition-all flex items-center gap-2 cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
                 >
                   <span>ENTER ACTIVE TRIAL QUIZ</span>
                   <span className="material-symbols-outlined text-[18px]">play_arrow</span>
-                </button>
-                <button
-                  onClick={() => { setCurrentView('leaderboard'); window.scrollTo(0, 0); }}
-                  className="px-space-lg py-3 rounded-lg bg-surface-container text-text-bright font-label-md text-label-md tracking-wider uppercase hover:bg-surface-container-high transition-colors flex items-center gap-2 border border-carbon-border cursor-pointer"
+                </Link>
+                <Link
+                  to="/leaderboard"
+                  className="px-6 py-3 rounded-xl bg-slate-900 text-white font-mono-code text-xs tracking-wider uppercase hover:bg-slate-800 transition-colors flex items-center gap-2 border border-slate-700 cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[18px]">leaderboard</span>
                   <span>VIEW HALL OF FAME</span>
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -485,84 +488,84 @@ export default function HomeView() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
             {/* Pillar 01 */}
-            <div
-              onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
+            <Link
+              to="/events"
               className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
             >
               <div className="flex flex-col gap-space-md">
                 <div className="flex items-center justify-between">
-                  <span className="font-label-lg text-label-lg text-primary-container font-bold">[ 01 ]</span>
+                  <span className="font-mono-code text-cyan-400 font-bold">[ 01 ]</span>
                   <span className="material-symbols-outlined text-primary-container text-[24px]">swords</span>
                 </div>
-                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-primary-container transition-colors">
+                <h3 className="font-heading font-bold text-lg text-text-bright uppercase group-hover:text-primary-container transition-colors">
                   COMPETITIVE ESPORTS
                 </h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   High-stakes inter-house and inter-college tier-1 scrims and official tournaments across Valorant, BGMI, Rocket League, and CS2 with professional casters.
                 </p>
               </div>
-              <span className="font-label-sm text-label-sm text-primary-container uppercase tracking-wider">Tier-1 Tournaments →</span>
-            </div>
+              <span className="font-mono-code text-xs text-primary-container uppercase tracking-wider">Tier-1 Tournaments →</span>
+            </Link>
 
             {/* Pillar 02 */}
-            <div
-              onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
+            <Link
+              to="/games"
               className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
             >
               <div className="flex flex-col gap-space-md">
                 <div className="flex items-center justify-between">
-                  <span className="font-label-lg text-label-lg text-secondary font-bold">[ 02 ]</span>
+                  <span className="font-mono-code text-purple-400 font-bold">[ 02 ]</span>
                   <span className="material-symbols-outlined text-secondary text-[24px]">psychology</span>
                 </div>
-                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-secondary transition-colors">
+                <h3 className="font-heading font-bold text-lg text-text-bright uppercase group-hover:text-secondary transition-colors">
                   MIND GAMES &amp; CHESS
                 </h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   Tactical blitz chess arenas, competitive Geoguessr showdowns, mathematical card battles, and analytical strategy championships tailored for BS problem solvers.
                 </p>
               </div>
-              <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Cognitive Arenas →</span>
-            </div>
+              <span className="font-mono-code text-xs text-secondary uppercase tracking-wider">Cognitive Arenas →</span>
+            </Link>
 
             {/* Pillar 03 */}
-            <div
-              onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
+            <Link
+              to="/games"
               className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
             >
               <div className="flex flex-col gap-space-md">
                 <div className="flex items-center justify-between">
-                  <span className="font-label-lg text-label-lg text-verified-emerald font-bold">[ 03 ]</span>
+                  <span className="font-mono-code text-emerald-400 font-bold">[ 03 ]</span>
                   <span className="material-symbols-outlined text-verified-emerald text-[24px]">group</span>
                 </div>
-                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-verified-emerald transition-colors">
+                <h3 className="font-heading font-bold text-lg text-text-bright uppercase group-hover:text-verified-emerald transition-colors">
                   CASUAL SCRIMS &amp; SOCIAL
                 </h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   Weekend party games, Among Us sessions, self-hosted Minecraft realms, and live major esports championship watch parties with thousands of peers online.
                 </p>
               </div>
-              <span className="font-label-sm text-label-sm text-verified-emerald uppercase tracking-wider">Community Lounges →</span>
-            </div>
+              <span className="font-mono-code text-xs text-verified-emerald uppercase tracking-wider">Community Lounges →</span>
+            </Link>
 
             {/* Pillar 04 */}
-            <div
-              onClick={() => { setCurrentView('polls'); window.scrollTo(0, 0); }}
+            <Link
+              to="/polls"
               className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
             >
               <div className="flex flex-col gap-space-md">
                 <div className="flex items-center justify-between">
-                  <span className="font-label-lg text-label-lg text-admin-amber font-bold">[ 04 ]</span>
+                  <span className="font-mono-code text-amber-400 font-bold">[ 04 ]</span>
                   <span className="material-symbols-outlined text-admin-amber text-[24px]">how_to_vote</span>
                 </div>
-                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-admin-amber transition-colors">
+                <h3 className="font-heading font-bold text-lg text-text-bright uppercase group-hover:text-admin-amber transition-colors">
                   DIRECT STUDENT DEMOCRACY
                 </h3>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   Transparent community polls for game choice selections, open financial prize distributions, and an elected student executive council answerable to the BS student body.
                 </p>
               </div>
-              <span className="font-label-sm text-label-sm text-admin-amber uppercase tracking-wider">Open Governance →</span>
-            </div>
+              <span className="font-mono-code text-xs text-admin-amber uppercase tracking-wider">Open Governance →</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -586,13 +589,13 @@ export default function HomeView() {
               <span className="font-label-md text-label-md text-text-bright tracking-wider uppercase font-bold">
                 INTERNAL REGISTRY &amp; POLICIES
               </span>
-              <div className="grid grid-cols-2 gap-2 font-label-sm text-label-sm text-text-dim">
-                <button onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Tournament Matrix</button>
-                <button onClick={() => { setCurrentView('quiz'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Quiz Arena Code</button>
-                <button onClick={() => { setCurrentView('team'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Council Roster</button>
-                <button onClick={() => { setCurrentView('polls'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Society Ballot</button>
-                <button onClick={() => { setCurrentView('about'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Code of Conduct</button>
-                <button onClick={() => { setCurrentView('about'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Fairplay Grievance</button>
+              <div className="grid grid-cols-2 gap-2 font-mono-code text-xs text-text-dim">
+                <Link to="/events" className="hover:text-cyan-400 transition-colors uppercase text-left">Tournament Matrix</Link>
+                <Link to="/quizzes" className="hover:text-cyan-400 transition-colors uppercase text-left">Quiz Arena Code</Link>
+                <Link to="/team" className="hover:text-cyan-400 transition-colors uppercase text-left">Council Roster</Link>
+                <Link to="/polls" className="hover:text-cyan-400 transition-colors uppercase text-left">Society Ballot</Link>
+                <Link to="/about" className="hover:text-cyan-400 transition-colors uppercase text-left">Code of Conduct</Link>
+                <Link to="/about" className="hover:text-cyan-400 transition-colors uppercase text-left">Fairplay Grievance</Link>
               </div>
             </div>
 

@@ -74,24 +74,24 @@ export default function EventsView() {
 
         {/* MAIN SECTION: Tournament Command Telemetry Header */}
         <div className="max-w-7xl mx-auto px-margin pt-space-lg pb-space-xl">
-          {/* Top Tactical Breadcrumb & Live Relay Indicator */}
-          <div className="flex flex-wrap items-center justify-between gap-space-sm mb-space-md">
-            <div className="flex items-center gap-space-xs text-label-sm font-label-sm tracking-widest uppercase">
-              <span className="text-primary-container">SYS::EVENTS</span>
-              <span className="text-outline-variant">/</span>
-              <span className="text-text-bright">IITM_CIRCUIT_S03</span>
-              <span className="text-outline-variant">/</span>
-              <span className="text-text-dim">REG_PORTAL_ACTIVE</span>
+          {/* Top Header & Live Relay Indicator */}
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div className="flex items-center gap-2 text-xs font-mono-code tracking-widest uppercase">
+              <span className="text-cyan-400 font-bold">COMPETITIVE CIRCUIT</span>
+              <span className="text-slate-600">/</span>
+              <span className="text-white font-bold">SEASON 03</span>
+              <span className="text-slate-600">/</span>
+              <span className="text-slate-400">IIT MADRAS BS</span>
             </div>
-            <div className="flex items-center gap-space-md bg-surface-container-low px-space-md py-1 rounded-full shadow-sm border border-carbon-border">
+            <div className="flex items-center gap-3 bg-slate-900/90 px-3.5 py-1.5 rounded-full shadow-sm border border-slate-800 text-xs font-mono-code">
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-verified-emerald animate-pulse"></span>
-                <span className="text-label-sm font-label-sm text-text-bright uppercase tracking-wider">2 Open For Registration</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span className="text-slate-200 uppercase tracking-wider font-semibold">2 Open Registration</span>
               </div>
-              <span className="text-outline-variant text-[10px]">•</span>
+              <span className="text-slate-600">•</span>
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-alert-crimson animate-ping"></span>
-                <span className="text-label-sm font-label-sm text-alert-crimson uppercase tracking-wider">1 Live In Progress</span>
+                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                <span className="text-rose-400 uppercase tracking-wider font-semibold">1 Live Now</span>
               </div>
             </div>
           </div>

@@ -50,24 +50,22 @@ export default function GamesView() {
       {/* SECTION 1: RADAR COMMAND HEADER */}
       <section className="w-full pt-8 pb-6 px-margin bg-surface">
         <div className="max-w-7xl mx-auto flex flex-col gap-space-md">
-          <div className="flex flex-wrap items-center justify-between gap-space-sm">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-2 h-2 bg-primary-container shadow-[0_0_8px_#00f0ff]"></span>
-              <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary-container">
-                [ TESSERACT DIRECTORY // REPOSITORY 09 ]
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider">
+              <span className="inline-block w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f0ff]"></span>
+              <span className="text-cyan-400 font-bold">
+                TESSERACT SANCTIONED TITLES
               </span>
-              <span className="text-outline-variant font-label-sm">::</span>
-              <span className="font-label-sm text-label-sm uppercase tracking-wider text-text-dim">
-                TELEMETRY NODE: MAA-DC-01
+              <span className="text-slate-600">•</span>
+              <span className="text-slate-400">
+                18 ACTIVE ROSTERS
               </span>
             </div>
-            <div className="flex items-center gap-space-sm font-label-sm text-label-sm">
-              <span className="text-verified-emerald flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald animate-pulse"></span>
-                RADAR ONLINE
+            <div className="flex items-center gap-2 text-xs font-mono-code">
+              <span className="text-emerald-400 flex items-center gap-1 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                SCRIM RADAR ONLINE
               </span>
-              <span className="text-outline-variant">•</span>
-              <span className="text-text-dim">LATENCY: 14MS (AWS-MUMBAI)</span>
             </div>
           </div>
 

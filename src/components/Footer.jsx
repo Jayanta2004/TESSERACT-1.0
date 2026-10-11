@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import {
   Gamepad2,
@@ -65,49 +66,49 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/games"
                   className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
                   <Gamepad2 className="w-3.5 h-3.5 text-cyan-500" />
                   <span>Featured Games</span>
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/events"
                   className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
                   <Calendar className="w-3.5 h-3.5 text-cyan-500" />
                   <span>Tournaments & Events</span>
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => { setCurrentView('quizzes'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/quizzes"
                   className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
                   <Award className="w-3.5 h-3.5 text-cyan-500" />
                   <span>In-House Quizzes</span>
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => { setCurrentView('polls'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/polls"
                   className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
                   <Vote className="w-3.5 h-3.5 text-cyan-500" />
                   <span>Society Polls</span>
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => { setCurrentView('leaderboard'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/leaderboard"
                   className="hover:text-cyan-300 transition-colors flex items-center gap-1.5"
                 >
                   <Trophy className="w-3.5 h-3.5 text-cyan-500" />
                   <span>Rankings & Leaderboard</span>
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
@@ -119,29 +120,29 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <button
-                  onClick={() => { setCurrentView('team'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/team"
                   className="hover:text-purple-300 transition-colors flex items-center gap-1.5"
                 >
                   <Users className="w-3.5 h-3.5 text-purple-400" />
                   <span>Leadership & Council</span>
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => { setCurrentView('about'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/about"
                   className="hover:text-purple-300 transition-colors"
                 >
                   About Tesseract
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => { setCurrentView('profile'); window.scrollTo(0, 0); }}
+                <Link
+                  to="/profile"
                   className="hover:text-purple-300 transition-colors"
                 >
                   Student Profile
-                </button>
+                </Link>
               </li>
               <li>
                 <a

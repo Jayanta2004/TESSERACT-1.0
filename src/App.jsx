@@ -1,5 +1,6 @@
-import React from 'react';
-import { AppProvider, useApp } from './context/AppContext';
+import React, { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AppProvider } from './context/AppContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import GlobalAnnouncementModal from './components/GlobalAnnouncementModal';
@@ -17,21 +18,31 @@ import TeamView from './views/TeamView';
 import AboutView from './views/AboutView';
 import AdminView from './views/AdminView';
 
-function MainContent() {
-  const { currentView } = useApp();
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [pathname]);
+  return null;
+}
 
+function MainRoutes() {
   return (
-    <main className="flex-1 w-full relative">
-      {currentView === 'home' && <HomeView />}
-      {currentView === 'games' && <GamesView />}
-      {currentView === 'events' && <EventsView />}
-      {currentView === 'quizzes' && <QuizView />}
-      {currentView === 'leaderboard' && <LeaderboardView />}
-      {currentView === 'polls' && <PollsView />}
-      {currentView === 'profile' && <ProfileView />}
-      {currentView === 'team' && <TeamView />}
-      {currentView === 'about' && <AboutView />}
-      {currentView === 'admin' && <AdminView />}
+    <main className="flex-1 w-full relative pt-[70px]">
+      <Routes>
+        <Route path="/" element={<HomeView />} />
+        <Route path="/events" element={<EventsView />} />
+        <Route path="/games" element={<GamesView />} />
+        <Route path="/quizzes" element={<QuizView />} />
+        <Route path="/quiz" element={<Navigate to="/quizzes" replace />} />
+        <Route path="/leaderboard" element={<LeaderboardView />} />
+        <Route path="/polls" element={<PollsView />} />
+        <Route path="/profile" element={<ProfileView />} />
+        <Route path="/team" element={<TeamView />} />
+        <Route path="/about" element={<AboutView />} />
+        <Route path="/admin" element={<AdminView />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </main>
   );
 }
@@ -39,12 +50,13 @@ function MainContent() {
 export default function App() {
   return (
     <AppProvider>
-      <div className="min-h-screen bg-[#06080e] text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
-        {/* Navigation */}
+      <ScrollToTop />
+      <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col font-sans selection:bg-cyan-400 selection:text-black">
+        {/* Navigation Header */}
         <Navbar />
 
-        {/* Dynamic Route View */}
-        <MainContent />
+        {/* Dynamic Client Routes */}
+        <MainRoutes />
 
         {/* Global Announcement Pop-up (PRD Section 8) */}
         <GlobalAnnouncementModal />
@@ -61,3 +73,4 @@ export default function App() {
     </AppProvider>
   );
 }
+

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   INITIAL_ANNOUNCEMENT,
   INITIAL_GAMES,
@@ -14,11 +15,30 @@ import {
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  // Navigation
-  const [currentView, setCurrentView] = useState('home');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Navigation state kept in sync with router
+  const [currentView, setCurrentViewState] = useState('home');
   const [selectedGameForModal, setSelectedGameForModal] = useState(null);
   const [selectedEventForModal, setSelectedEventForModal] = useState(null);
   const [activeQuizForRunner, setActiveQuizForRunner] = useState(null);
+
+  // Sync state whenever the URL path changes
+  useEffect(() => {
+    const rawPath = location.pathname.replace(/^\//, '').toLowerCase();
+    const cleanPath = rawPath === '' ? 'home' : (rawPath === 'quiz' ? 'quizzes' : rawPath);
+    setCurrentViewState(cleanPath);
+  }, [location.pathname]);
+
+  // Navigate both router and local state
+  const setCurrentView = (viewId) => {
+    setCurrentViewState(viewId);
+    const targetPath = (viewId === 'home' || !viewId) ? '/' : `/${viewId}`;
+    if (location.pathname !== targetPath) {
+      navigate(targetPath);
+    }
+  };
 
   // Authentication & Account State: 'guest' | 'unverified' | 'student' | 'admin'
   const [accountState, setAccountState] = useState('student');
