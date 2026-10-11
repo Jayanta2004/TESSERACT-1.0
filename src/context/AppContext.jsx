@@ -48,7 +48,7 @@ export const AppProvider = ({ children }) => {
 
   // Global Announcement
   const [announcement, setAnnouncement] = useState(INITIAL_ANNOUNCEMENT);
-  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState(true);
+  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState(false);
 
   // Core Data Entities
   const [games, setGames] = useState(INITIAL_GAMES);
