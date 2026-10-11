@@ -1,24 +1,5 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import {
-  Gamepad2,
-  Users,
-  User,
-  Shield,
-  Trophy,
-  Calendar,
-  Lock,
-  ArrowRight,
-  X,
-  Play,
-  CheckCircle2,
-  Filter,
-  Flame,
-  Search,
-  Sparkles,
-  Layers,
-  ChevronRight
-} from 'lucide-react';
 
 export default function GamesView() {
   const {
@@ -32,250 +13,495 @@ export default function GamesView() {
     setSelectedEventForModal
   } = useApp();
 
-  const [filterCategory, setFilterCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [platformFilter, setPlatformFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeDrawerGame, setActiveDrawerGame] = useState(null);
+  const [botLobbyRequested, setBotLobbyRequested] = useState(false);
 
-  const categories = ['All', 'Esports', 'Multiplayer Party', 'Mind Games', 'Casual / Party'];
+  // If AppContext has selectedGameForModal, show in drawer
+  const currentDrawerGame = activeDrawerGame || selectedGameForModal;
 
   const filteredGames = games.filter(game => {
-    const matchesCategory = filterCategory === 'All' || game.category.toLowerCase().includes(filterCategory.toLowerCase());
+    let matchesCategory = true;
+    if (activeCategory === 'fps') matchesCategory = game.category.toLowerCase().includes('tactical') || game.category.toLowerCase().includes('fps') || game.title.toLowerCase().includes('val') || game.title.toLowerCase().includes('cs');
+    else if (activeCategory === 'br') matchesCategory = game.category.toLowerCase().includes('battle royale') || game.title.toLowerCase().includes('bgmi');
+    else if (activeCategory === 'mind') matchesCategory = game.category.toLowerCase().includes('mind') || game.title.toLowerCase().includes('chess');
+    else if (activeCategory === 'party') matchesCategory = game.category.toLowerCase().includes('casual') || game.category.toLowerCase().includes('party') || game.title.toLowerCase().includes('among');
+
+    let matchesPlatform = true;
+    if (platformFilter === 'pc') matchesPlatform = game.platform.toLowerCase().includes('pc');
+    else if (platformFilter === 'mobile') matchesPlatform = game.platform.toLowerCase().includes('mobile');
+    else if (platformFilter === 'crossplay') matchesPlatform = game.platform.toLowerCase().includes('cross') || game.platform.toLowerCase().includes('web') || game.platform.toLowerCase().includes('pc & mobile');
+
     const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           game.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+
+    return matchesCategory && matchesPlatform && matchesSearch;
   });
 
+  const handleRequestBotLobby = () => {
+    setBotLobbyRequested(true);
+    setTimeout(() => setBotLobbyRequested(false), 4000);
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-      {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800/80">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-code bg-purple-950/60 text-purple-300 border border-purple-500/30 mb-2">
-            <Gamepad2 className="w-3.5 h-3.5" />
-            <span>PRD SECTION 9 • GAMING HUB</span>
-          </div>
-          <h1 className="font-heading text-3xl sm:text-5xl font-black text-white">
-            Tesseract Games Hub
-          </h1>
-          <p className="mt-2 text-sm sm:text-base text-slate-300 max-w-2xl">
-            Explore active competitive titles, weekly casual party scrims, and mind sports hosted across the IIT Madras BS community.
-          </p>
-        </div>
-
-        {/* Guest Warning Pill if guest */}
-        {accountState === 'guest' && (
-          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200 shadow-lg">
-            <Lock className="w-4 h-4 text-amber-400 shrink-0" />
-            <div>
-              <span className="font-semibold block font-mono-code">Student Login Required</span>
-              <span>Full game lobbies & competitions require an active IITM account.</span>
+    <div className="w-full flex flex-col pb-16 relative">
+      {/* SECTION 1: RADAR COMMAND HEADER */}
+      <section className="w-full pt-8 pb-6 px-margin bg-surface">
+        <div className="max-w-7xl mx-auto flex flex-col gap-space-md">
+          <div className="flex flex-wrap items-center justify-between gap-space-sm">
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-2 h-2 bg-primary-container shadow-[0_0_8px_#00f0ff]"></span>
+              <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary-container">
+                [ TESSERACT DIRECTORY // REPOSITORY 09 ]
+              </span>
+              <span className="text-outline-variant font-label-sm">::</span>
+              <span className="font-label-sm text-label-sm uppercase tracking-wider text-text-dim">
+                TELEMETRY NODE: MAA-DC-01
+              </span>
             </div>
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-heading font-bold text-xs uppercase shrink-0"
-            >
-              Sign In
-            </button>
+            <div className="flex items-center gap-space-sm font-label-sm text-label-sm">
+              <span className="text-verified-emerald flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald animate-pulse"></span>
+                RADAR ONLINE
+              </span>
+              <span className="text-outline-variant">•</span>
+              <span className="text-text-dim">LATENCY: 14MS (AWS-MUMBAI)</span>
+            </div>
           </div>
-        )}
-      </div>
 
-      {/* Filters & Search */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Category Pills */}
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setFilterCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-                filterCategory === cat
-                  ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)] font-bold'
-                  : 'bg-slate-900/90 text-slate-400 hover:text-slate-200 border border-slate-800'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Search Bar */}
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
-          <input
-            type="text"
-            placeholder="Search titles..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 shadow-inner"
-          />
-        </div>
-      </div>
-
-      {/* Games Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-        {filteredGames.map((game) => (
-          <div
-            key={game.id}
-            className="group rounded-3xl glass-card overflow-hidden flex flex-col justify-between"
-          >
-            {/* Card Artwork */}
-            <div className="relative h-56 w-full overflow-hidden bg-slate-900">
-              <img
-                src={game.artwork}
-                alt={game.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#090d18] via-black/20 to-transparent"></div>
-              
-              <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full text-[10px] font-mono-code font-bold uppercase bg-purple-600/95 text-white shadow-lg">
-                  {game.category}
-                </span>
-                <span className="px-2.5 py-1 rounded-full text-[10px] font-mono-code bg-black/70 text-slate-200 backdrop-blur-md border border-white/10">
-                  {game.mode}
-                </span>
-              </div>
-
-              <div className="absolute bottom-3 left-4 text-xs font-mono-code text-cyan-400 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>{game.activePlayers} Active BS Players</span>
-              </div>
+          <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-space-lg mt-1">
+            <div className="max-w-3xl">
+              <h1 className="font-headline-xl text-3xl sm:text-headline-xl tracking-tight text-text-bright uppercase">
+                IITM BS GAMES DIRECTORY &amp; SCRIM RADAR
+              </h1>
+              <p className="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed">
+                Sanctioned competitive esports titles, official collegiate rulebooks, active student scrim channels, and inter-house schedule matrix for IIT Madras BS students.
+              </p>
             </div>
 
-            {/* Card Content */}
-            <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-              <div>
-                <h3 className="font-heading text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
-                  {game.title}
-                </h3>
-                <p className="text-sm text-slate-400 mt-2 line-clamp-3 leading-relaxed">
-                  {game.description}
-                </p>
+            {/* Telemetry Key Stats Strip */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-surface-container-low p-2 rounded-xl border border-carbon-border">
+              <div className="bg-surface-container p-3 rounded-lg flex flex-col border border-carbon-border">
+                <span className="font-headline-md text-headline-md text-primary-container leading-none font-bold">06</span>
+                <span className="font-label-sm text-[10px] uppercase tracking-wider text-text-dim mt-1">Sanctioned Titles</span>
               </div>
-
-              {/* Card Footer */}
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                <span className="text-xs font-mono-code text-slate-500">
-                  {game.rules?.length || 3} Official Rules
-                </span>
-                <button
-                  onClick={() => setSelectedGameForModal(game)}
-                  className="px-4 py-2 rounded-xl text-xs font-heading font-bold uppercase tracking-wider text-purple-300 hover:text-white bg-purple-950/80 hover:bg-purple-600 border border-purple-500/40 transition-all flex items-center gap-1.5 shadow"
-                >
-                  <span>View Game Rules</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+              <div className="bg-surface-container p-3 rounded-lg flex flex-col border border-carbon-border">
+                <div className="flex items-center gap-1">
+                  <span className="font-headline-md text-headline-md text-verified-emerald leading-none font-bold">184</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald animate-ping"></span>
+                </div>
+                <span className="font-label-sm text-[10px] uppercase tracking-wider text-text-dim mt-1">Active Scrimmers</span>
+              </div>
+              <div className="bg-surface-container p-3 rounded-lg flex flex-col border border-carbon-border">
+                <span className="font-headline-md text-headline-md text-text-bright leading-none font-bold">0%</span>
+                <span className="font-label-sm text-[10px] uppercase tracking-wider text-alert-crimson mt-1">Emulators Permitted</span>
+              </div>
+              <div className="bg-surface-container p-3 rounded-lg flex flex-col border border-carbon-border">
+                <span className="font-headline-md text-headline-md text-primary leading-none font-bold">100%</span>
+                <span className="font-label-sm text-[10px] uppercase tracking-wider text-text-dim mt-1">Anti-Cheat Audited</span>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
 
-      {/* GAME DETAIL MODAL */}
-      {selectedGameForModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl bg-[#0a0f1d] border border-purple-500/50 rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
-            {/* Header banner */}
-            <div className="relative h-52 w-full overflow-hidden shrink-0">
-              <img
-                src={selectedGameForModal.artwork}
-                alt={selectedGameForModal.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1d] via-[#0a0f1d]/70 to-transparent"></div>
-              
+      {/* Sticky Tactical Filter HUD */}
+      <div className="sticky top-[104px] z-30 w-full bg-surface-glass backdrop-blur-xl shadow-lg border-y border-carbon-border">
+        <div className="max-w-7xl mx-auto px-margin py-3 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+          {/* Chips Filter */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
+            {[
+              { id: 'all', label: `All Titles [${games.length}]` },
+              { id: 'fps', label: 'Tactical FPS' },
+              { id: 'br', label: 'Battle Royale' },
+              { id: 'mind', label: 'Mind Games / Chess' },
+              { id: 'party', label: 'Party & Casual' }
+            ].map(chip => (
               <button
-                onClick={() => setSelectedGameForModal(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-black/70 text-slate-300 hover:text-white border border-white/20"
+                key={chip.id}
+                onClick={() => setActiveCategory(chip.id)}
+                className={`filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
+                  activeCategory === chip.id
+                    ? 'bg-primary-container text-on-primary-container shadow-[0_0_10px_rgba(0,240,255,0.4)] font-bold'
+                    : 'bg-surface-container text-text-dim hover:text-text-bright hover:bg-surface-container-high border border-carbon-border'
+                }`}
               >
-                <X className="w-5 h-5" />
+                {chip.label}
               </button>
+            ))}
 
-              <div className="absolute bottom-4 left-6">
-                <span className="px-3 py-0.5 rounded-full text-xs font-mono-code font-bold uppercase bg-purple-600 text-white shadow mb-2 inline-block">
-                  {selectedGameForModal.category}
-                </span>
-                <h2 className="font-heading text-2xl sm:text-3xl font-black text-white">
-                  {selectedGameForModal.title}
-                </h2>
-              </div>
+            <div className="h-4 w-px bg-surface-variant mx-1 hidden sm:block"></div>
+            <select
+              value={platformFilter}
+              onChange={(e) => setPlatformFilter(e.target.value)}
+              className="bg-surface-container text-text-bright font-label-sm text-label-sm px-2.5 py-1.5 rounded-lg outline-none cursor-pointer border border-carbon-border"
+            >
+              <option value="all">Platform: All</option>
+              <option value="pc">Platform: PC</option>
+              <option value="mobile">Platform: Mobile</option>
+              <option value="crossplay">Platform: Crossplay</option>
+            </select>
+          </div>
+
+          {/* Live Search */}
+          <div className="flex items-center gap-space-md shrink-0">
+            <div className="relative flex-1 sm:w-64">
+              <span className="material-symbols-outlined text-outline-variant absolute left-2.5 top-2 text-[18px]">search</span>
+              <input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-surface-container-lowest text-text-bright placeholder-outline pl-9 pr-4 py-1.5 rounded-lg font-body-sm text-body-sm focus:outline-none focus:bg-surface-container border border-carbon-border"
+                placeholder="Search game or rules..."
+                type="text"
+              />
             </div>
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-lowest font-label-sm text-[11px] text-text-dim border border-carbon-border">
+              <span className="inline-block w-2 h-2 rounded-full bg-verified-emerald animate-pulse"></span>
+              <span>Matchmaking Active [Mumbai]</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            {/* Scrollable Modal Content */}
-            <div className="p-6 space-y-6 overflow-y-auto">
+      {/* Games Directory Grid */}
+      <main className="w-full max-w-7xl mx-auto px-margin py-space-xl">
+        <div className="flex items-center justify-between mb-space-lg">
+          <div className="flex items-center gap-2">
+            <span className="font-label-md text-label-md text-primary-container uppercase font-bold tracking-wider">// MATRIX OVERVIEW</span>
+            <span className="text-outline-variant">•</span>
+            <span className="font-label-sm text-label-sm text-text-dim uppercase">
+              Showing {filteredGames.length} Sanctioned Titles
+            </span>
+          </div>
+          <div className="font-label-sm text-[11px] text-text-dim hidden md:flex items-center gap-2">
+            <span className="material-symbols-outlined text-verified-emerald text-[14px]">gavel</span>
+            <span>All Titles Audited for IITM Inter-House Season 03</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+          {filteredGames.map((game) => (
+            <div
+              key={game.id}
+              className="game-card group bg-surface-container-low rounded-xl overflow-hidden flex flex-col justify-between hover:bg-surface-container transition-all duration-300 shadow-md hover:shadow-2xl border border-carbon-border"
+            >
               <div>
-                <h4 className="text-xs font-mono-code uppercase text-purple-400 tracking-wider mb-1">
-                  About the Title
-                </h4>
-                <p className="text-sm text-slate-300 leading-relaxed">
-                  {selectedGameForModal.description}
-                </p>
-              </div>
-
-              {/* Rules Section */}
-              <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
-                <h4 className="text-xs font-heading font-bold text-white tracking-wider uppercase flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-cyan-400" />
-                  <span>Official Tesseract Competition Rules</span>
-                </h4>
-                <ul className="space-y-2 text-xs text-slate-300">
-                  {selectedGameForModal.rules?.map((rule, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{rule}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Related upcoming event */}
-              {selectedGameForModal.upcomingEventId && (
-                <div className="p-4 rounded-2xl bg-gradient-to-r from-cyan-950/40 to-slate-900 border border-cyan-500/30 flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] font-mono-code text-cyan-400 uppercase tracking-wider block">
-                      Active Tournament Associated
+                {/* Thumbnail Container */}
+                <div className="relative h-48 w-full overflow-hidden bg-surface-container-lowest">
+                  <img
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    src={game.image || "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=600"}
+                    alt={game.title}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+                  <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                    <span className="px-2 py-0.5 rounded bg-surface-container-lowest/90 font-label-sm text-[10px] text-text-bright tracking-wider uppercase font-bold border border-carbon-border">
+                      {game.platform}
                     </span>
-                    <div className="text-sm font-semibold text-white mt-0.5">
-                      {events.find(e => e.id === selectedGameForModal.upcomingEventId)?.title || 'Tournament Announced'}
+                    <span className="px-2 py-0.5 rounded bg-primary-container/20 text-primary-container font-label-sm text-[10px] tracking-wider uppercase font-bold border border-primary-container/30">
+                      {game.category}
+                    </span>
+                  </div>
+                  <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-lowest/90 font-label-sm text-[10px] text-verified-emerald border border-carbon-border">
+                    <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald animate-pulse"></span>
+                    {game.activePlayers || '40+'} Scrimmers
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                    <span className="font-headline-lg text-headline-lg text-text-bright tracking-wide uppercase font-bold">
+                      {game.title}
+                    </span>
+                    <span className="font-label-sm text-[11px] text-primary-container uppercase font-mono">
+                      {game.teamSize}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Card Content Body */}
+                <div className="p-4 flex flex-col gap-3">
+                  <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                    {game.description}
+                  </p>
+
+                  {/* Telemetry Matrix Box */}
+                  <div className="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col gap-1.5 font-label-sm text-[11px] border border-carbon-border">
+                    <div className="flex justify-between items-center text-text-dim">
+                      <span className="uppercase tracking-wider">Format:</span>
+                      <span className="text-text-bright font-medium">{game.teamSize} Bracket</span>
+                    </div>
+                    <div className="flex justify-between items-center text-text-dim">
+                      <span className="uppercase tracking-wider">Server:</span>
+                      <span className="text-text-bright font-medium">Mumbai AWS (Low Ping)</span>
+                    </div>
+                    <div className="flex justify-between items-center text-text-dim">
+                      <span className="uppercase tracking-wider">Rank Cap:</span>
+                      <span className="text-primary-container font-medium">Open House (All Ranks)</span>
                     </div>
                   </div>
-                  <button
-                    onClick={() => {
-                      const ev = events.find(e => e.id === selectedGameForModal.upcomingEventId);
-                      if (ev) {
-                        setSelectedGameForModal(null);
-                        setSelectedEventForModal(ev);
-                        setCurrentView('events');
-                      }
-                    }}
-                    className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-cyan-400 text-black hover:bg-cyan-300 transition-colors"
-                  >
-                    View Tournament
-                  </button>
                 </div>
-              )}
+              </div>
 
-              {/* Action Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              {/* Action CTAs */}
+              <div className="p-4 pt-0 flex items-center gap-2 mt-2">
+                <button
+                  onClick={() => setActiveDrawerGame(game)}
+                  className="flex-1 py-2 px-3 rounded-lg bg-primary-container text-on-primary-container font-label-sm text-label-sm uppercase font-bold text-center hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-1.5 shadow-[0_0_12px_rgba(0,240,255,0.25)] cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[16px]">menu_book</span>
+                  Game Specs &amp; Rules
+                </button>
                 <a
+                  className="p-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary-container transition-all flex items-center justify-center border border-carbon-border"
                   href="https://discord.gg"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 py-3 px-4 rounded-xl font-heading text-xs font-bold uppercase tracking-wider text-white bg-indigo-600 hover:bg-indigo-500 text-center transition-all flex items-center justify-center gap-2 shadow"
+                  title="Join Discord Scrims"
                 >
-                  <Users className="w-4 h-4" />
-                  <span>Join Discord Game Scrims</span>
+                  <span className="material-symbols-outlined text-[18px]">open_in_new</span>
                 </a>
-                <button
-                  onClick={() => setSelectedGameForModal(null)}
-                  className="py-3 px-6 rounded-xl text-xs font-semibold text-slate-400 bg-slate-900 hover:bg-slate-800 border border-slate-700 transition-colors"
-                >
-                  Close
-                </button>
               </div>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      {/* Bottom Interactive Scrim Scheduler Radar Matrix */}
+      <section className="w-full bg-surface-container-lowest border-t border-carbon-border px-margin py-space-xl">
+        <div className="max-w-7xl mx-auto flex flex-col gap-space-lg">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                <span className="font-label-sm text-label-sm uppercase tracking-wider text-primary-container font-bold">
+                  LIVE RADAR MATRIX
+                </span>
+              </div>
+              <h2 className="font-headline-lg text-2xl sm:text-headline-lg text-text-bright uppercase">
+                TONIGHT'S SANCTIONED SCRIM SCHEDULE
+              </h2>
+              <p className="font-body-sm text-body-sm text-text-dim mt-1">
+                Real-time inter-house queue status, server allocations, and automated lobby generation.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={handleRequestBotLobby}
+                className="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary-container font-label-sm text-label-sm uppercase tracking-wider font-bold transition-all flex items-center gap-2 border border-carbon-border hover:border-primary-container/40 cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[16px]">smart_toy</span>
+                {botLobbyRequested ? 'Bot Lobby Dispatched!' : 'Request Scrim Bot Lobby'}
+              </button>
+              <button
+                onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
+                className="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-sm text-label-sm uppercase tracking-wider font-bold hover:bg-primary transition-all flex items-center gap-2 shadow-[0_0_12px_rgba(0,240,255,0.3)] cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[16px]">add_circle</span>
+                Book Inter-House Slot
+              </button>
+            </div>
+          </div>
+
+          {/* Schedule Table */}
+          <div className="bg-surface-container-low rounded-xl overflow-hidden border border-carbon-border">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left font-body-sm text-body-sm">
+                <thead className="bg-surface-container font-label-sm text-label-sm uppercase text-text-dim border-b border-carbon-border select-none">
+                  <tr>
+                    <th className="py-3 px-4">Time (IST)</th>
+                    <th className="py-3 px-4">Discipline</th>
+                    <th className="py-3 px-4">Houses / Competitors</th>
+                    <th className="py-3 px-4">Lobby Mode</th>
+                    <th className="py-3 px-4">Node / Relay</th>
+                    <th className="py-3 px-4 text-right">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-carbon-border/50 text-text-bright font-label-md text-label-md">
+                  <tr className="hover:bg-surface-container/60 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-primary-container">21:00 IST</td>
+                    <td className="py-3.5 px-4 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-alert-crimson"></span>
+                      VALORANT 5v5
+                    </td>
+                    <td className="py-3.5 px-4 text-on-surface">House Archimedes <span className="text-text-dim font-normal">vs</span> House Turing</td>
+                    <td className="py-3.5 px-4"><span className="px-2 py-0.5 rounded bg-surface-container font-label-sm text-[10px] text-text-dim border border-carbon-border">BO3 Custom Lobby</span></td>
+                    <td className="py-3.5 px-4 font-mono text-[11px] text-text-dim">AWS-MAA-14</td>
+                    <td className="py-3.5 px-4 text-right">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-alert-crimson/15 text-alert-crimson font-label-sm text-[10px] uppercase font-bold animate-pulse">
+                        ● LOBBY OPEN
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-surface-container/60 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-primary-container">21:30 IST</td>
+                    <td className="py-3.5 px-4 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+                      CHESS BLITZ
+                    </td>
+                    <td className="py-3.5 px-4 text-on-surface">Open Arena (Swiss 7 Rounds)</td>
+                    <td className="py-3.5 px-4"><span className="px-2 py-0.5 rounded bg-surface-container font-label-sm text-[10px] text-text-dim border border-carbon-border">3+2 Blitz</span></td>
+                    <td className="py-3.5 px-4 font-mono text-[11px] text-text-dim">Lichess API Gateway</td>
+                    <td className="py-3.5 px-4 text-right">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-verified-emerald/15 text-verified-emerald font-label-sm text-[10px] uppercase font-bold">
+                        CONFIRMED (38 SQ)
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-surface-container/60 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-primary-container">22:15 IST</td>
+                    <td className="py-3.5 px-4 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-admin-amber"></span>
+                      BGMI SQUAD
+                    </td>
+                    <td className="py-3.5 px-4 text-on-surface">Inter-Batch Showdown (Foundational vs Diploma)</td>
+                    <td className="py-3.5 px-4"><span className="px-2 py-0.5 rounded bg-surface-container font-label-sm text-[10px] text-text-dim border border-carbon-border">Custom Room (Erangel)</span></td>
+                    <td className="py-3.5 px-4 font-mono text-[11px] text-text-dim">MOS-IN-02</td>
+                    <td className="py-3.5 px-4 text-right">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-primary-container/15 text-primary-container font-label-sm text-[10px] uppercase font-bold">
+                        PRE-FLIGHT AUDIT
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-surface-container/60 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-primary-container">23:00 IST</td>
+                    <td className="py-3.5 px-4 flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                      CS2 5v5
+                    </td>
+                    <td className="py-3.5 px-4 text-on-surface">House Ramanujan <span className="text-text-dim font-normal">vs</span> House Aryabhata</td>
+                    <td className="py-3.5 px-4"><span className="px-2 py-0.5 rounded bg-surface-container font-label-sm text-[10px] text-text-dim border border-carbon-border">De_Mirage / MR12</span></td>
+                    <td className="py-3.5 px-4 font-mono text-[11px] text-text-dim">IITM-DEDICATED-01</td>
+                    <td className="py-3.5 px-4 text-right">
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container text-text-dim font-label-sm text-[10px] uppercase border border-carbon-border">
+                        SCHEDULED
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Interactive Slide-Over Drawer: Flagship Game Specs & Rulebook */}
+      {currentDrawerGame && (
+        <aside
+          aria-label="Game Specifications and Rulebook"
+          className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-surface-glass backdrop-blur-2xl border-l border-carbon-border shadow-2xl flex flex-col"
+        >
+          {/* Drawer Header with Game Art Banner */}
+          <div className="relative shrink-0 h-44 w-full bg-surface-container-lowest overflow-hidden">
+            <img
+              src={currentDrawerGame.image || "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800"}
+              alt={currentDrawerGame.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-glass via-surface-glass/60 to-transparent"></div>
+
+            {/* Close Action */}
+            <button
+              onClick={() => {
+                setActiveDrawerGame(null);
+                setSelectedGameForModal(null);
+              }}
+              className="absolute top-4 right-4 z-20 px-3 py-1.5 rounded-lg bg-surface-container-lowest/80 text-text-dim hover:text-text-bright hover:bg-surface-container font-label-sm text-label-sm uppercase tracking-wider flex items-center gap-1.5 transition-all border border-carbon-border cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[16px]">close</span>
+              Close Specs [Esc]
+            </button>
+
+            <div className="absolute bottom-4 left-6 right-6 flex flex-col gap-1.5">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-label-sm text-[10px] font-bold uppercase tracking-wider">
+                  {currentDrawerGame.platform}
+                </span>
+                <span className="px-2 py-0.5 rounded bg-surface-container-highest/80 text-text-bright font-label-sm text-[10px] uppercase tracking-wider">
+                  {currentDrawerGame.category}
+                </span>
+                <span className="px-2 py-0.5 rounded bg-alert-crimson/20 border border-alert-crimson/40 text-alert-crimson font-label-sm text-[10px] font-bold uppercase tracking-wider">
+                  SANCTIONED IITM S03
+                </span>
+              </div>
+              <h2 className="font-headline-lg text-headline-lg text-text-bright tracking-tight uppercase font-bold">
+                {currentDrawerGame.title} — OFFICIAL SPECIFICATIONS &amp; RULEBOOK
+              </h2>
+            </div>
+          </div>
+
+          {/* Drawer Scrollable Content */}
+          <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6">
+            {/* Section 1: Overview */}
+            <div className="flex flex-col gap-2">
+              <h3 className="font-label-md text-label-md text-primary-container uppercase font-bold tracking-wider">
+                // GAME OVERVIEW &amp; SYNOPSIS
+              </h3>
+              <p className="font-body-md text-body-md text-text-bright leading-relaxed">
+                {currentDrawerGame.description}
+              </p>
+            </div>
+
+            {/* Section 2: Rulebook Clauses */}
+            <div className="flex flex-col gap-3">
+              <h3 className="font-label-md text-label-md text-text-bright uppercase font-bold tracking-wider flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-admin-amber text-[18px]">gavel</span>
+                IITM BS SANCTIONED RULESET
+              </h3>
+              <div className="bg-surface-container p-4 rounded-xl flex flex-col gap-3 text-body-sm text-text-dim border border-carbon-border">
+                {currentDrawerGame.rules?.map((rule, idx) => (
+                  <div key={idx} className="flex items-start gap-2 text-text-bright">
+                    <span className="material-symbols-outlined text-verified-emerald text-[16px] shrink-0 mt-0.5">check_circle</span>
+                    <span>{rule}</span>
+                  </div>
+                )) || (
+                  <>
+                    <div className="flex items-start gap-2 text-text-bright">
+                      <span className="material-symbols-outlined text-verified-emerald text-[16px] shrink-0 mt-0.5">check_circle</span>
+                      <span>All players must verify with institutional @study.iitm.ac.in credentials.</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-text-bright">
+                      <span className="material-symbols-outlined text-verified-emerald text-[16px] shrink-0 mt-0.5">check_circle</span>
+                      <span>No emulators, third-party macros, or network throttling allowed.</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-text-bright">
+                      <span className="material-symbols-outlined text-verified-emerald text-[16px] shrink-0 mt-0.5">check_circle</span>
+                      <span>Matches are officiated by appointed student council marshals.</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Section 3: Telemetry Benchmarks */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-surface-container p-3 rounded-lg border border-carbon-border">
+                <span className="font-label-sm text-[10px] text-text-dim uppercase">Server Region</span>
+                <span className="font-headline-md text-body-lg text-text-bright font-bold block mt-0.5">Mumbai AWS [14ms]</span>
+              </div>
+              <div className="bg-surface-container p-3 rounded-lg border border-carbon-border">
+                <span className="font-label-sm text-[10px] text-text-dim uppercase">Eligibility</span>
+                <span className="font-headline-md text-body-lg text-verified-emerald font-bold block mt-0.5">All Degrees / Diplomas</span>
+              </div>
+            </div>
+
+            {/* Section 4: Action Footer */}
+            <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => {
+                  setActiveDrawerGame(null);
+                  setSelectedGameForModal(null);
+                  setCurrentView('events');
+                  window.scrollTo(0, 0);
+                }}
+                className="flex-1 py-3 px-4 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md uppercase font-bold hover:bg-primary transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <span>Find Associated Tournaments</span>
+                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </aside>
       )}
     </div>
   );

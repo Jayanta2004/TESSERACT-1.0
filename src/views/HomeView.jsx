@@ -1,27 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import {
-  Gamepad2,
-  Calendar,
-  Award,
-  Trophy,
-  ArrowRight,
-  ShieldCheck,
-  Flame,
-  Users,
-  ChevronRight,
-  Sparkles,
-  ExternalLink,
-  MessageSquare,
-  Globe,
-  Clock,
-  Play,
-  Zap,
-  Target,
-  Layers,
-  Terminal,
-  Activity
-} from 'lucide-react';
 
 export default function HomeView() {
   const {
@@ -34,529 +12,612 @@ export default function HomeView() {
     setSelectedGameForModal
   } = useApp();
 
-  const featuredGames = games.slice(0, 3);
-  const upcomingEvents = events.filter(e => e.status === 'Upcoming').slice(0, 2);
+  // Interactive Countdown Timer
+  const [timeLeft, setTimeLeft] = useState({
+    days: '02',
+    hours: '14',
+    mins: '38',
+    secs: '12'
+  });
+
+  useEffect(() => {
+    let totalSeconds = 2 * 86400 + 14 * 3600 + 38 * 60 + 12;
+    const interval = setInterval(() => {
+      if (totalSeconds <= 0) {
+        clearInterval(interval);
+        return;
+      }
+      totalSeconds--;
+      const d = Math.floor(totalSeconds / 86400);
+      const h = Math.floor((totalSeconds % 86400) / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+      setTimeLeft({
+        days: d < 10 ? `0${d}` : `${d}`,
+        hours: h < 10 ? `0${h}` : `${h}`,
+        mins: m < 10 ? `0${m}` : `${m}`,
+        secs: s < 10 ? `0${s}` : `${s}`
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const flagshipEvent = events.find(e => e.id === 'val-spring-25') || events[0];
+  const upcomingEvents = events.filter(e => e.status === 'Upcoming' || e.status === 'Live').slice(0, 2);
 
   return (
-    <div className="space-y-28 pb-24 overflow-hidden relative">
-      {/* Background Decorative Mesh & Radial Spotlights */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[650px] cyber-grid-bg opacity-30 pointer-events-none -z-10"></div>
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-cyan-600/20 via-sky-500/10 to-purple-600/20 blur-[130px] rounded-full pointer-events-none -z-10"></div>
-
-      {/* HERO SECTION (PRD Section 7) */}
-      <section className="relative pt-12 sm:pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center relative z-10 max-w-5xl mx-auto space-y-6">
-          {/* Top Live Status Pill */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/40 text-cyan-300 text-xs font-mono-code shadow-[0_0_25px_rgba(6,182,212,0.25)] hover:border-cyan-400 transition-colors cursor-pointer"
-               onClick={() => setIsAnnouncementOpen(true)}>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-            </span>
-            <span className="font-semibold tracking-wider uppercase text-[11px]">
-              TESSERACT LEAGUE SEASON 3 • REGISTRATIONS OPEN
-            </span>
-            <ChevronRight className="w-3.5 h-3.5 text-cyan-400" />
-          </div>
-
-          {/* Slogan Headline (PRD Section 7) */}
-          <h1 className="font-heading text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] drop-shadow-2xl">
-            WHERE IITM STUDENTS <br />
-            <span className="cyan-gradient-text drop-shadow-[0_0_40px_rgba(0,240,255,0.45)]">
-              PLAY, COMPETE & CONNECT.
-            </span>
-          </h1>
-
-          {/* Subtitle Description */}
-          <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-normal">
-            The unified collegiate esports platform of <strong className="text-white font-semibold">IIT Madras BS</strong>. Compete in verified inter-house tournaments, solve timed in-house quizzes, and vote directly on society governance.
-          </p>
-
-          {/* Primary Action Buttons (PRD Section 7: Primary CTA Explore Events | Secondary CTA Explore Games) */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-            <button
-              onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl btn-cyber-primary text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 group shadow-[0_0_30px_rgba(6,182,212,0.4)]"
-            >
-              <Calendar className="w-4 h-4 text-slate-950" />
-              <span>Explore Tournaments</span>
-              <ArrowRight className="w-4 h-4 text-slate-950 group-hover:translate-x-1 transition-transform" />
-            </button>
-
-            <button
-              onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl btn-cyber-secondary text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-lg"
-            >
-              <Gamepad2 className="w-4 h-4 text-cyan-400" />
-              <span>Games Catalog</span>
-            </button>
-          </div>
-
-          {/* Quick Social & In-house Features Row */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-400 font-mono-code">
-            <span className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/60 border border-slate-800">
-              <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-              <span>IITM Domain Verification</span>
-            </span>
-            <span className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/60 border border-slate-800">
-              <Award className="w-3.5 h-3.5 text-purple-400" />
-              <span>In-House Quiz Engine</span>
-            </span>
-            <span className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900/60 border border-slate-800">
-              <Trophy className="w-3.5 h-3.5 text-amber-400" />
-              <span>Real-Time Leaderboard</span>
-            </span>
-          </div>
-
-          {/* Live Platform KPI Bar */}
-          <div className="pt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="p-5 rounded-2xl glass-card text-left space-y-1">
-              <div className="flex items-center justify-between text-cyan-400 mb-1">
-                <Users className="w-4 h-4" />
-                <span className="text-[10px] font-mono-code uppercase text-slate-500">BS STUDENTS</span>
-              </div>
-              <div className="font-heading text-2xl sm:text-3xl font-black text-white">1,250+</div>
-              <div className="text-xs text-slate-400">Verified members</div>
-            </div>
-
-            <div className="p-5 rounded-2xl glass-card text-left space-y-1">
-              <div className="flex items-center justify-between text-purple-400 mb-1">
-                <Trophy className="w-4 h-4" />
-                <span className="text-[10px] font-mono-code uppercase text-slate-500">COMPETITIONS</span>
-              </div>
-              <div className="font-heading text-2xl sm:text-3xl font-black text-white">24+</div>
-              <div className="text-xs text-slate-400">Championships hosted</div>
-            </div>
-
-            <div className="p-5 rounded-2xl glass-card text-left space-y-1">
-              <div className="flex items-center justify-between text-amber-400 mb-1">
-                <Flame className="w-4 h-4" />
-                <span className="text-[10px] font-mono-code uppercase text-slate-500">PRIZE POOL</span>
-              </div>
-              <div className="font-heading text-2xl sm:text-3xl font-black text-white">₹75,000+</div>
-              <div className="text-xs text-slate-400">Distributed to students</div>
-            </div>
-
-            <div className="p-5 rounded-2xl glass-card text-left space-y-1">
-              <div className="flex items-center justify-between text-emerald-400 mb-1">
-                <Activity className="w-4 h-4" />
-                <span className="text-[10px] font-mono-code uppercase text-slate-500">GOVERNANCE</span>
-              </div>
-              <div className="font-heading text-2xl sm:text-3xl font-black text-white">100%</div>
-              <div className="text-xs text-slate-400">Student operated</div>
-            </div>
-          </div>
+    <div className="w-full flex flex-col">
+      {/* SECTION 1: HERO VIEWPORT & ASYMMETRIC GRID */}
+      <section className="relative w-full pt-8 pb-16 px-margin overflow-hidden">
+        {/* Cyber Grid & Ambient Glow Background */}
+        <div className="absolute inset-0 pointer-events-none opacity-25">
+          <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary-container filter blur-[100px]"></div>
+          <div className="absolute top-1/2 right-10 w-80 h-80 rounded-full bg-secondary-container filter blur-[120px]"></div>
+          <svg className="w-full h-full stroke-surface-container-highest/40 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_70%)]" height="100%" width="100%">
+            <defs>
+              <pattern height="40" id="cyber-grid" patternUnits="userSpaceOnUse" width="40">
+                <path d="M 40 0 L 0 0 0 40" fill="none" strokeWidth="0.8"></path>
+              </pattern>
+            </defs>
+            <rect fill="url(#cyber-grid)" height="100%" width="100%"></rect>
+          </svg>
         </div>
-      </section>
 
-      {/* FEATURED TOURNAMENT HERO SPOTLIGHT (PRD Section 7 & 10) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden glass-panel border border-cyan-500/30 p-6 sm:p-8 shadow-2xl">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-cyan-500/15 via-purple-500/10 to-transparent blur-3xl pointer-events-none"></div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Banner preview */}
-            <div className="lg:col-span-5 relative rounded-2xl overflow-hidden h-60 sm:h-72 group shadow-xl">
-              <img
-                src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1000&q=80"
-                alt="Valorant Championship"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#060912] via-transparent to-transparent"></div>
-              <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full text-[10px] font-mono-code font-bold uppercase bg-rose-600 text-white shadow">
-                  ● REGISTRATIONS CLOSING SOON
-                </span>
-              </div>
-              <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-mono-code">
-                <span className="text-white font-bold bg-black/60 px-2.5 py-1 rounded-lg backdrop-blur-md">
-                  Oct 24 - 26, 2026
-                </span>
-                <span className="text-amber-300 font-heading font-black bg-black/60 px-2.5 py-1 rounded-lg backdrop-blur-md">
-                  Pool: ₹12,000
-                </span>
-              </div>
+        <div className="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+          {/* Left Column (Cols 1-7) */}
+          <div className="lg:col-span-7 flex flex-col gap-space-lg z-10">
+            {/* Monospace Tag & Announcement Trigger */}
+            <div className="flex items-center gap-space-sm flex-wrap">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high text-primary-container font-label-sm text-label-sm tracking-wider uppercase shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+                [ OFFICIAL SOCIETY • IIT MADRAS BS DEGREE • EST. 2022 ]
+              </span>
+              <button
+                onClick={() => setIsAnnouncementOpen(true)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-alert-crimson/15 text-alert-crimson font-label-sm text-label-sm uppercase hover:bg-alert-crimson/25 transition-colors"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-alert-crimson animate-ping"></span>
+                <span>Dispatch Broadcast</span>
+                <span className="material-symbols-outlined text-[14px]">notifications_active</span>
+              </button>
             </div>
 
-            {/* Info and CTA */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono-code font-bold uppercase bg-cyan-950 text-cyan-300 border border-cyan-500/40">
-                  FLAGSHIP ESPORTS CUP
+            {/* Brutalist Headline */}
+            <div className="flex flex-col">
+              <h1 className="font-headline-xl text-3xl sm:text-5xl lg:text-headline-xl tracking-tight uppercase text-text-bright leading-tight sm:leading-none">
+                WHERE IITM STUDENTS<br />
+                <span className="bg-gradient-to-r from-text-bright via-primary-container to-surface-tint bg-clip-text text-transparent">
+                  PLAY, COMPETE &amp; CONNECT.
                 </span>
-                <span className="text-xs text-slate-400 font-mono-code">5v5 Tournament • Mumbai AWS Realm</span>
+              </h1>
+            </div>
+
+            {/* Editorial Subtitle */}
+            <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+              The premier collegiate battleground engineered exclusively for the IIT Madras BS in Data Science &amp; Electronic Systems community. Direct student governance, verified collegiate tournaments, and in-house competitive arenas.
+            </p>
+
+            {/* Primary Action Cluster */}
+            <div className="flex flex-wrap items-center gap-space-md pt-space-xs">
+              <button
+                onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
+                className="inline-flex items-center gap-2 px-space-lg py-3 rounded-lg bg-primary-container text-on-primary-container font-label-lg text-label-lg uppercase tracking-wider transition-all duration-200 hover:bg-primary hover:shadow-[0_0_24px_rgba(0,240,255,0.45)] hover:-translate-y-0.5 font-bold cursor-pointer"
+              >
+                <span>EXPLORE TOURNAMENTS</span>
+                <span className="material-symbols-outlined text-[18px]">north_east</span>
+              </button>
+              <button
+                onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
+                className="inline-flex items-center gap-2 px-space-lg py-3 rounded-lg bg-surface-container text-primary-container font-label-lg text-label-lg uppercase tracking-wider transition-all duration-200 hover:bg-surface-container-high hover:text-text-bright hover:-translate-y-0.5 border border-carbon-border cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[18px]">sports_esports</span>
+                <span>GAMES DIRECTORY</span>
+              </button>
+            </div>
+
+            {/* Community Channel Pills */}
+            <div className="flex flex-wrap items-center gap-space-sm pt-space-xs">
+              <a
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-text-bright font-label-sm text-label-sm hover:bg-surface-container-high transition-colors border border-carbon-border"
+                href="https://discord.gg"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span className="text-secondary">👾</span>
+                <span>Discord</span>
+                <span className="text-verified-emerald font-label-sm text-label-sm">• 1,840 Online</span>
+              </a>
+              <a
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-text-bright font-label-sm text-label-sm hover:bg-surface-container-high transition-colors border border-carbon-border"
+                href="https://chat.whatsapp.com"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <span className="text-verified-emerald">💬</span>
+                <span>WhatsApp Community</span>
+                <span className="text-text-dim font-label-sm text-label-sm">(12 Batches)</span>
+              </a>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-text-dim font-label-sm text-label-sm border border-carbon-border">
+                <span className="material-symbols-outlined text-verified-emerald text-[14px]">security</span>
+                <span>@study.iitm.ac.in Required</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Right Column (Cols 8-12) Interactive Tournament Hologram Ticket */}
+          <div className="lg:col-span-5 relative z-10">
+            <div className="relative rounded-xl overflow-hidden bg-surface-container-low shadow-2xl border border-carbon-border">
+              {/* Ambient Glow Bar */}
+              <div className="h-1.5 w-full bg-gradient-to-r from-primary-container via-surface-tint to-secondary"></div>
+
+              {/* Top Header Strip */}
+              <div className="px-space-md py-space-sm bg-surface-container flex items-center justify-between border-b border-carbon-border">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-alert-crimson animate-pulse"></span>
+                  <span className="font-label-sm text-label-sm text-text-bright tracking-widest uppercase">FLAGSHIP EVENT • SEASON 3</span>
+                </div>
+                <span className="px-2 py-0.5 rounded bg-primary-container/10 text-primary-container font-label-sm text-label-sm uppercase font-bold border border-primary-container/20">
+                  LIVE CIRCUIT
+                </span>
               </div>
 
-              <h2 className="font-heading text-2xl sm:text-3xl font-black text-white">
-                Valorant IITM BS Championship 2026
-              </h2>
-
-              <p className="text-sm text-slate-300 leading-relaxed">
-                The premier tactical FPS tournament of the academic term. Form your 5-player roster with verified IITM BS students or sign up as a solo free-agent. Streamed live with student shoutcasters.
-              </p>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2 text-xs font-mono-code">
-                <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">FORMAT</span>
-                  <span className="text-white font-semibold">Single Elimination</span>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">FIRST PRIZE</span>
-                  <span className="text-amber-400 font-semibold">₹7,000 + Trophy</span>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 col-span-2 sm:col-span-1">
-                  <span className="text-slate-500 block text-[10px]">REGISTRATION</span>
-                  <span className="text-emerald-400 font-semibold">Google Form Slip</span>
+              {/* Countdown Sub-Ribbon */}
+              <div className="px-space-md py-2 bg-surface-container-highest/60 flex items-center justify-between font-label-sm text-label-sm text-text-dim border-b border-carbon-border">
+                <span className="uppercase tracking-wider">REGISTRATION ENDS IN:</span>
+                <div className="font-label-md text-label-md text-primary-container tracking-widest flex items-center gap-1" id="hero-countdown">
+                  <span className="text-text-bright font-bold">{timeLeft.days}</span><span className="text-primary-container">D :</span>
+                  <span className="text-text-bright font-bold">{timeLeft.hours}</span><span className="text-primary-container">H :</span>
+                  <span className="text-text-bright font-bold">{timeLeft.mins}</span><span className="text-primary-container">M :</span>
+                  <span className="text-primary-container font-bold">{timeLeft.secs}</span><span className="text-primary-container">S</span>
                 </div>
               </div>
 
-              <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              {/* Media Graphic Frame */}
+              <div className="relative w-full h-44 overflow-hidden bg-surface-container-highest">
+                <img
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  src={flagshipEvent?.banner || "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200"}
+                  alt={flagshipEvent?.title || "Flagship Tournament"}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+                <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between">
+                  <div>
+                    <span className="px-2 py-0.5 rounded bg-alert-crimson/90 text-text-bright font-label-sm text-label-sm uppercase font-bold">
+                      MAJOR TOURNAMENT
+                    </span>
+                    <h3 className="font-headline-md text-headline-md text-text-bright tracking-tight uppercase mt-1">
+                      {flagshipEvent?.title || "VALORANT INTER-HOUSE CUP"}
+                    </h3>
+                  </div>
+                  <span className="font-headline-md text-headline-md text-primary-container font-bold">
+                    {flagshipEvent?.prizePool || "₹15,000"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Telemetry Badges Grid */}
+              <div className="p-space-md grid grid-cols-3 gap-2 bg-surface-container-low">
+                <div className="p-2 rounded bg-surface-container flex flex-col border border-carbon-border">
+                  <span className="font-label-sm text-[11px] text-text-dim uppercase">FORMAT</span>
+                  <span className="font-label-md text-label-md text-text-bright uppercase mt-0.5">{flagshipEvent?.format || "5v5 DOUBLE ELIM"}</span>
+                </div>
+                <div className="p-2 rounded bg-surface-container flex flex-col border border-carbon-border">
+                  <span className="font-label-sm text-[11px] text-text-dim uppercase">SERVER REALM</span>
+                  <span className="font-label-md text-label-md text-verified-emerald uppercase mt-0.5">MUMBAI AWS [14ms]</span>
+                </div>
+                <div className="p-2 rounded bg-surface-container flex flex-col border border-carbon-border">
+                  <span className="font-label-sm text-[11px] text-text-dim uppercase">PRIZE POOL</span>
+                  <span className="font-label-md text-label-md text-primary-container uppercase mt-0.5">{flagshipEvent?.prizePool || "₹15,000 INR"}</span>
+                </div>
+              </div>
+
+              {/* Slot Capacity Meter */}
+              <div className="px-space-md py-2 bg-surface-container-low flex flex-col gap-1.5">
+                <div className="flex items-center justify-between font-label-sm text-label-sm">
+                  <span className="text-text-dim">SLOTS CAPACITY</span>
+                  <span className="text-text-bright font-bold">
+                    {flagshipEvent?.registeredTeams || 32} / {flagshipEvent?.maxTeams || 40} SQUADS FILLED{' '}
+                    <span className="text-alert-crimson">
+                      [{(flagshipEvent?.maxTeams || 40) - (flagshipEvent?.registeredTeams || 32)} REMAINING]
+                    </span>
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-primary-container to-verified-emerald transition-all duration-700"
+                    style={{
+                      width: `${Math.round(((flagshipEvent?.registeredTeams || 32) / (flagshipEvent?.maxTeams || 40)) * 100)}%`
+                    }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* 1-Click Action Footer */}
+              <div className="p-space-md bg-surface-container flex flex-col gap-2 border-t border-carbon-border">
                 <button
                   onClick={() => {
-                    const valEvent = events.find(e => e.id === 'ev-01');
-                    if (valEvent) setSelectedEventForModal(valEvent);
-                    setCurrentView('events');
+                    setSelectedEventForModal(flagshipEvent);
                   }}
-                  className="px-6 py-3 rounded-xl btn-cyber-primary text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                  className="w-full py-3 px-space-md rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md tracking-wider uppercase font-bold text-center flex items-center justify-center gap-2 hover:bg-primary transition-all shadow-md cursor-pointer hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
                 >
-                  <span>Register Squad (Official Slip)</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>REGISTER SQUAD VIA GOOGLE FORM</span>
+                  <span className="material-symbols-outlined text-[16px]">open_in_new</span>
                 </button>
-                <button
-                  onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
-                  className="px-5 py-3 rounded-xl btn-cyber-secondary text-xs uppercase tracking-wider text-center"
-                >
-                  View All Tournaments ({events.length})
-                </button>
+                <p className="text-center font-label-sm text-label-sm text-text-dim flex items-center justify-center gap-1">
+                  <span className="material-symbols-outlined text-[14px] text-verified-emerald">verified</span>
+                  Captain must authenticate with registered @study.iitm.ac.in
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* UPCOMING COMPETITIVE CALENDAR (PRD Section 7 & 10) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-8 pb-4 border-b border-slate-800/80">
-          <div>
-            <div className="text-xs font-mono-code uppercase tracking-widest text-cyan-400 mb-1 flex items-center gap-2">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>TOURNAMENT CALENDAR</span>
+      {/* SECTION 2: LIVE STATS TELEMETRY BAR (Full-Width HUD Ribbon) */}
+      <section className="w-full bg-surface-container-low border-y border-carbon-border">
+        <div className="max-w-7xl mx-auto px-margin py-space-md grid grid-cols-2 md:grid-cols-4 gap-space-md">
+          {/* Metric 1 */}
+          <div className="flex flex-col p-space-sm rounded bg-surface-container border border-carbon-border">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-verified-emerald"></span>
+              <span className="font-headline-lg text-headline-lg text-text-bright">1,250+</span>
             </div>
-            <h2 className="font-heading text-2xl sm:text-3xl font-black text-white">
-              Upcoming IITM BS Tournaments
-            </h2>
+            <span className="font-label-md text-label-md text-primary-container uppercase mt-0.5">VERIFIED BS UNDERGRADS</span>
+            <span className="font-body-sm text-body-sm text-text-dim mt-0.5">Active tournament roster size</span>
           </div>
-          <button
-            onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
-            className="text-xs sm:text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group font-mono-code"
-          >
-            <span>View All ({events.length})</span>
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-          {upcomingEvents.map((event) => (
-            <div
-              key={event.id}
-              className="group rounded-3xl glass-card overflow-hidden flex flex-col justify-between"
+          {/* Metric 2 */}
+          <div className="flex flex-col p-space-sm rounded bg-surface-container border border-carbon-border">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary-container"></span>
+              <span className="font-headline-lg text-headline-lg text-text-bright">24+</span>
+            </div>
+            <span className="font-label-md text-label-md text-primary-container uppercase mt-0.5">TOURNAMENTS &amp; SCRIMS</span>
+            <span className="font-body-sm text-body-sm text-text-dim mt-0.5">Across 8 verified gaming titles</span>
+          </div>
+
+          {/* Metric 3 */}
+          <div className="flex flex-col p-space-sm rounded bg-surface-container border border-carbon-border">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-admin-amber"></span>
+              <span className="font-headline-lg text-headline-lg text-text-bright">₹75,000+</span>
+            </div>
+            <span className="font-label-md text-label-md text-primary-container uppercase mt-0.5">PRIZE POOLS AWARDED</span>
+            <span className="font-body-sm text-body-sm text-text-dim mt-0.5">Direct UPI disbursements to winners</span>
+          </div>
+
+          {/* Metric 4 */}
+          <div className="flex flex-col p-space-sm rounded bg-surface-container border border-carbon-border">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-secondary"></span>
+              <span className="font-headline-lg text-headline-lg text-text-bright">100%</span>
+            </div>
+            <span className="font-label-md text-label-md text-primary-container uppercase mt-0.5">STUDENT DEMOCRACY</span>
+            <span className="font-body-sm text-body-sm text-text-dim mt-0.5">Elected council &amp; stewards</span>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: TOURNAMENT CALENDAR SPOTLIGHT */}
+      <section className="w-full px-margin py-space-xl bg-surface">
+        <div className="max-w-7xl mx-auto flex flex-col gap-space-lg">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
+            <div className="flex flex-col gap-1">
+              <span className="font-label-sm text-label-sm text-primary-container uppercase tracking-widest">[ 02 // SCHEDULED CONTESTS ]</span>
+              <h2 className="font-headline-xl text-2xl sm:text-headline-xl text-text-bright uppercase">ACTIVE &amp; UPCOMING COMPETITIVE CIRCUIT</h2>
+            </div>
+            <button
+              onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
+              className="inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:text-text-bright transition-colors uppercase tracking-wider cursor-pointer"
             >
-              <div className="relative h-52 w-full overflow-hidden bg-slate-900">
-                <img
-                  src={event.banner}
-                  alt={event.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#090d18] via-transparent to-transparent"></div>
-                <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full text-[10px] font-mono-code font-bold uppercase bg-cyan-400 text-black shadow">
-                    {event.eventType}
-                  </span>
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono-code bg-black/70 text-slate-200 backdrop-blur-md border border-white/10">
-                    {event.game}
-                  </span>
-                </div>
-                <div className="absolute bottom-3 right-3 px-3 py-1 rounded-xl bg-amber-400 text-black font-heading font-black text-xs shadow-lg">
-                  Prize: {event.prizePool}
-                </div>
-              </div>
-
-              <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                <div>
-                  <div className="flex items-center gap-2 text-xs font-mono-code text-cyan-400 mb-2">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{event.date} • {event.time}</span>
-                  </div>
-                  <h3 className="font-heading text-lg sm:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
-                    {event.title}
-                  </h3>
-                  <p className="text-sm text-slate-400 mt-2 line-clamp-2 leading-relaxed">
-                    {event.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-                  <div className="text-xs text-slate-400 font-mono-code">
-                    Format: <span className="text-slate-200 font-semibold">{event.format}</span>
-                  </div>
-                  <button
-                    onClick={() => {
-                      setSelectedEventForModal(event);
-                      setCurrentView('events');
-                    }}
-                    className="px-4 py-2 rounded-xl text-xs font-heading font-bold uppercase tracking-wider text-cyan-300 hover:text-black bg-cyan-950/80 hover:bg-cyan-400 border border-cyan-500/40 transition-all flex items-center gap-1.5"
-                  >
-                    <span>View Details</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FEATURED GAMES DIRECTORY (PRD Section 7 & 9) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-8 pb-4 border-b border-slate-800/80">
-          <div>
-            <div className="text-xs font-mono-code uppercase tracking-widest text-purple-400 mb-1 flex items-center gap-2">
-              <Gamepad2 className="w-3.5 h-3.5" />
-              <span>GAMES HUB</span>
-            </div>
-            <h2 className="font-heading text-2xl sm:text-3xl font-black text-white">
-              Official Titles & Community Scrims
-            </h2>
+              <span>VIEW FULL CIRCUIT SCHEDULE</span>
+              <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
           </div>
-          <button
-            onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
-            className="text-xs sm:text-sm font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1 group font-mono-code"
-          >
-            <span>All Titles ({games.length})</span>
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredGames.map((game) => (
-            <div
-              key={game.id}
-              className="group rounded-3xl glass-card overflow-hidden flex flex-col justify-between"
-            >
-              <div className="relative h-48 w-full overflow-hidden bg-slate-900">
-                <img
-                  src={game.artwork}
-                  alt={game.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#090d18] via-transparent to-transparent"></div>
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono-code font-bold uppercase bg-purple-600/90 text-white shadow">
-                    {game.category}
-                  </span>
+          {/* 2 Side-by-Side Featured Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+            {upcomingEvents.map((evt) => (
+              <div
+                key={evt.id}
+                className="relative rounded-xl overflow-hidden bg-surface-container flex flex-col shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-carbon-border"
+              >
+                <div className="relative h-48 w-full bg-surface-container-highest overflow-hidden">
+                  <img
+                    className="w-full h-full object-cover"
+                    src={evt.banner || "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200"}
+                    alt={evt.title}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/50 to-transparent"></div>
+                  <div className="absolute top-3 left-3 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-verified-emerald/20 text-verified-emerald font-label-sm text-label-sm uppercase font-bold shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald animate-pulse"></span>
+                      {evt.status === 'Live' ? 'LIVE NOW' : 'REGISTRATION OPEN'}
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-surface-container-lowest/80 text-text-bright font-label-sm text-label-sm uppercase">
+                      {evt.game}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 right-3 px-3 py-1 rounded bg-surface-container-lowest/90 text-primary-container font-headline-md text-headline-md font-bold">
+                    {evt.prizePool}
+                  </div>
                 </div>
-                <div className="absolute bottom-2.5 left-3 text-xs font-mono-code text-cyan-400 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>{game.activePlayers} active student scrimmers</span>
+
+                <div className="p-space-lg flex flex-col flex-1 justify-between gap-space-md">
+                  <div className="flex flex-col gap-space-xs">
+                    <h3 className="font-headline-lg text-xl sm:text-headline-lg text-text-bright uppercase">
+                      {evt.title}
+                    </h3>
+                    <p className="font-body-md text-body-md text-on-surface-variant">
+                      {evt.description}
+                    </p>
+                  </div>
+
+                  {/* Mini Specs Data Strip */}
+                  <div className="grid grid-cols-2 gap-2 p-space-sm rounded bg-surface-container-low border border-carbon-border">
+                    <div className="flex flex-col">
+                      <span className="font-label-sm text-[11px] text-text-dim uppercase">FORMAT</span>
+                      <span className="font-label-md text-label-md text-text-bright uppercase mt-0.5">{evt.format}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-label-sm text-[11px] text-text-dim uppercase">DATE &amp; TIME</span>
+                      <span className="font-label-md text-label-md text-text-bright uppercase mt-0.5">{evt.date} • {evt.time}</span>
+                    </div>
+                  </div>
+
+                  {/* Action Controls */}
+                  <div className="flex items-center justify-between pt-space-xs">
+                    <span className="inline-flex items-center gap-1 font-label-sm text-label-sm text-verified-emerald">
+                      <span className="material-symbols-outlined text-[14px]">school</span>
+                      <span>BS Verified Only</span>
+                    </span>
+                    <button
+                      onClick={() => setSelectedEventForModal(evt)}
+                      className="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md uppercase font-bold hover:bg-primary transition-colors cursor-pointer"
+                    >
+                      ENTER SQUAD ↗
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                <div>
-                  <h3 className="font-heading text-lg font-bold text-white group-hover:text-purple-300 transition-colors">
-                    {game.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
-                    {game.description}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                  <span className="text-[11px] text-slate-400 font-mono-code">{game.mode}</span>
-                  <button
-                    onClick={() => {
-                      setSelectedGameForModal(game);
-                      setCurrentView('games');
-                    }}
-                    className="px-3 py-1.5 rounded-lg text-xs font-semibold text-purple-300 bg-purple-950/60 hover:bg-purple-600 hover:text-white border border-purple-500/40 transition-all"
-                  >
-                    View Game Rules
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* IN-HOUSE QUIZ & LEADERBOARD SPOTLIGHT (PRD Section 12 & 13) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-tr from-[#0a0f1d] via-[#10172c] to-[#1e1338] border border-cyan-500/35 relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      {/* SECTION 4: NATIVE QUIZ ARENA CALLOUT (Anti-Unstop Tech Banner) */}
+      <section className="w-full px-margin py-space-xl bg-surface-container-lowest">
+        <div className="max-w-7xl mx-auto rounded-2xl bg-surface-container-low p-space-lg md:p-space-xl relative overflow-hidden shadow-2xl border border-carbon-border">
+          {/* Ambient Corner Accent */}
+          <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-primary-container opacity-10 filter blur-[90px] pointer-events-none"></div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-            <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-mono-code">
-                <Award className="w-3.5 h-3.5" />
-                <span>PRD MILESTONE • NATIVE IN-HOUSE QUIZ ENGINE</span>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+            {/* Content Block */}
+            <div className="lg:col-span-8 flex flex-col gap-space-md">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-primary-container/15 text-primary-container font-label-sm text-label-sm uppercase font-bold tracking-wider">
+                  <span className="material-symbols-outlined text-[14px]">terminal</span>
+                  PROPRIETARY TESSERACT TECH • ANTI-UNSTOP
+                </span>
+                <span className="px-2.5 py-1 rounded bg-surface-container text-text-dim font-label-sm text-label-sm uppercase border border-carbon-border">
+                  ZERO THIRD-PARTY LATENCY
+                </span>
               </div>
-              <h2 className="font-heading text-3xl sm:text-4xl font-black text-white leading-tight">
-                No External Third-Party Platforms. <br />
-                <span className="cyan-gradient-text">Timed Quizzes Native to Tesseract.</span>
+
+              <h2 className="font-headline-xl text-2xl sm:text-headline-xl text-text-bright uppercase tracking-tight">
+                IN-HOUSE TIMED MCQ QUIZ ARENA
               </h2>
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
-                Tesseract directly hosts live timed multiple-choice quizzes with strict countdown timers, server-side scoring (+4/-1 negative marking), timeout auto-submit, and automated tie-breaker leaderboards.
+              <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                Why rely on clunky third-party forms? Tesseract hosts proprietary low-latency quiz showdowns directly on-platform with instantaneous tie-breaker resolution, anti-cheat detection, and live screen leaderboards for gaming lore, anime, and tech trivia.
               </p>
-              <div className="flex flex-wrap gap-4 pt-2">
+
+              <div className="flex flex-wrap items-center gap-space-md pt-space-xs">
                 <button
-                  onClick={() => { setCurrentView('quizzes'); window.scrollTo(0, 0); }}
-                  className="px-6 py-3 rounded-xl btn-cyber-primary text-xs uppercase tracking-wider flex items-center gap-2"
+                  onClick={() => { setCurrentView('quiz'); window.scrollTo(0, 0); }}
+                  className="px-space-lg py-3 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md tracking-wider uppercase font-bold hover:bg-primary transition-all flex items-center gap-2 cursor-pointer shadow-md hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
                 >
-                  <Award className="w-4 h-4 text-black" />
-                  <span>Launch Quiz Arena</span>
+                  <span>ENTER ACTIVE TRIAL QUIZ</span>
+                  <span className="material-symbols-outlined text-[18px]">play_arrow</span>
                 </button>
                 <button
                   onClick={() => { setCurrentView('leaderboard'); window.scrollTo(0, 0); }}
-                  className="px-6 py-3 rounded-xl btn-cyber-secondary text-xs uppercase tracking-wider flex items-center gap-2"
+                  className="px-space-lg py-3 rounded-lg bg-surface-container text-text-bright font-label-md text-label-md tracking-wider uppercase hover:bg-surface-container-high transition-colors flex items-center gap-2 border border-carbon-border cursor-pointer"
                 >
-                  <Trophy className="w-4 h-4 text-amber-400" />
-                  <span>View Leaderboard</span>
+                  <span className="material-symbols-outlined text-[18px]">leaderboard</span>
+                  <span>VIEW HALL OF FAME</span>
                 </button>
               </div>
             </div>
 
-            {/* Live Quiz HUD Widget */}
-            <div className="lg:col-span-4 p-5 rounded-2xl bg-black/60 border border-slate-700/80 backdrop-blur-md space-y-3 shadow-xl">
-              <div className="flex items-center justify-between text-xs font-mono-code text-slate-400">
-                <span>Featured Quiz</span>
-                <span className="text-emerald-400 font-bold flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                  LIVE NOW
-                </span>
+            {/* Telemetry Data Display Visual */}
+            <div className="lg:col-span-4 p-space-md rounded-xl bg-surface-container flex flex-col gap-space-sm shadow-md border border-carbon-border">
+              <div className="flex items-center justify-between">
+                <span className="font-label-sm text-label-sm text-text-dim uppercase">TELEMETRY BENCHMARK</span>
+                <span className="font-label-sm text-label-sm text-verified-emerald font-bold">100% OPERATIONAL</span>
               </div>
-              <h4 className="font-heading text-base font-bold text-white">
-                IITM BS Esports Trivia 2026
-              </h4>
-              <div className="grid grid-cols-2 gap-2 text-xs font-mono-code text-slate-300">
-                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">TIME LIMIT</span>
-                  <span className="text-white font-bold">5 Minutes</span>
+
+              {/* Mini Inline Latency Visual */}
+              <div className="flex flex-col gap-2 py-space-xs">
+                <div className="flex items-center justify-between font-label-sm text-label-sm">
+                  <span className="text-on-surface-variant">Tesseract WebSocket Sync</span>
+                  <span className="text-primary-container font-bold">&lt; 18ms</span>
                 </div>
-                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
-                  <span className="text-slate-500 block text-[10px]">MARKING</span>
-                  <span className="text-amber-400 font-bold">+4 / -1 Neg</span>
+                <div className="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+                  <div className="h-full bg-primary-container" style={{ width: '95%' }}></div>
+                </div>
+                <div className="flex items-center justify-between font-label-sm text-label-sm mt-1">
+                  <span className="text-on-surface-variant">Legacy Platform Response</span>
+                  <span className="text-alert-crimson font-bold">&gt; 1,400ms</span>
+                </div>
+                <div className="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
+                  <div className="h-full bg-alert-crimson" style={{ width: '25%' }}></div>
                 </div>
               </div>
-              <button
-                onClick={() => { setCurrentView('quizzes'); window.scrollTo(0, 0); }}
-                className="w-full py-2.5 rounded-xl text-xs font-heading font-bold uppercase tracking-wider text-cyan-300 bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-500/40 transition-colors flex items-center justify-center gap-1.5"
-              >
-                <span>Take Quiz Now</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+
+              {/* Feature Bullets */}
+              <div className="pt-space-xs flex flex-col gap-1.5 text-text-dim font-label-sm text-label-sm">
+                <div className="flex items-center gap-2 text-text-bright">
+                  <span className="material-symbols-outlined text-[14px] text-verified-emerald">check_circle</span>
+                  <span>Instantaneous milliseconds tie-breaking engine</span>
+                </div>
+                <div className="flex items-center gap-2 text-text-bright">
+                  <span className="material-symbols-outlined text-[14px] text-verified-emerald">check_circle</span>
+                  <span>Direct student roll-number authentication</span>
+                </div>
+                <div className="flex items-center gap-2 text-text-bright">
+                  <span className="material-symbols-outlined text-[14px] text-verified-emerald">check_circle</span>
+                  <span>Interactive real-time live audience HUD</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SHORT ABOUT & 4 PILLARS (PRD Section 7) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <div className="text-xs font-mono-code uppercase tracking-widest text-cyan-400">
-            THE TESSERACT VISION
+      {/* SECTION 5: THE 4 SOCIETY PILLARS (Modular Swiss-Style Grid) */}
+      <section className="w-full px-margin py-space-xl bg-surface">
+        <div className="max-w-7xl mx-auto flex flex-col gap-space-lg">
+          <div className="flex flex-col gap-1">
+            <span className="font-label-sm text-label-sm text-primary-container uppercase tracking-widest">[ 03 // CORE TENETS ]</span>
+            <h2 className="font-headline-xl text-2xl sm:text-headline-xl text-text-bright uppercase">THE FOUR PILLARS OF TESSERACT</h2>
           </div>
-          <h2 className="font-heading text-3xl sm:text-4xl font-black text-white">
-            One Platform for Everything Esports at IITM BS
-          </h2>
-          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Founded by students of the IIT Madras BS Degree program, Tesseract connects thousands of learners across diverse cities through competitive spirit, teamwork, and community governance.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 rounded-3xl glass-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-heading font-black text-lg">
-              01
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+            {/* Pillar 01 */}
+            <div
+              onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }}
+              className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
+            >
+              <div className="flex flex-col gap-space-md">
+                <div className="flex items-center justify-between">
+                  <span className="font-label-lg text-label-lg text-primary-container font-bold">[ 01 ]</span>
+                  <span className="material-symbols-outlined text-primary-container text-[24px]">swords</span>
+                </div>
+                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-primary-container transition-colors">
+                  COMPETITIVE ESPORTS
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant">
+                  High-stakes inter-house and inter-college tier-1 scrims and official tournaments across Valorant, BGMI, Rocket League, and CS2 with professional casters.
+                </p>
+              </div>
+              <span className="font-label-sm text-label-sm text-primary-container uppercase tracking-wider">Tier-1 Tournaments →</span>
             </div>
-            <h3 className="font-heading text-lg font-bold text-white">Competitive Esports</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Official collegiate tournaments in Valorant, BGMI, and Rocket League with verified rosters and prize pools.
-            </p>
-          </div>
 
-          <div className="p-6 rounded-3xl glass-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-heading font-black text-lg">
-              02
+            {/* Pillar 02 */}
+            <div
+              onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
+              className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
+            >
+              <div className="flex flex-col gap-space-md">
+                <div className="flex items-center justify-between">
+                  <span className="font-label-lg text-label-lg text-secondary font-bold">[ 02 ]</span>
+                  <span className="material-symbols-outlined text-secondary text-[24px]">psychology</span>
+                </div>
+                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-secondary transition-colors">
+                  MIND GAMES &amp; CHESS
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant">
+                  Tactical blitz chess arenas, competitive Geoguessr showdowns, mathematical card battles, and analytical strategy championships tailored for BS problem solvers.
+                </p>
+              </div>
+              <span className="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Cognitive Arenas →</span>
             </div>
-            <h3 className="font-heading text-lg font-bold text-white">Mind & Logic Games</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              FIDE-standard Swiss chess tournaments, speed typing battles, cipher solving, and analytical game trivia.
-            </p>
-          </div>
 
-          <div className="p-6 rounded-3xl glass-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-heading font-black text-lg">
-              03
+            {/* Pillar 03 */}
+            <div
+              onClick={() => { setCurrentView('games'); window.scrollTo(0, 0); }}
+              className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
+            >
+              <div className="flex flex-col gap-space-md">
+                <div className="flex items-center justify-between">
+                  <span className="font-label-lg text-label-lg text-verified-emerald font-bold">[ 03 ]</span>
+                  <span className="material-symbols-outlined text-verified-emerald text-[24px]">group</span>
+                </div>
+                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-verified-emerald transition-colors">
+                  CASUAL SCRIMS &amp; SOCIAL
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant">
+                  Weekend party games, Among Us sessions, self-hosted Minecraft realms, and live major esports championship watch parties with thousands of peers online.
+                </p>
+              </div>
+              <span className="font-label-sm text-label-sm text-verified-emerald uppercase tracking-wider">Community Lounges →</span>
             </div>
-            <h3 className="font-heading text-lg font-bold text-white">Community & Voice</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Friday night Scribbl parties, casual scrim lounges, shoutcasting workshops, and game developer talks.
-            </p>
-          </div>
 
-          <div className="p-6 rounded-3xl glass-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-heading font-black text-lg">
-              04
+            {/* Pillar 04 */}
+            <div
+              onClick={() => { setCurrentView('polls'); window.scrollTo(0, 0); }}
+              className="p-space-lg rounded-xl bg-surface-container flex flex-col justify-between gap-space-lg transition-transform duration-200 hover:-translate-y-1 border border-carbon-border cursor-pointer group"
+            >
+              <div className="flex flex-col gap-space-md">
+                <div className="flex items-center justify-between">
+                  <span className="font-label-lg text-label-lg text-admin-amber font-bold">[ 04 ]</span>
+                  <span className="material-symbols-outlined text-admin-amber text-[24px]">how_to_vote</span>
+                </div>
+                <h3 className="font-headline-md text-headline-md text-text-bright uppercase group-hover:text-admin-amber transition-colors">
+                  DIRECT STUDENT DEMOCRACY
+                </h3>
+                <p className="font-body-md text-body-md text-on-surface-variant">
+                  Transparent community polls for game choice selections, open financial prize distributions, and an elected student executive council answerable to the BS student body.
+                </p>
+              </div>
+              <span className="font-label-sm text-label-sm text-admin-amber uppercase tracking-wider">Open Governance →</span>
             </div>
-            <h3 className="font-heading text-lg font-bold text-white">Direct Democracy</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Verified student polling system ensuring society initiatives and tournament choices are decided by you.
-            </p>
           </div>
-        </div>
-
-        {/* Meet Team CTA */}
-        <div className="mt-12 text-center">
-          <button
-            onClick={() => { setCurrentView('team'); window.scrollTo(0, 0); }}
-            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl glass-card text-xs sm:text-sm font-semibold text-slate-200 hover:text-white"
-          >
-            <Users className="w-4 h-4 text-cyan-400" />
-            <span>Meet the Leadership & WebOps Team Behind Tesseract</span>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-          </button>
         </div>
       </section>
 
-      {/* COMMUNITY CTA BANNER (PRD Section 7) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-blue-950/40 via-indigo-950/60 to-purple-950/50 border border-indigo-500/30 text-center relative overflow-hidden shadow-2xl">
-          <div className="max-w-2xl mx-auto space-y-4">
-            <h2 className="font-heading text-2xl sm:text-4xl font-black text-white">
-              Ready to Squad Up?
-            </h2>
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-              Join the official Tesseract Discord and WhatsApp community to find teammates for tournaments, chat in voice lounges, and get match notifications.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <a
-                href="https://discord.gg"
-                target="_blank"
-                rel="noreferrer"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.4)] flex items-center justify-center gap-2 transition-all"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span>Join Official Discord</span>
-              </a>
-              <a
-                href="https://chat.whatsapp.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center gap-2 transition-all"
-              >
-                <Globe className="w-4 h-4" />
-                <span>Join WhatsApp Community</span>
-              </a>
+      {/* SECTION 6: PRO COLLEGIATE ESPORTS FOOTER EXTENSION */}
+      <section className="w-full px-margin py-space-xl bg-surface-container-low border-t border-carbon-border">
+        <div className="max-w-7xl mx-auto flex flex-col gap-space-lg">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-space-lg">
+            {/* Col 1: Academic Identity Notice */}
+            <div className="md:col-span-5 flex flex-col gap-space-sm">
+              <span className="font-label-md text-label-md text-text-bright tracking-wider uppercase font-bold">
+                ACADEMIC CHARTER &amp; GOVERNANCE
+              </span>
+              <p className="font-body-sm text-body-sm text-text-dim leading-relaxed">
+                Tesseract is the official student-led gaming and esports society of the IIT Madras BS Degree program (Data Science &amp; Electronic Systems). Designed to cultivate collegiate athletic rigor, team synchronization, and computational recreation. Not officially affiliated with Riot Games, Krafton, or Valve Corporation.
+              </p>
+            </div>
+
+            {/* Col 2: Fast Portals */}
+            <div className="md:col-span-4 flex flex-col gap-space-sm">
+              <span className="font-label-md text-label-md text-text-bright tracking-wider uppercase font-bold">
+                INTERNAL REGISTRY &amp; POLICIES
+              </span>
+              <div className="grid grid-cols-2 gap-2 font-label-sm text-label-sm text-text-dim">
+                <button onClick={() => { setCurrentView('events'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Tournament Matrix</button>
+                <button onClick={() => { setCurrentView('quiz'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Quiz Arena Code</button>
+                <button onClick={() => { setCurrentView('team'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Council Roster</button>
+                <button onClick={() => { setCurrentView('polls'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Society Ballot</button>
+                <button onClick={() => { setCurrentView('about'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Code of Conduct</button>
+                <button onClick={() => { setCurrentView('about'); window.scrollTo(0, 0); }} className="hover:text-primary-container transition-colors uppercase text-left">Fairplay Grievance</button>
+              </div>
+            </div>
+
+            {/* Col 3: WebOps Node Status */}
+            <div className="md:col-span-3 flex flex-col gap-space-sm">
+              <span className="font-label-md text-label-md text-text-bright tracking-wider uppercase font-bold">
+                COMMUNITY &amp; DISPATCH
+              </span>
+              <div className="flex items-center gap-space-sm">
+                <a className="p-2 rounded bg-surface-container text-text-bright hover:text-primary-container transition-colors border border-carbon-border" href="https://discord.gg" target="_blank" rel="noreferrer" title="Discord">
+                  <span className="material-symbols-outlined text-[20px]">forum</span>
+                </a>
+                <a className="p-2 rounded bg-surface-container text-text-bright hover:text-primary-container transition-colors border border-carbon-border" href="https://youtube.com" target="_blank" rel="noreferrer" title="YouTube Live">
+                  <span className="material-symbols-outlined text-[20px]">smart_display</span>
+                </a>
+                <a className="p-2 rounded bg-surface-container text-text-bright hover:text-primary-container transition-colors border border-carbon-border" href="https://instagram.com" target="_blank" rel="noreferrer" title="Instagram">
+                  <span className="material-symbols-outlined text-[20px]">photo_camera</span>
+                </a>
+                <a className="p-2 rounded bg-surface-container text-text-bright hover:text-primary-container transition-colors border border-carbon-border" href="https://linkedin.com" target="_blank" rel="noreferrer" title="LinkedIn">
+                  <span className="material-symbols-outlined text-[20px]">work</span>
+                </a>
+              </div>
+              <span className="font-label-sm text-label-sm text-text-dim mt-2">
+                Crafted by IITM BS WebOps &amp; Esports Society Sub-Council.
+              </span>
             </div>
           </div>
         </div>

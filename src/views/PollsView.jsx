@@ -1,18 +1,5 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import {
-  Vote,
-  CheckCircle2,
-  Lock,
-  Calendar,
-  Users,
-  Eye,
-  EyeOff,
-  BarChart3,
-  ShieldAlert,
-  ArrowRight,
-  Sparkles
-} from 'lucide-react';
 
 export default function PollsView() {
   const {
@@ -23,15 +10,9 @@ export default function PollsView() {
     setIsAuthModalOpen
   } = useApp();
 
+  const [activeCategory, setActiveCategory] = useState('all');
   const [selectedOptions, setSelectedOptions] = useState({});
-  const [anonymousPreferences, setAnonymousPreferences] = useState({});
-
-  const handleSelectOption = (pollId, optionId) => {
-    setSelectedOptions(prev => ({
-      ...prev,
-      [pollId]: optionId
-    }));
-  };
+  const [isAnonymous, setIsAnonymous] = useState(true);
 
   const handleCastVote = (pollId) => {
     if (accountState === 'guest') {
@@ -40,186 +21,294 @@ export default function PollsView() {
     }
     const optionId = selectedOptions[pollId];
     if (!optionId) {
-      alert('Please select an option to vote.');
+      alert('Please select an option before casting your ballot.');
       return;
     }
-    const isAnonymous = anonymousPreferences[pollId] || false;
     votePoll(pollId, optionId, isAnonymous);
   };
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800/80">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono-code bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 mb-2">
-            <Vote className="w-3.5 h-3.5" />
-            <span>PRD SECTION 14 • SOCIETY POLLS</span>
-          </div>
-          <h1 className="font-heading text-3xl sm:text-5xl font-black text-white">
-            Society Democratic Polls
-          </h1>
-          <p className="mt-2 text-sm sm:text-base text-slate-300 max-w-2xl">
-            Direct student democracy for Tesseract. Cast your verified vote on upcoming game titles, event timings, and community rules.
-          </p>
-        </div>
+  const filteredPolls = polls.filter(poll => {
+    if (activeCategory === 'tournament') return poll.category?.toLowerCase().includes('tournament') || poll.question?.toLowerCase().includes('tournament');
+    if (activeCategory === 'catalog') return poll.category?.toLowerCase().includes('catalog') || poll.question?.toLowerCase().includes('game') || poll.question?.toLowerCase().includes('sanction');
+    if (activeCategory === 'rulebook') return poll.category?.toLowerCase().includes('rulebook') || poll.question?.toLowerCase().includes('rule');
+    if (activeCategory === 'archive') return poll.hasVoted;
+    return true;
+  });
 
-        {accountState === 'guest' && (
-          <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/30 flex items-center gap-3 text-xs text-amber-200 shadow-lg">
-            <Lock className="w-4 h-4 text-amber-400 shrink-0" />
-            <div>
-              <span className="font-semibold block font-mono-code">IITM Student Vote Requirement</span>
-              <span>1 vote per verified student limit strictly enforced.</span>
+  return (
+    <div className="w-full flex flex-col pb-16">
+      {/* Top Banner & KPI Strip */}
+      <div className="w-full bg-surface-container-lowest px-margin py-space-xl border-b border-carbon-border">
+        <div className="max-w-7xl mx-auto flex flex-col gap-space-lg">
+          <div className="flex flex-wrap items-center justify-between gap-space-sm text-label-sm font-label-sm">
+            <div className="flex items-center gap-space-sm bg-surface-container-low px-3 py-1.5 rounded-lg text-primary-container border border-carbon-border">
+              <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald animate-pulse"></span>
+              <span className="tracking-widest uppercase">SYS::DEMOCRACY // S03 REFERENDUM PORTAL</span>
+              <span className="text-outline-variant">/</span>
+              <span className="text-text-bright tracking-wider">ANTI-SYBIL CONSENSUS ENGINE ACTIVE</span>
             </div>
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-heading font-bold text-xs uppercase shrink-0"
-            >
-              Sign In
-            </button>
+            <div className="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg text-text-dim border border-carbon-border">
+              <span className="material-symbols-outlined text-[14px] text-verified-emerald">gavel</span>
+              <span>QUORUM CONSENSUS: STRICT 50% THRESHOLD</span>
+            </div>
           </div>
-        )}
+
+          <div className="flex flex-col gap-space-xs">
+            <h1 className="text-3xl sm:text-headline-xl font-headline-xl text-text-bright uppercase tracking-wide">
+              SOCIETY REFERENDUMS &amp; DEMOCRATIC STUDENT POLLS
+            </h1>
+            <p className="text-body-lg font-body-lg text-text-dim max-w-4xl">
+              Direct collegiate democracy powered by IIT Madras student email verification. Vote on upcoming sanctioned tournaments, new games added to the official scrim directory, and society rulebook amendments.
+            </p>
+          </div>
+
+          {/* KPI Strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md pt-space-xs">
+            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
+              <div className="flex items-center justify-between text-text-dim">
+                <span className="text-label-sm font-label-sm uppercase tracking-wider">Eligible BS Voters</span>
+                <span className="material-symbols-outlined text-primary-container text-[18px]">how_to_reg</span>
+              </div>
+              <div className="text-headline-lg font-headline-lg text-text-bright font-bold">1,420</div>
+              <span className="text-label-sm font-label-sm text-verified-emerald flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald"></span> Verified Students (@study.iitm)
+              </span>
+            </div>
+
+            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
+              <div className="flex items-center justify-between text-text-dim">
+                <span className="text-label-sm font-label-sm uppercase tracking-wider">Total Ballots Cast</span>
+                <span className="material-symbols-outlined text-primary-container text-[18px]">ballot</span>
+              </div>
+              <div className="text-headline-lg font-headline-lg text-text-bright font-bold">892 <span className="text-body-sm text-text-dim font-normal">Votes</span></div>
+              <div className="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden mt-1">
+                <div className="bg-primary-container h-full rounded-full" style={{ width: '62.8%' }}></div>
+              </div>
+              <span className="text-label-sm font-label-sm text-text-dim mt-0.5">62.8% Turnout Rate (Valid Quorum)</span>
+            </div>
+
+            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
+              <div className="flex items-center justify-between text-text-dim">
+                <span className="text-label-sm font-label-sm uppercase tracking-wider">Active Referendums</span>
+                <span className="material-symbols-outlined text-admin-amber text-[18px]">pending_actions</span>
+              </div>
+              <div className="text-headline-lg font-headline-lg text-text-bright font-bold">
+                {polls.filter(p => !p.hasVoted).length} <span className="text-body-sm text-admin-amber font-normal">Open Polls</span>
+              </div>
+              <span className="text-label-sm font-label-sm text-text-dim">1 Closing &lt; 36 Hours</span>
+            </div>
+
+            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
+              <div className="flex items-center justify-between text-text-dim">
+                <span className="text-label-sm font-label-sm uppercase tracking-wider">Consensus Standard</span>
+                <span className="material-symbols-outlined text-verified-emerald text-[18px]">fingerprint</span>
+              </div>
+              <div className="text-headline-md font-headline-md text-text-bright leading-tight font-bold">1-Student-1-Vote</div>
+              <span className="text-label-sm font-label-sm text-text-dim truncate">SHA-256 Roll Tokenized</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Polls List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {polls.map((poll) => {
-          const userVotedOptionId = user?.pollVotes ? user.pollVotes[poll.id] : null;
-          const hasVoted = Boolean(userVotedOptionId);
-          const totalVotes = poll.totalVotes || 0;
+      {/* Filter Tabs & Voter Status Bar */}
+      <div className="w-full px-margin py-space-lg bg-surface border-b border-carbon-border">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+          <div className="flex flex-wrap items-center gap-space-xs">
+            {[
+              { id: 'all', label: `All Polls (${polls.length})` },
+              { id: 'tournament', label: 'Tournament Selection' },
+              { id: 'catalog', label: 'Game Catalog Additions' },
+              { id: 'rulebook', label: 'Rulebook Amendments' },
+              { id: 'archive', label: 'Concluded Archives' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveCategory(tab.id)}
+                className={`px-3 py-1.5 rounded-lg font-label-sm text-label-sm uppercase font-bold transition-all cursor-pointer ${
+                  activeCategory === tab.id
+                    ? 'bg-primary-container text-on-primary-container shadow-md'
+                    : 'bg-surface-container-low text-text-dim hover:text-text-bright border border-carbon-border'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
-          return (
-            <div
-              key={poll.id}
-              className="group rounded-3xl glass-card p-7 flex flex-col justify-between space-y-6"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full text-xs font-mono-code font-bold uppercase bg-emerald-950 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                    Active Society Vote
-                  </span>
-                  <span className="text-xs font-mono-code text-slate-400 flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Ends: {poll.endDate}</span>
-                  </span>
-                </div>
+          <div className="flex items-center gap-space-sm bg-surface-container-low px-space-md py-2 rounded-xl shrink-0 shadow-sm border border-carbon-border">
+            <div className="w-2 h-2 rounded-full bg-verified-emerald animate-pulse"></div>
+            <div className="flex flex-col">
+              <span className="text-label-sm font-label-sm text-text-bright font-bold">Voter: {user.name}</span>
+              <span className="text-label-sm font-label-sm text-text-dim">{user.email} • 1 Ballot Token Assigned</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                <h3 className="font-heading text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors">
-                  {poll.question}
-                </h3>
+      {/* Polls Container */}
+      <div className="w-full px-margin py-space-xl bg-surface">
+        <div className="max-w-7xl mx-auto flex flex-col gap-space-xl">
+          {filteredPolls.map((poll) => {
+            const hasVoted = poll.hasVoted;
+            const currentSelected = selectedOptions[poll.id];
 
-                <p className="text-sm text-slate-400 leading-relaxed">
-                  {poll.description}
-                </p>
-
-                {/* Poll Options */}
-                <div className="space-y-3 pt-2">
-                  {poll.options.map((option) => {
-                    const isSelected = selectedOptions[poll.id] === option.id;
-                    const isVoted = userVotedOptionId === option.id;
-                    const percentage = totalVotes > 0 ? Math.round((option.votes / totalVotes) * 100) : 0;
-
-                    return (
-                      <div
-                        key={option.id}
-                        onClick={() => !hasVoted && handleSelectOption(poll.id, option.id)}
-                        className={`relative overflow-hidden p-4 rounded-2xl border transition-all ${
-                          hasVoted
-                            ? isVoted
-                              ? 'bg-emerald-950/40 border-emerald-500/60 text-white shadow-md'
-                              : 'bg-slate-900/60 border-slate-800 text-slate-300'
-                            : isSelected
-                            ? 'bg-cyan-950/50 border-cyan-400 text-white cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.25)]'
-                            : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 cursor-pointer'
-                        }`}
-                      >
-                        {/* Progress bar background for results */}
-                        {(hasVoted || poll.showResultsLive) && (
-                          <div
-                            className={`absolute top-0 bottom-0 left-0 transition-all duration-700 ${
-                              isVoted
-                                ? 'bg-emerald-500/25 border-r-2 border-emerald-400'
-                                : 'bg-slate-800/40'
-                            }`}
-                            style={{ width: `${percentage}%` }}
-                          ></div>
-                        )}
-
-                        <div className="relative z-10 flex items-center justify-between gap-3 text-sm">
-                          <div className="flex items-center gap-3">
-                            {!hasVoted && (
-                              <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
-                                isSelected ? 'border-cyan-400 bg-cyan-400' : 'border-slate-600'
-                              }`}>
-                                {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-black"></div>}
-                              </div>
-                            )}
-
-                            {hasVoted && isVoted && (
-                              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                            )}
-
-                            <span className="font-medium">{option.label}</span>
-                          </div>
-
-                          {(hasVoted || poll.showResultsLive) && (
-                            <div className="text-right shrink-0 font-mono-code text-xs">
-                              <span className="font-bold text-white text-sm">{percentage}%</span>
-                              <span className="text-slate-500 ml-1.5">({option.votes} votes)</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Poll Footer & Vote Button */}
-              <div className="pt-4 border-t border-slate-800 space-y-4">
-                {poll.allowAnonymous && !hasVoted && (
-                  <div className="flex items-center justify-between text-xs text-slate-400">
-                    <label className="flex items-center gap-2 cursor-pointer font-mono-code">
-                      <input
-                        type="checkbox"
-                        checked={anonymousPreferences[poll.id] || false}
-                        onChange={(e) => setAnonymousPreferences(prev => ({
-                          ...prev,
-                          [poll.id]: e.target.checked
-                        }))}
-                        className="rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-emerald-500"
-                      />
-                      <span>Vote Anonymously (Hide Gamer Tag)</span>
-                    </label>
+            return (
+              <div
+                key={poll.id}
+                className="bg-surface-container p-space-xl rounded-xl shadow-xl flex flex-col gap-space-lg border border-carbon-border"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-space-sm">
+                  <div className="flex items-center gap-space-sm">
+                    <span className="px-2.5 py-1 rounded bg-primary-container/15 text-primary-container font-label-sm text-label-sm uppercase font-bold tracking-wider border border-primary-container/20">
+                      {poll.category || 'REFERENDUM'}
+                    </span>
                   </div>
-                )}
-
-                <div className="flex items-center justify-between">
-                  <div className="text-xs text-slate-400 font-mono-code flex items-center gap-1.5">
-                    <Users className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>{totalVotes} total verified student votes</span>
-                  </div>
-
                   {hasVoted ? (
-                    <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono-code font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span>Vote Logged (1-Vote Limit)</span>
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low text-verified-emerald font-label-sm text-label-sm font-bold border border-carbon-border">
+                      <span className="material-symbols-outlined text-[14px]">lock</span>
+                      BALLOT RECORDED &amp; SEALED
                     </div>
                   ) : (
-                    <button
-                      onClick={() => handleCastVote(poll.id)}
-                      className="px-6 py-2.5 rounded-xl font-heading text-xs font-bold uppercase tracking-wider text-black bg-emerald-400 hover:bg-emerald-300 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center gap-1.5 active:scale-95"
-                    >
-                      <span>Submit My Vote</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-alert-crimson/15 text-alert-crimson font-label-sm text-label-sm font-bold animate-pulse border border-alert-crimson/30">
+                      <span className="w-2 h-2 rounded-full bg-alert-crimson"></span>
+                      LIVE REFERENDUM • CLOSES IN 36H
+                    </div>
                   )}
                 </div>
+
+                <div className="flex flex-col gap-space-xs">
+                  <h2 className="text-xl sm:text-headline-lg font-headline-lg text-text-bright uppercase">
+                    {poll.question}
+                  </h2>
+                  <p className="text-body-md font-body-md text-text-dim max-w-4xl">
+                    Cast your vote to determine official policy and resource allocation. Only verified @study.iitm.ac.in accounts may vote once.
+                  </p>
+                </div>
+
+                {/* If user has voted, show locked status and full breakdown bars */}
+                {hasVoted ? (
+                  <div className="flex flex-col gap-space-md">
+                    <div className="p-space-md rounded-xl bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm shadow-sm border border-carbon-border">
+                      <div className="flex items-center gap-space-sm">
+                        <span className="material-symbols-outlined text-verified-emerald text-[20px]">task_alt</span>
+                        <div className="flex flex-col">
+                          <span className="text-body-sm font-body-sm text-text-bright font-semibold">YOUR BALLOT IS LOCKED</span>
+                          <span className="text-label-sm font-label-sm text-text-dim">
+                            Voted on institutional ledger. Quorum weight: 1.0
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-label-sm font-label-sm text-primary-container px-2 py-1 rounded bg-surface-container-highest border border-carbon-border font-mono">
+                        Tx: #0x8F92A...IITM
+                      </div>
+                    </div>
+
+                    {/* Progress bars for each option */}
+                    <div className="space-y-4 pt-2">
+                      {poll.options.map((opt) => (
+                        <div key={opt.id} className="flex flex-col gap-1.5">
+                          <div className="flex items-center justify-between text-body-md font-body-md">
+                            <span className="text-text-bright font-medium flex items-center gap-2">
+                              <span className="material-symbols-outlined text-verified-emerald text-[16px]">check_circle</span>
+                              {opt.text}
+                            </span>
+                            <span className="text-primary-container font-label-md text-label-md font-bold">
+                              {opt.percent}% ({opt.votes} Votes)
+                            </span>
+                          </div>
+                          <div className="w-full bg-surface-container-lowest h-2.5 rounded-full overflow-hidden border border-carbon-border">
+                            <div
+                              className="bg-primary-container h-full rounded-full transition-all duration-700"
+                              style={{ width: `${opt.percent}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  /* If user has NOT voted, show selectable options form */
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleCastVote(poll.id);
+                    }}
+                    className="flex flex-col gap-space-md"
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+                      {poll.options.map((opt, idx) => {
+                        const letter = String.fromCharCode(65 + idx);
+                        const isChosen = currentSelected === opt.id;
+
+                        return (
+                          <label
+                            key={opt.id}
+                            onClick={() => setSelectedOptions(prev => ({ ...prev, [poll.id]: opt.id }))}
+                            className={`cursor-pointer group flex flex-col justify-between p-space-lg rounded-xl transition-all shadow-md relative overflow-hidden border ${
+                              isChosen
+                                ? 'border-2 border-primary-container bg-primary-container/10 shadow-[0_0_16px_rgba(0,240,255,0.2)]'
+                                : 'bg-surface-container-low hover:bg-surface-container-high border-carbon-border'
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-space-md">
+                              <div className="flex flex-col gap-1">
+                                <span className="text-label-sm font-label-sm text-primary-container uppercase font-bold tracking-wider">
+                                  Option {letter}
+                                </span>
+                                <span className="text-body-lg font-body-lg text-text-bright font-semibold group-hover:text-primary transition-colors">
+                                  {opt.text}
+                                </span>
+                                <span className="text-body-sm font-body-sm text-text-dim mt-1">
+                                  Current standing: {opt.votes} votes ({opt.percent}%)
+                                </span>
+                              </div>
+                              <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                                isChosen ? 'bg-primary-container' : 'bg-surface-container-highest border border-carbon-border'
+                              }`}>
+                                <span className={`material-symbols-outlined text-[16px] text-surface font-bold ${
+                                  isChosen ? 'opacity-100' : 'opacity-0'
+                                }`}>
+                                  check
+                                </span>
+                              </div>
+                            </div>
+                          </label>
+                        );
+                      })}
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md pt-space-xs border-t border-carbon-border pt-4">
+                      <label className="flex items-center gap-space-sm cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={isAnonymous}
+                          onChange={(e) => setIsAnonymous(e.target.checked)}
+                          className="w-4 h-4 rounded bg-surface-container-highest accent-primary-container text-on-primary-container cursor-pointer"
+                        />
+                        <span className="text-body-sm font-body-sm text-text-dim">
+                          <strong className="text-text-bright">Cast Ballot Anonymously:</strong> Hide student username from public ledger, recording only roll token hash.
+                        </span>
+                      </label>
+
+                      <button
+                        type="submit"
+                        className="px-5 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md uppercase font-bold flex items-center justify-center gap-2 hover:bg-primary transition-all shadow-lg hover:shadow-primary-container/20 cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">verified</span>
+                        SUBMIT BALLOT (1-VOTE LOCK)
+                      </button>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-surface-container-lowest text-label-sm font-label-sm text-text-dim flex items-center gap-2 border border-carbon-border">
+                      <span className="material-symbols-outlined text-admin-amber text-[16px] shrink-0">lock</span>
+                      <span>Irreversible Ballot: Once submitted, your institutional roll number is cryptographically tokenized. Duplicate votes are rejected at consensus layer.</span>
+                    </div>
+                  </form>
+                )}
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
