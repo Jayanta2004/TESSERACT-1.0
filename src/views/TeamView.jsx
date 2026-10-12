@@ -305,62 +305,66 @@ export default function TeamView() {
       </section>
 
       {/* Interactive Filter HUD & Control Bar */}
-      <section className="w-full px-margin pb-space-lg sticky top-[104px] z-30 backdrop-blur-xl bg-background/90 py-2 border-y border-carbon-border">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-space-md">
-          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-surface-container-low rounded-xl shadow-sm border border-carbon-border">
-            {[
-              { id: 'all', label: `All Members (${councilMembers.length})` },
-              { id: 'leadership', label: 'Leadership & Founders' },
-              { id: 'tech', label: 'WebOps & Tech Architects' },
-              { id: 'marshal', label: 'Marshals & Ops' }
-            ].map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setFilterCategory(tab.id)}
-                className={`px-3 py-1.5 rounded-lg font-label-sm text-label-sm uppercase font-bold transition-all cursor-pointer ${
-                  filterCategory === tab.id
-                    ? 'bg-primary-container text-on-primary-container shadow-sm'
-                    : 'text-text-dim hover:text-text-bright'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-space-xs">
-            <div className="relative flex items-center min-w-[200px] lg:min-w-[240px]">
-              <span className="material-symbols-outlined text-[16px] text-text-dim absolute left-3 pointer-events-none">search</span>
-              <input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-surface-container-low text-text-bright font-body-sm text-body-sm pl-9 pr-4 py-1.5 rounded-xl shadow-sm focus:outline-none focus:bg-surface-container placeholder:text-text-dim/60 border border-carbon-border"
-                placeholder="Search handle, name, roll..."
-                type="text"
-              />
+      <section className="w-full px-margin pt-space-md pb-space-sm">
+        <div className="max-w-7xl mx-auto">
+          <div className="glass-panel p-2.5 rounded-2xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+            {/* Category Filter Tabs */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 lg:pb-0">
+              {[
+                { id: 'all', label: `All Members (${councilMembers.length})` },
+                { id: 'leadership', label: 'Leadership & Founders' },
+                { id: 'tech', label: 'WebOps & Tech Architects' },
+                { id: 'marshal', label: 'Marshals & Ops' }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setFilterCategory(tab.id)}
+                  className={`whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono-code uppercase font-semibold transition-all cursor-pointer ${
+                    filterCategory === tab.id
+                      ? 'bg-cyan-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(0,240,255,0.3)]'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
-            <select
-              value={houseFilter}
-              onChange={(e) => setHouseFilter(e.target.value)}
-              className="bg-surface-container-low text-text-bright font-label-sm text-label-sm uppercase py-2 px-3 rounded-xl shadow-sm focus:outline-none cursor-pointer border border-carbon-border"
-            >
-              <option value="all">All Houses</option>
-              <option value="turing">House Turing</option>
-              <option value="ramanujan">House Ramanujan</option>
-              <option value="archimedes">House Archimedes</option>
-              <option value="aryabhata">House Aryabhata</option>
-            </select>
+
+            {/* Search & House Sorter */}
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="relative flex-1 sm:w-64">
+                <span className="material-symbols-outlined text-[16px] text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
+                <input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-slate-900/60 text-white font-body text-xs pl-9 pr-4 py-2 rounded-xl border border-white/10 focus:outline-none focus:ring-1 focus:ring-cyan-400 placeholder:text-slate-500"
+                  placeholder="Search handle, name, roll..."
+                  type="text"
+                />
+              </div>
+              <select
+                value={houseFilter}
+                onChange={(e) => setHouseFilter(e.target.value)}
+                className="bg-slate-900/80 text-white font-mono-code text-xs uppercase py-2 px-3 rounded-xl border border-white/10 focus:outline-none cursor-pointer hover:border-cyan-500/40 transition-colors"
+              >
+                <option value="all" className="bg-slate-900 text-white">All Houses</option>
+                <option value="turing" className="bg-slate-900 text-white">House Turing</option>
+                <option value="ramanujan" className="bg-slate-900 text-white">House Ramanujan</option>
+                <option value="archimedes" className="bg-slate-900 text-white">House Archimedes</option>
+                <option value="aryabhata" className="bg-slate-900 text-white">House Aryabhata</option>
+              </select>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Editorial Roster Grid */}
-      <section className="w-full px-margin py-space-xl">
+      <section className="w-full px-margin pt-4 pb-space-xl">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
           {filteredRoster.map((member) => (
             <article
               key={member.id}
-              className="roster-card group bg-surface-container-low rounded-xl p-space-md flex flex-col justify-between shadow-md hover:shadow-xl transition-all relative overflow-hidden border border-carbon-border"
+              className="roster-card group glass-card glass-card-hover rounded-2xl p-space-md flex flex-col justify-between transition-all relative overflow-hidden"
             >
               <div className="flex flex-col gap-space-md">
                 <div className="relative w-full aspect-[16/10] rounded-lg overflow-hidden bg-surface-container-highest">
