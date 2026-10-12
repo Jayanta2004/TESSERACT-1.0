@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { ROLES, getRoleInfo } from '../utils/rbac';
 
 export default function AdminView() {
   const {
     accountState,
+    switchRole,
     announcement,
     setAnnouncement,
     events,
@@ -23,6 +26,74 @@ export default function AdminView() {
     setCurrentView,
     showToast
   } = useApp();
+
+  const navigate = useNavigate();
+
+  // Defense-in-depth: Enforce Admin Role at component level
+  if (accountState !== ROLES.ADMIN) {
+    const roleInfo = getRoleInfo(accountState);
+    return (
+      <div className="w-full min-h-[calc(100vh-140px)] flex items-center justify-center px-4 py-16">
+        <div className="max-w-xl w-full glass-card p-8 sm:p-10 rounded-2xl border border-red-500/30 shadow-[0_0_50px_rgba(244,63,94,0.15)] relative overflow-hidden">
+          <div className="flex items-center justify-between pb-6 border-b border-white/[0.08] mb-6">
+            <div className="flex items-center gap-2 text-xs font-mono-code text-red-400 font-bold tracking-wider uppercase">
+              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+              SECURITY PROTOCOL // 403 FORBIDDEN
+            </div>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono-code font-bold bg-red-500/10 text-red-400 border border-red-500/20">
+              GATEWAY ENFORCED
+            </span>
+          </div>
+
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 mx-auto flex items-center justify-center shadow-[0_0_25px_rgba(244,63,94,0.3)]">
+              <span className="material-symbols-outlined text-[34px]">lock_person</span>
+            </div>
+
+            <div>
+              <h1 className="font-heading text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+                WebOps Clearance Required
+              </h1>
+              <p className="text-sm font-body text-slate-300 mt-2 leading-relaxed">
+                The Tesseract Admin Operations Center is strictly restricted to Society Executive Council governors, Tournament Marshals, and WebOps Leads.
+              </p>
+            </div>
+
+            <div className="bg-slate-950/60 p-4 rounded-xl border border-white/10 text-left font-mono-code text-xs space-y-2 mt-4">
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Current Role Identity:</span>
+                <span className={`px-2 py-0.5 rounded border font-semibold ${roleInfo.badgeClass}`}>
+                  {roleInfo.label} (Level {roleInfo.clearanceLevel})
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Required Clearance:</span>
+                <span className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40 font-bold">
+                  WebOps Admin (Level 3)
+                </span>
+              </div>
+            </div>
+
+            <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
+              <button
+                onClick={() => switchRole(ROLES.ADMIN)}
+                className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(168,85,247,0.35)] flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[16px]">bolt</span>
+                Switch to Admin (Demo)
+              </button>
+              <button
+                onClick={() => navigate('/')}
+                className="w-full sm:w-auto py-3 px-5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-mono-code text-xs border border-white/10 transition-colors cursor-pointer"
+              >
+                Return to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const [activeTab, setActiveTab] = useState('telemetry');
 
@@ -62,7 +133,7 @@ export default function AdminView() {
       ctaUrl: annCtaUrl,
       enabled: annEnabled
     });
-    alert('Announcement broadcast updated successfully!');
+    showToast('Announcement broadcast updated successfully!', 'success');
   };
 
   const handleCreateEvent = (e) => {
@@ -83,7 +154,7 @@ export default function AdminView() {
       description: `Official ${newEventGame} competition hosted by Tesseract.`
     });
     setNewEventTitle('');
-    alert('Tournament event deployed to registry!');
+    showToast('Tournament event deployed to registry!', 'success');
   };
 
   const handleCreateGame = (e) => {
@@ -100,7 +171,7 @@ export default function AdminView() {
       rules: ['Institutional email verification required.', 'Officiated by Tesseract marshals.']
     });
     setNewGameTitle('');
-    alert('Game discipline added to catalog!');
+    showToast('Game discipline added to catalog!', 'success');
   };
 
   const handleAddDomain = (e) => {
@@ -176,7 +247,7 @@ export default function AdminView() {
               Export Audit [JSON]
             </button>
             <button
-              onClick={() => alert("CMS state synced across edge cache and recorded to local session!")}
+              onClick={() => showToast("CMS state synced across edge cache and recorded to local session!", "success")}
               className="px-3 py-1.5 rounded bg-primary-container hover:bg-primary text-on-primary-container font-label-md text-label-md font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
             >
               <span className="material-symbols-outlined text-[16px]">sync_saved_locally</span>

@@ -9,7 +9,8 @@ export default function ProfileView() {
     events,
     quizzes,
     polls,
-    setIsAuthModalOpen
+    setIsAuthModalOpen,
+    showToast
   } = useApp();
 
   const [activeTab, setActiveTab] = useState('tournaments');
@@ -84,15 +85,27 @@ export default function ProfileView() {
               <span className="material-symbols-outlined text-[14px]">school</span>
               <span>TERM 4 — DIPLOMA LEVEL</span>
             </div>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-verified-emerald/15 text-verified-emerald font-label-sm text-label-sm font-bold border border-verified-emerald/30">
-              <span className="material-symbols-outlined text-[14px]">verified_user</span>
-              <span>INSTITUTIONAL KERNEL VERIFIED // CLEARED</span>
-            </div>
+            {accountState === 'student' ? (
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-label-sm text-label-sm font-bold border border-emerald-500/30">
+                <span className="material-symbols-outlined text-[14px]">verified_user</span>
+                <span>INSTITUTIONAL KERNEL VERIFIED // CLEARED</span>
+              </div>
+            ) : accountState === 'admin' ? (
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-label-sm text-label-sm font-bold border border-purple-500/40">
+                <span className="material-symbols-outlined text-[14px]">bolt</span>
+                <span>WEBOPS ROOT ADMIN // FULL CLEARANCE</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-label-sm text-label-sm font-bold border border-amber-500/30">
+                <span className="material-symbols-outlined text-[14px]">hourglass_empty</span>
+                <span>PENDING DOMAIN VERIFICATION // PRACTICE MODE</span>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-space-sm shrink-0 w-full sm:w-auto justify-end">
             <button
-              onClick={() => alert(`Exporting Official Tesseract Passport PDF for ${user.name} (${user.rollNumber})`)}
+              onClick={() => showToast(`Exporting Official Tesseract Passport PDF for ${user.name} (${user.rollNumber || '24BS-1004'})`, 'info')}
               className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-all shadow-sm border border-carbon-border cursor-pointer"
             >
               <span className="material-symbols-outlined text-[15px] text-text-dim">download</span>
@@ -101,7 +114,7 @@ export default function ProfileView() {
             <button
               onClick={() => {
                 navigator.clipboard?.writeText(window.location.href);
-                alert("Passport URL copied to clipboard!");
+                showToast("Passport URL copied to clipboard!", "success");
               }}
               className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container/20 hover:bg-primary-container/30 text-primary-container font-label-sm text-label-sm transition-all shadow-sm border border-primary-container/40 cursor-pointer"
             >

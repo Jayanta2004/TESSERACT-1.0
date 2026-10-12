@@ -9,7 +9,8 @@ export default function QuizView() {
     user,
     setIsAuthModalOpen,
     submitQuizAttempt,
-    setCurrentView
+    setCurrentView,
+    showToast
   } = useApp();
 
   // Screen state: 1: 'catalog' | 2: 'briefing' | 3: 'running' | 4: 'results'
@@ -60,7 +61,6 @@ export default function QuizView() {
     } else {
       if (timerRef.current) clearInterval(timerRef.current);
     }
-
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
@@ -69,15 +69,19 @@ export default function QuizView() {
   // Handle timeout auto-submission
   useEffect(() => {
     if (activeState === 3 && secondsRemaining === 0 && totalTimeElapsed > 0) {
-      alert('Time has expired! Auto-submitting responses to server.');
+      showToast('Time has expired! Auto-submitting responses to server.', 'info');
       executeFinalSubmit();
     }
   }, [activeState, secondsRemaining, totalTimeElapsed]);
 
   const handleSelectQuizForBriefing = (quiz) => {
     if (accountState === 'guest') {
+      showToast('Please sign in with your IIT Madras student email to attempt timed quizzes.', 'info');
       setIsAuthModalOpen(true);
       return;
+    }
+    if (accountState === 'unverified') {
+      showToast('Unverified Student Notice: Taking quiz in Practice mode. Verified credentials required for official podium.', 'info');
     }
     setSelectedQuiz(quiz);
     setCharterAgreed(false);

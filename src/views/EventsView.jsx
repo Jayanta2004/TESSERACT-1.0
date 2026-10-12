@@ -9,7 +9,10 @@ export default function EventsView() {
     setIsAuthModalOpen,
     registerForEvent,
     selectedEventForModal,
-    setSelectedEventForModal
+    setSelectedEventForModal,
+    showToast,
+    can,
+    PERMISSIONS
   } = useApp();
 
   const [activeCategory, setActiveCategory] = useState('all');
@@ -37,11 +40,13 @@ export default function EventsView() {
 
   const handleOpenGateway = (event) => {
     if (accountState === 'guest') {
+      showToast('Please sign in with your IIT Madras student email to register squads.', 'info');
       setIsAuthModalOpen(true);
       return;
     }
     if (accountState === 'unverified') {
-      alert('Your IITM institutional email is unverified. Please switch to student identity or verify.');
+      showToast('Institutional Verification Required: Official squad rosters require verified @study.iitm.ac.in credentials.', 'error');
+      setIsAuthModalOpen(true);
       return;
     }
     setActiveDetailsModal(null);
@@ -346,16 +351,16 @@ export default function EventsView() {
             </div>
             <div className="flex items-center gap-space-sm shrink-0">
               <a
-                className="px-3 py-1.5 rounded-lg bg-surface-container text-text-dim hover:text-on-surface transition-colors font-label-sm text-label-sm uppercase tracking-wider border border-carbon-border"
+                className="px-3 py-1.5 rounded-lg bg-surface-container text-text-dim hover:text-on-surface transition-colors font-label-sm text-label-sm uppercase tracking-wider border border-carbon-border cursor-pointer"
                 href="#download-rulebook"
-                onClick={(e) => { e.preventDefault(); alert("Official Tesseract S03 Rulebook PDF downloaded to local storage."); }}
+                onClick={(e) => { e.preventDefault(); showToast("Official Tesseract S03 Rulebook PDF ready for download.", "info"); }}
               >
                 Download S03 Rulebook
               </a>
               <a
-                className="px-3 py-1.5 rounded-lg bg-surface-container text-text-dim hover:text-on-surface transition-colors font-label-sm text-label-sm uppercase tracking-wider border border-carbon-border"
+                className="px-3 py-1.5 rounded-lg bg-surface-container text-text-dim hover:text-on-surface transition-colors font-label-sm text-label-sm uppercase tracking-wider border border-carbon-border cursor-pointer"
                 href="#dispute-tribunal"
-                onClick={(e) => { e.preventDefault(); alert("Dispute tribunal grievance desk is live at webops@tesseract.iitmbs.org"); }}
+                onClick={(e) => { e.preventDefault(); showToast("Dispute tribunal grievance desk is live at webops@tesseract.iitmbs.org", "info"); }}
               >
                 Dispute Tribunal
               </a>

@@ -46,6 +46,7 @@ export default function Navbar() {
 
   const roleConfigs = {
     guest: { label: 'Guest', icon: 'person', color: 'text-slate-400', badge: 'bg-slate-800 text-slate-300' },
+    unverified: { label: 'Unverified', icon: 'hourglass_empty', color: 'text-amber-400', badge: 'bg-amber-500/20 text-amber-300 border-amber-400/30' },
     student: { label: 'Student', icon: 'school', color: 'text-cyan-400', badge: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/30' },
     admin: { label: 'Admin', icon: 'bolt', color: 'text-purple-400', badge: 'bg-purple-500/20 text-purple-300 border-purple-400/30' }
   };
@@ -145,9 +146,10 @@ export default function Navbar() {
                   Test Identity Role:
                 </div>
                 {[
-                  { role: 'student', label: 'Verified Student', icon: 'school', color: 'text-cyan-400' },
-                  { role: 'guest', label: 'Guest (Public)', icon: 'person', color: 'text-slate-400' },
-                  { role: 'admin', label: 'WebOps Admin', icon: 'bolt', color: 'text-purple-400' },
+                  { role: 'student', label: 'Verified Student', icon: 'school', color: 'text-cyan-400', lvl: 'Lvl 2' },
+                  { role: 'unverified', label: 'Unverified Student', icon: 'hourglass_empty', color: 'text-amber-400', lvl: 'Lvl 1' },
+                  { role: 'admin', label: 'WebOps Admin', icon: 'bolt', color: 'text-purple-400', lvl: 'Lvl 3' },
+                  { role: 'guest', label: 'Public Guest', icon: 'person', color: 'text-slate-400', lvl: 'Lvl 0' },
                 ].map((item) => (
                   <button
                     key={item.role}
@@ -155,16 +157,19 @@ export default function Navbar() {
                       switchRole(item.role);
                       setRoleDropdownOpen(false);
                     }}
-                    className={`w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-mono-code transition-colors cursor-pointer ${
+                    className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-mono-code transition-colors cursor-pointer ${
                       accountState === item.role
                         ? 'bg-cyan-400/15 text-cyan-300 font-bold'
                         : 'text-slate-300 hover:bg-white/[0.06] hover:text-white'
                     }`}
                   >
-                    <span className={`material-symbols-outlined text-[16px] ${item.color}`}>
-                      {item.icon}
-                    </span>
-                    <span>{item.label}</span>
+                    <div className="flex items-center gap-2">
+                      <span className={`material-symbols-outlined text-[16px] ${item.color}`}>
+                        {item.icon}
+                      </span>
+                      <span>{item.label}</span>
+                    </div>
+                    <span className="text-[10px] text-slate-500 font-normal">{item.lvl}</span>
                   </button>
                 ))}
               </div>

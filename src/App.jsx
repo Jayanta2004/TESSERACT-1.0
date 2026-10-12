@@ -18,6 +18,9 @@ import TeamView from './views/TeamView';
 import AboutView from './views/AboutView';
 import AdminView from './views/AdminView';
 
+import ProtectedRoute from './components/ProtectedRoute';
+import { ROLES, PERMISSIONS } from './utils/rbac';
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -37,10 +40,24 @@ function MainRoutes() {
         <Route path="/quiz" element={<Navigate to="/quizzes" replace />} />
         <Route path="/leaderboard" element={<LeaderboardView />} />
         <Route path="/polls" element={<PollsView />} />
-        <Route path="/profile" element={<ProfileView />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute requiredPermission={PERMISSIONS.VIEW_PROFILE}>
+              <ProfileView />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/team" element={<TeamView />} />
         <Route path="/about" element={<AboutView />} />
-        <Route path="/admin" element={<AdminView />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole={ROLES.ADMIN}>
+              <AdminView />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </main>

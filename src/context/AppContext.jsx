@@ -12,6 +12,13 @@ import {
   ALLOWED_EMAIL_DOMAINS
 } from '../data/mockData';
 
+import {
+  ROLES,
+  PERMISSIONS,
+  hasPermission as checkRolePermission,
+  getRoleInfo
+} from '../utils/rbac';
+
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
@@ -425,7 +432,14 @@ export const AppProvider = ({ children }) => {
       activeQuizForRunner,
       setActiveQuizForRunner,
       toast,
-      showToast
+      showToast,
+      // RBAC Exports
+      ROLES,
+      PERMISSIONS,
+      hasPermission: (permission) => checkRolePermission(accountState, permission),
+      can: (permission) => checkRolePermission(accountState, permission),
+      currentRoleInfo: getRoleInfo(accountState),
+      getRoleInfo
     }}>
       {children}
     </AppContext.Provider>

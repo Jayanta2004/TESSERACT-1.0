@@ -346,25 +346,32 @@ export default function AuthModal() {
             <div className="text-[11px] font-mono-code text-slate-400 uppercase tracking-wider mb-2.5 flex items-center justify-between">
               <span>Quick Test Presets (Instant):</span>
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-4 gap-1.5">
               <button
                 type="button"
                 onClick={() => handleQuickDemo('guest')}
-                className="py-1.5 px-2 rounded-lg text-[11px] font-medium bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition-colors"
+                className="py-1.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono-code font-medium bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition-colors text-center cursor-pointer"
               >
                 👤 Guest
               </button>
               <button
                 type="button"
+                onClick={() => handleQuickDemo('unverified')}
+                className="py-1.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono-code font-medium bg-amber-950/60 hover:bg-amber-900/60 text-amber-300 border border-amber-700/60 transition-colors text-center cursor-pointer"
+              >
+                ⏳ Unverified
+              </button>
+              <button
+                type="button"
                 onClick={() => handleQuickDemo('student')}
-                className="py-1.5 px-2 rounded-lg text-[11px] font-medium bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-700/60 transition-colors"
+                className="py-1.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono-code font-medium bg-cyan-950/60 hover:bg-cyan-900/60 text-cyan-300 border border-cyan-700/60 transition-colors text-center cursor-pointer"
               >
                 🎓 Student
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickDemo('admin')}
-                className="py-1.5 px-2 rounded-lg text-[11px] font-medium bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 border border-purple-700/60 transition-colors"
+                className="py-1.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono-code font-medium bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 border border-purple-700/60 transition-colors text-center cursor-pointer"
               >
                 ⚡ Admin
               </button>

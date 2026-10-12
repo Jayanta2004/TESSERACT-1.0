@@ -7,7 +7,8 @@ export default function PollsView() {
     accountState,
     user,
     votePoll,
-    setIsAuthModalOpen
+    setIsAuthModalOpen,
+    showToast
   } = useApp();
 
   const [activeCategory, setActiveCategory] = useState('all');
@@ -16,12 +17,18 @@ export default function PollsView() {
 
   const handleCastVote = (pollId) => {
     if (accountState === 'guest') {
+      showToast('Please sign in with your verified IIT Madras student email to vote.', 'info');
+      setIsAuthModalOpen(true);
+      return;
+    }
+    if (accountState === 'unverified') {
+      showToast('Anti-Sybil Verification Required: Society voting is restricted to verified IIT Madras students (@study.iitm.ac.in).', 'error');
       setIsAuthModalOpen(true);
       return;
     }
     const optionId = selectedOptions[pollId];
     if (!optionId) {
-      alert('Please select an option before casting your ballot.');
+      showToast('Please select an option before casting your ballot.', 'info');
       return;
     }
     votePoll(pollId, optionId, isAnonymous);

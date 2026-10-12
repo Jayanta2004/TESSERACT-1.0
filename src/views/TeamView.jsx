@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 
 export default function TeamView() {
-  const { teamMembers, setCurrentView } = useApp();
+  const { teamMembers, setCurrentView, showToast } = useApp();
   const [filterCategory, setFilterCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [houseFilter, setHouseFilter] = useState('all');
@@ -165,7 +165,7 @@ export default function TeamView() {
             </div>
             <div className="flex items-center gap-space-sm shrink-0">
               <button
-                onClick={() => alert("WebOps Guild applications open! Contact webops@tesseract.iitmbs.org with your GitHub and roll number.")}
+                onClick={() => showToast("WebOps Guild applications open! Contact webops@tesseract.iitmbs.org with your GitHub and roll number.", "info")}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-variant text-text-bright font-label-md text-label-md uppercase tracking-wider transition-all shadow-sm border border-carbon-border cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[16px] text-admin-amber">code_blocks</span>
