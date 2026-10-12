@@ -188,7 +188,7 @@ export default function AdminView() {
 
       {/* Primary Sub-Navigation & Tab Switcher Bar */}
       <div className="w-full bg-surface-container-low px-margin shadow-sm border-b border-carbon-border">
-        <div className="max-w-7xl mx-auto flex items-center overflow-x-auto gap-space-xs py-1">
+        <div className="max-w-7xl mx-auto flex items-center overflow-x-auto no-scrollbar gap-space-xs py-1">
           {[
             { id: 'telemetry', label: 'Telemetry Overview', icon: 'speed' },
             { id: 'announcements', label: 'Announcements & Pop-ups', icon: 'campaign', count: announcement?.enabled ? '1 Active' : '0 Active' },

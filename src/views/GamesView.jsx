@@ -106,10 +106,10 @@ export default function GamesView() {
       </section>
 
       {/* Sticky Tactical Filter HUD */}
-      <div className="sticky top-[104px] z-30 w-full bg-surface-glass backdrop-blur-xl shadow-lg border-y border-carbon-border">
+      <div className="sticky top-[68px] z-30 w-full bg-[#0a0e18]/85 backdrop-blur-xl border-y border-white/10 shadow-lg">
         <div className="max-w-7xl mx-auto px-margin py-3 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
           {/* Chips Filter */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 lg:pb-0">
             {[
               { id: 'all', label: `All Titles [${games.length}]` },
               { id: 'fps', label: 'Tactical FPS' },
@@ -120,43 +120,43 @@ export default function GamesView() {
               <button
                 key={chip.id}
                 onClick={() => setActiveCategory(chip.id)}
-                className={`filter-chip px-3 py-1.5 rounded-lg font-label-sm text-label-sm uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
+                className={`filter-chip px-3 py-1.5 rounded-lg font-mono-code text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
                   activeCategory === chip.id
-                    ? 'bg-primary-container text-on-primary-container shadow-[0_0_10px_rgba(0,240,255,0.4)] font-bold'
-                    : 'bg-surface-container text-text-dim hover:text-text-bright hover:bg-surface-container-high border border-carbon-border'
+                    ? 'bg-cyan-400 text-slate-950 font-bold shadow-[0_0_12px_rgba(6,182,212,0.4)]'
+                    : 'bg-slate-900/60 text-slate-400 hover:text-white hover:bg-slate-800/80 border border-white/10'
                 }`}
               >
                 {chip.label}
               </button>
             ))}
 
-            <div className="h-4 w-px bg-surface-variant mx-1 hidden sm:block"></div>
+            <div className="h-4 w-px bg-white/10 mx-1 hidden sm:block"></div>
             <select
               value={platformFilter}
               onChange={(e) => setPlatformFilter(e.target.value)}
-              className="bg-surface-container text-text-bright font-label-sm text-label-sm px-2.5 py-1.5 rounded-lg outline-none cursor-pointer border border-carbon-border"
+              className="bg-slate-900/80 text-white font-mono-code text-xs px-2.5 py-1.5 rounded-lg outline-none cursor-pointer border border-white/10 hover:border-cyan-400/50 transition-colors"
             >
-              <option value="all">Platform: All</option>
-              <option value="pc">Platform: PC</option>
-              <option value="mobile">Platform: Mobile</option>
-              <option value="crossplay">Platform: Crossplay</option>
+              <option value="all" className="bg-slate-900 text-white">Platform: All</option>
+              <option value="pc" className="bg-slate-900 text-white">Platform: PC</option>
+              <option value="mobile" className="bg-slate-900 text-white">Platform: Mobile</option>
+              <option value="crossplay" className="bg-slate-900 text-white">Platform: Crossplay</option>
             </select>
           </div>
 
           {/* Live Search */}
           <div className="flex items-center gap-space-md shrink-0">
             <div className="relative flex-1 sm:w-64">
-              <span className="material-symbols-outlined text-outline-variant absolute left-2.5 top-2 text-[18px]">search</span>
+              <span className="material-symbols-outlined text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 text-[18px]">search</span>
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-surface-container-lowest text-text-bright placeholder-outline pl-9 pr-4 py-1.5 rounded-lg font-body-sm text-body-sm focus:outline-none focus:bg-surface-container border border-carbon-border"
+                className="w-full bg-slate-900/60 text-white placeholder-slate-400 pl-9 pr-4 py-1.5 rounded-lg text-xs font-body focus:outline-none focus:ring-1 focus:ring-cyan-400 border border-white/10"
                 placeholder="Search game or rules..."
                 type="text"
               />
             </div>
-            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-lowest font-label-sm text-[11px] text-text-dim border border-carbon-border">
-              <span className="inline-block w-2 h-2 rounded-full bg-verified-emerald animate-pulse"></span>
+            <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/60 font-mono-code text-[11px] text-slate-400 border border-white/10">
+              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span>Matchmaking Active [Mumbai]</span>
             </div>
           </div>

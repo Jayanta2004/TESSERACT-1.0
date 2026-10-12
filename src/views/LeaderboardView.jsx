@@ -221,7 +221,7 @@ export default function LeaderboardView() {
           </div>
 
           {/* House Filter Tabs */}
-          <div className="flex items-center justify-between border-t border-carbon-border pt-space-sm overflow-x-auto">
+          <div className="flex items-center justify-between border-t border-carbon-border pt-space-sm overflow-x-auto no-scrollbar">
             <div className="flex items-center gap-1.5 shrink-0">
               {[
                 { id: 'all', label: `All Participants (${baseEntries.length})` },

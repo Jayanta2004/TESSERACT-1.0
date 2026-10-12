@@ -131,7 +131,7 @@ export default function EventsView() {
           {/* Tactical Filtering & Control Switcher Bar */}
           <div className="glass-panel p-2.5 rounded-2xl mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
             {/* Category Filter Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 md:pb-0">
               {[
                 { id: 'all', label: `All Events (${events.length})` },
                 { id: 'interhouse', label: 'Flagship Inter-House' },
