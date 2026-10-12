@@ -45,82 +45,82 @@ export default function PollsView() {
   return (
     <div className="w-full flex flex-col pb-16">
       {/* Top Banner & KPI Strip */}
-      <div className="w-full bg-surface-container-lowest px-margin py-space-xl border-b border-carbon-border">
-        <div className="max-w-7xl mx-auto flex flex-col gap-space-lg">
-          <div className="flex flex-wrap items-center justify-between gap-space-sm text-label-sm font-label-sm">
-            <div className="flex items-center gap-space-sm bg-surface-container-low px-3 py-1.5 rounded-lg text-primary-container border border-carbon-border">
-              <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald animate-pulse"></span>
-              <span className="tracking-widest uppercase">SYS::DEMOCRACY // S03 REFERENDUM PORTAL</span>
-              <span className="text-outline-variant">/</span>
-              <span className="text-text-bright tracking-wider">ANTI-SYBIL CONSENSUS ENGINE ACTIVE</span>
+      <div className="w-full bg-[#0a0e18]/80 backdrop-blur-md px-margin py-8 border-b border-white/10">
+        <div className="max-w-7xl mx-auto flex flex-col gap-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono-code">
+            <div className="flex items-center gap-2.5 glass-panel px-3.5 py-1.5 rounded-full text-cyan-400 border border-cyan-400/20">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="tracking-widest uppercase font-bold">SYS::DEMOCRACY // S03 REFERENDUM PORTAL</span>
+              <span className="text-slate-600">/</span>
+              <span className="text-white tracking-wider">ANTI-SYBIL CONSENSUS ENGINE ACTIVE</span>
             </div>
-            <div className="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-lg text-text-dim border border-carbon-border">
-              <span className="material-symbols-outlined text-[14px] text-verified-emerald">gavel</span>
+            <div className="flex items-center gap-2 glass-panel px-3.5 py-1.5 rounded-full text-slate-300 border border-white/10">
+              <span className="material-symbols-outlined text-[15px] text-emerald-400">gavel</span>
               <span>QUORUM CONSENSUS: STRICT 50% THRESHOLD</span>
             </div>
           </div>
 
-          <div className="flex flex-col gap-space-xs">
-            <h1 className="text-3xl sm:text-headline-xl font-headline-xl text-text-bright uppercase tracking-wide">
-              SOCIETY REFERENDUMS &amp; DEMOCRATIC STUDENT POLLS
+          <div className="flex flex-col gap-2">
+            <h1 className="text-3xl sm:text-4xl font-heading text-white uppercase tracking-tight font-bold">
+              Society Referendums &amp; Student Polls
             </h1>
-            <p className="text-body-lg font-body-lg text-text-dim max-w-4xl">
+            <p className="font-body text-sm text-slate-300 max-w-4xl leading-relaxed">
               Direct collegiate democracy powered by IIT Madras student email verification. Vote on upcoming sanctioned tournaments, new games added to the official scrim directory, and society rulebook amendments.
             </p>
           </div>
 
           {/* KPI Strip */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md pt-space-xs">
-            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
-              <div className="flex items-center justify-between text-text-dim">
-                <span className="text-label-sm font-label-sm uppercase tracking-wider">Eligible BS Voters</span>
-                <span className="material-symbols-outlined text-primary-container text-[18px]">how_to_reg</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+            <div className="glass-card p-5 rounded-2xl flex flex-col gap-2 shadow-lg border border-white/10">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="font-mono-code text-[11px] uppercase tracking-wider">Eligible BS Voters</span>
+                <span className="material-symbols-outlined text-cyan-400 text-[18px]">how_to_reg</span>
               </div>
-              <div className="text-headline-lg font-headline-lg text-text-bright font-bold">1,420</div>
-              <span className="text-label-sm font-label-sm text-verified-emerald flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald"></span> Verified Students (@study.iitm)
+              <div className="font-heading text-3xl text-white font-bold">1,420</div>
+              <span className="font-mono-code text-xs text-emerald-400 flex items-center gap-1 font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Verified Students (@study.iitm)
               </span>
             </div>
 
-            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
-              <div className="flex items-center justify-between text-text-dim">
-                <span className="text-label-sm font-label-sm uppercase tracking-wider">Total Ballots Cast</span>
-                <span className="material-symbols-outlined text-primary-container text-[18px]">ballot</span>
+            <div className="glass-card p-5 rounded-2xl flex flex-col gap-2 shadow-lg border border-white/10">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="font-mono-code text-[11px] uppercase tracking-wider">Total Ballots Cast</span>
+                <span className="material-symbols-outlined text-cyan-400 text-[18px]">ballot</span>
               </div>
-              <div className="text-headline-lg font-headline-lg text-text-bright font-bold">892 <span className="text-body-sm text-text-dim font-normal">Votes</span></div>
-              <div className="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden mt-1">
-                <div className="bg-primary-container h-full rounded-full" style={{ width: '62.8%' }}></div>
+              <div className="font-heading text-3xl text-white font-bold">892 <span className="font-body text-xs text-slate-400 font-normal">Votes</span></div>
+              <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden mt-1">
+                <div className="bg-cyan-400 h-full rounded-full shadow-[0_0_8px_rgba(6,182,212,0.5)]" style={{ width: '62.8%' }}></div>
               </div>
-              <span className="text-label-sm font-label-sm text-text-dim mt-0.5">62.8% Turnout Rate (Valid Quorum)</span>
+              <span className="font-mono-code text-[11px] text-slate-400 mt-0.5">62.8% Turnout Rate (Valid Quorum)</span>
             </div>
 
-            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
-              <div className="flex items-center justify-between text-text-dim">
-                <span className="text-label-sm font-label-sm uppercase tracking-wider">Active Referendums</span>
-                <span className="material-symbols-outlined text-admin-amber text-[18px]">pending_actions</span>
+            <div className="glass-card p-5 rounded-2xl flex flex-col gap-2 shadow-lg border border-white/10">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="font-mono-code text-[11px] uppercase tracking-wider">Active Referendums</span>
+                <span className="material-symbols-outlined text-amber-400 text-[18px]">pending_actions</span>
               </div>
-              <div className="text-headline-lg font-headline-lg text-text-bright font-bold">
-                {polls.filter(p => !p.hasVoted).length} <span className="text-body-sm text-admin-amber font-normal">Open Polls</span>
+              <div className="font-heading text-3xl text-white font-bold">
+                {polls.filter(p => !p.hasVoted).length} <span className="font-body text-xs text-amber-400 font-normal">Open Polls</span>
               </div>
-              <span className="text-label-sm font-label-sm text-text-dim">1 Closing &lt; 36 Hours</span>
+              <span className="font-mono-code text-[11px] text-slate-400">1 Closing &lt; 36 Hours</span>
             </div>
 
-            <div className="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-xs shadow-md border border-carbon-border">
-              <div className="flex items-center justify-between text-text-dim">
-                <span className="text-label-sm font-label-sm uppercase tracking-wider">Consensus Standard</span>
-                <span className="material-symbols-outlined text-verified-emerald text-[18px]">fingerprint</span>
+            <div className="glass-card p-5 rounded-2xl flex flex-col gap-2 shadow-lg border border-white/10">
+              <div className="flex items-center justify-between text-slate-400">
+                <span className="font-mono-code text-[11px] uppercase tracking-wider">Consensus Standard</span>
+                <span className="material-symbols-outlined text-emerald-400 text-[18px]">fingerprint</span>
               </div>
-              <div className="text-headline-md font-headline-md text-text-bright leading-tight font-bold">1-Student-1-Vote</div>
-              <span className="text-label-sm font-label-sm text-text-dim truncate">SHA-256 Roll Tokenized</span>
+              <div className="font-heading text-2xl text-white leading-tight font-bold">1-Student-1-Vote</div>
+              <span className="font-mono-code text-[11px] text-slate-400 truncate">SHA-256 Roll Tokenized</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Filter Tabs & Voter Status Bar */}
-      <div className="w-full px-margin py-space-lg bg-surface border-b border-carbon-border">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
-          <div className="flex flex-wrap items-center gap-space-xs">
+      <div className="w-full px-margin py-6 border-b border-white/10">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-2">
             {[
               { id: 'all', label: `All Polls (${polls.length})` },
               { id: 'tournament', label: 'Tournament Selection' },
@@ -131,10 +131,10 @@ export default function PollsView() {
               <button
                 key={tab.id}
                 onClick={() => setActiveCategory(tab.id)}
-                className={`px-3 py-1.5 rounded-lg font-label-sm text-label-sm uppercase font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-xl font-heading text-xs uppercase font-semibold transition-all cursor-pointer ${
                   activeCategory === tab.id
-                    ? 'bg-primary-container text-on-primary-container shadow-md'
-                    : 'bg-surface-container-low text-text-dim hover:text-text-bright border border-carbon-border'
+                    ? 'bg-cyan-400 text-slate-950 font-bold shadow-[0_0_12px_rgba(6,182,212,0.35)]'
+                    : 'glass-panel text-slate-400 hover:text-white border border-white/10'
                 }`}
               >
                 {tab.label}
@@ -142,19 +142,19 @@ export default function PollsView() {
             ))}
           </div>
 
-          <div className="flex items-center gap-space-sm bg-surface-container-low px-space-md py-2 rounded-xl shrink-0 shadow-sm border border-carbon-border">
-            <div className="w-2 h-2 rounded-full bg-verified-emerald animate-pulse"></div>
+          <div className="flex items-center gap-3 glass-panel px-4 py-2 rounded-xl shrink-0 shadow-sm border border-white/10">
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
             <div className="flex flex-col">
-              <span className="text-label-sm font-label-sm text-text-bright font-bold">Voter: {user.name}</span>
-              <span className="text-label-sm font-label-sm text-text-dim">{user.email} • 1 Ballot Token Assigned</span>
+              <span className="font-heading text-xs text-white font-bold">Voter: {user?.name || 'Guest Student'}</span>
+              <span className="font-mono-code text-[11px] text-slate-400">{user?.email || 'Public Visitor'} • {user ? '1 Ballot Token Assigned' : 'Read-Only Mode'}</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Polls Container */}
-      <div className="w-full px-margin py-space-xl bg-surface">
-        <div className="max-w-7xl mx-auto flex flex-col gap-space-xl">
+      <div className="w-full px-margin py-8">
+        <div className="max-w-7xl mx-auto flex flex-col gap-8">
           {filteredPolls.map((poll) => {
             const hasVoted = poll.hasVoted;
             const currentSelected = selectedOptions[poll.id];
@@ -162,70 +162,70 @@ export default function PollsView() {
             return (
               <div
                 key={poll.id}
-                className="bg-surface-container p-space-xl rounded-xl shadow-xl flex flex-col gap-space-lg border border-carbon-border"
+                className="glass-card p-6 md:p-8 rounded-2xl shadow-2xl flex flex-col gap-6 border border-white/10"
               >
-                <div className="flex flex-wrap items-center justify-between gap-space-sm">
-                  <div className="flex items-center gap-space-sm">
-                    <span className="px-2.5 py-1 rounded bg-primary-container/15 text-primary-container font-label-sm text-label-sm uppercase font-bold tracking-wider border border-primary-container/20">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-full bg-cyan-500/15 text-cyan-300 font-mono-code text-[11px] uppercase font-bold tracking-wider border border-cyan-400/25">
                       {poll.category || 'REFERENDUM'}
                     </span>
                   </div>
                   {hasVoted ? (
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low text-verified-emerald font-label-sm text-label-sm font-bold border border-carbon-border">
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full glass-panel text-emerald-400 font-mono-code text-xs font-bold border border-emerald-500/30">
                       <span className="material-symbols-outlined text-[14px]">lock</span>
                       BALLOT RECORDED &amp; SEALED
                     </div>
                   ) : (
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-alert-crimson/15 text-alert-crimson font-label-sm text-label-sm font-bold animate-pulse border border-alert-crimson/30">
-                      <span className="w-2 h-2 rounded-full bg-alert-crimson"></span>
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/15 text-rose-300 font-mono-code text-xs font-bold border border-rose-500/30">
+                      <span className="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
                       LIVE REFERENDUM • CLOSES IN 36H
                     </div>
                   )}
                 </div>
 
-                <div className="flex flex-col gap-space-xs">
-                  <h2 className="text-xl sm:text-headline-lg font-headline-lg text-text-bright uppercase">
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-xl sm:text-2xl font-heading text-white uppercase font-bold">
                     {poll.question}
                   </h2>
-                  <p className="text-body-md font-body-md text-text-dim max-w-4xl">
+                  <p className="font-body text-xs text-slate-300 max-w-4xl leading-relaxed">
                     Cast your vote to determine official policy and resource allocation. Only verified @study.iitm.ac.in accounts may vote once.
                   </p>
                 </div>
 
                 {/* If user has voted, show locked status and full breakdown bars */}
                 {hasVoted ? (
-                  <div className="flex flex-col gap-space-md">
-                    <div className="p-space-md rounded-xl bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm shadow-sm border border-carbon-border">
-                      <div className="flex items-center gap-space-sm">
-                        <span className="material-symbols-outlined text-verified-emerald text-[20px]">task_alt</span>
+                  <div className="flex flex-col gap-5">
+                    <div className="p-4 rounded-xl glass-panel flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-white/10">
+                      <div className="flex items-center gap-3">
+                        <span className="material-symbols-outlined text-emerald-400 text-[22px]">task_alt</span>
                         <div className="flex flex-col">
-                          <span className="text-body-sm font-body-sm text-text-bright font-semibold">YOUR BALLOT IS LOCKED</span>
-                          <span className="text-label-sm font-label-sm text-text-dim">
+                          <span className="font-heading text-xs text-white font-bold">YOUR BALLOT IS LOCKED</span>
+                          <span className="font-mono-code text-[11px] text-slate-400">
                             Voted on institutional ledger. Quorum weight: 1.0
                           </span>
                         </div>
                       </div>
-                      <div className="text-label-sm font-label-sm text-primary-container px-2 py-1 rounded bg-surface-container-highest border border-carbon-border font-mono">
+                      <div className="font-mono-code text-xs text-cyan-300 px-3 py-1 rounded-lg glass-panel border border-white/10">
                         Tx: #0x8F92A...IITM
                       </div>
                     </div>
 
                     {/* Progress bars for each option */}
-                    <div className="space-y-4 pt-2">
+                    <div className="space-y-4 pt-1">
                       {poll.options.map((opt) => (
-                        <div key={opt.id} className="flex flex-col gap-1.5">
-                          <div className="flex items-center justify-between text-body-md font-body-md">
-                            <span className="text-text-bright font-medium flex items-center gap-2">
-                              <span className="material-symbols-outlined text-verified-emerald text-[16px]">check_circle</span>
+                        <div key={opt.id} className="flex flex-col gap-2">
+                          <div className="flex items-center justify-between font-body text-xs">
+                            <span className="text-white font-semibold flex items-center gap-2">
+                              <span className="material-symbols-outlined text-emerald-400 text-[16px]">check_circle</span>
                               {opt.text}
                             </span>
-                            <span className="text-primary-container font-label-md text-label-md font-bold">
+                            <span className="text-cyan-400 font-mono-code font-bold">
                               {opt.percent}% ({opt.votes} Votes)
                             </span>
                           </div>
-                          <div className="w-full bg-surface-container-lowest h-2.5 rounded-full overflow-hidden border border-carbon-border">
+                          <div className="w-full bg-white/5 h-2.5 rounded-full overflow-hidden border border-white/5">
                             <div
-                              className="bg-primary-container h-full rounded-full transition-all duration-700"
+                              className="bg-gradient-to-r from-cyan-400 to-emerald-400 h-full rounded-full transition-all duration-700 shadow-[0_0_8px_rgba(6,182,212,0.4)]"
                               style={{ width: `${opt.percent}%` }}
                             ></div>
                           </div>
@@ -240,9 +240,9 @@ export default function PollsView() {
                       e.preventDefault();
                       handleCastVote(poll.id);
                     }}
-                    className="flex flex-col gap-space-md"
+                    className="flex flex-col gap-5"
                   >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {poll.options.map((opt, idx) => {
                         const letter = String.fromCharCode(65 + idx);
                         const isChosen = currentSelected === opt.id;
@@ -251,28 +251,28 @@ export default function PollsView() {
                           <label
                             key={opt.id}
                             onClick={() => setSelectedOptions(prev => ({ ...prev, [poll.id]: opt.id }))}
-                            className={`cursor-pointer group flex flex-col justify-between p-space-lg rounded-xl transition-all shadow-md relative overflow-hidden border ${
+                            className={`cursor-pointer group flex flex-col justify-between p-5 rounded-2xl transition-all relative overflow-hidden border ${
                               isChosen
-                                ? 'border-2 border-primary-container bg-primary-container/10 shadow-[0_0_16px_rgba(0,240,255,0.2)]'
-                                : 'bg-surface-container-low hover:bg-surface-container-high border-carbon-border'
+                                ? 'border-cyan-400 bg-cyan-500/15 shadow-[0_0_20px_rgba(6,182,212,0.25)]'
+                                : 'glass-panel border-white/10 hover:border-cyan-400/40 hover:bg-white/[0.04]'
                             }`}
                           >
-                            <div className="flex items-start justify-between gap-space-md">
+                            <div className="flex items-start justify-between gap-3">
                               <div className="flex flex-col gap-1">
-                                <span className="text-label-sm font-label-sm text-primary-container uppercase font-bold tracking-wider">
+                                <span className="font-mono-code text-[11px] text-cyan-400 uppercase font-bold tracking-wider">
                                   Option {letter}
                                 </span>
-                                <span className="text-body-lg font-body-lg text-text-bright font-semibold group-hover:text-primary transition-colors">
+                                <span className="font-heading text-sm text-white font-bold group-hover:text-cyan-300 transition-colors">
                                   {opt.text}
                                 </span>
-                                <span className="text-body-sm font-body-sm text-text-dim mt-1">
+                                <span className="font-mono-code text-[11px] text-slate-400 mt-1">
                                   Current standing: {opt.votes} votes ({opt.percent}%)
                                 </span>
                               </div>
                               <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                                isChosen ? 'bg-primary-container' : 'bg-surface-container-highest border border-carbon-border'
+                                isChosen ? 'bg-cyan-400 text-slate-950' : 'glass-panel border border-white/20'
                               }`}>
-                                <span className={`material-symbols-outlined text-[16px] text-surface font-bold ${
+                                <span className={`material-symbols-outlined text-[16px] font-bold ${
                                   isChosen ? 'opacity-100' : 'opacity-0'
                                 }`}>
                                   check
@@ -284,30 +284,30 @@ export default function PollsView() {
                       })}
                     </div>
 
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md pt-space-xs border-t border-carbon-border pt-4">
-                      <label className="flex items-center gap-space-sm cursor-pointer select-none">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/10">
+                      <label className="flex items-center gap-3 cursor-pointer select-none">
                         <input
                           type="checkbox"
                           checked={isAnonymous}
                           onChange={(e) => setIsAnonymous(e.target.checked)}
-                          className="w-4 h-4 rounded bg-surface-container-highest accent-primary-container text-on-primary-container cursor-pointer"
+                          className="w-4 h-4 rounded bg-slate-900 border-white/20 accent-cyan-400 text-cyan-400 cursor-pointer"
                         />
-                        <span className="text-body-sm font-body-sm text-text-dim">
-                          <strong className="text-text-bright">Cast Ballot Anonymously:</strong> Hide student username from public ledger, recording only roll token hash.
+                        <span className="font-body text-xs text-slate-300">
+                          <strong className="text-white">Cast Ballot Anonymously:</strong> Hide student username from public ledger, recording only roll token hash.
                         </span>
                       </label>
 
                       <button
                         type="submit"
-                        className="px-5 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md uppercase font-bold flex items-center justify-center gap-2 hover:bg-primary transition-all shadow-lg hover:shadow-primary-container/20 cursor-pointer"
+                        className="px-6 py-2.5 rounded-xl bg-cyan-400 text-slate-950 font-heading text-xs uppercase font-bold flex items-center justify-center gap-2 hover:bg-cyan-300 transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] cursor-pointer shrink-0"
                       >
                         <span className="material-symbols-outlined text-[18px]">verified</span>
                         SUBMIT BALLOT (1-VOTE LOCK)
                       </button>
                     </div>
 
-                    <div className="p-3 rounded-lg bg-surface-container-lowest text-label-sm font-label-sm text-text-dim flex items-center gap-2 border border-carbon-border">
-                      <span className="material-symbols-outlined text-admin-amber text-[16px] shrink-0">lock</span>
+                    <div className="p-3.5 rounded-xl glass-panel font-mono-code text-xs text-slate-400 flex items-center gap-2.5 border border-white/10">
+                      <span className="material-symbols-outlined text-amber-400 text-[18px] shrink-0">lock</span>
                       <span>Irreversible Ballot: Once submitted, your institutional roll number is cryptographically tokenized. Duplicate votes are rejected at consensus layer.</span>
                     </div>
                   </form>

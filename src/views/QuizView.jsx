@@ -161,29 +161,29 @@ export default function QuizView() {
   return (
     <div className="w-full flex flex-col pb-16">
       {/* ================= STATE SIMULATION QUICK BAR ================= */}
-      <section className="w-full bg-surface-container-lowest px-margin py-space-sm border-b border-carbon-border">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-space-sm">
-          <div className="flex items-center gap-space-sm">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-primary-container/10 border border-primary-container/40 text-primary-container font-label-sm text-label-sm uppercase font-bold tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+      <section className="w-full bg-[#0a0e18]/80 backdrop-blur-xl px-margin py-2.5 border-b border-white/10">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 font-mono-code text-xs uppercase font-bold tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
               PRD SEC 12 EVALUATOR CONSOLE
             </span>
-            <span className="text-text-dim text-body-sm hidden sm:inline">Inspect assessment lifecycle phases:</span>
+            <span className="text-slate-400 text-xs font-mono-code hidden sm:inline">Assessment lifecycle phases:</span>
           </div>
-          <div className="flex items-center gap-1 bg-surface-container-low p-1 rounded-xl border border-carbon-border">
+          <div className="flex items-center gap-1 glass-panel p-1 rounded-xl">
             {[
-              { id: 1, label: '1. Quiz Catalog' },
-              { id: 2, label: '2. Pre-Flight Rules' },
-              { id: 3, label: '3. Live Exam HUD' },
-              { id: 4, label: '4. Results & Review' }
+              { id: 1, label: '1. Catalog' },
+              { id: 2, label: '2. Briefing' },
+              { id: 3, label: '3. Live Exam' },
+              { id: 4, label: '4. Review' }
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveState(tab.id)}
-                className={`state-tab-btn px-3 py-1 rounded text-label-sm font-label-sm font-bold uppercase transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono-code font-bold uppercase transition-all cursor-pointer ${
                   activeState === tab.id
-                    ? 'bg-primary-container text-on-primary-container shadow-[0_0_10px_rgba(0,240,255,0.3)]'
-                    : 'text-text-dim hover:text-text-bright hover:bg-surface-container'
+                    ? 'bg-cyan-400 text-slate-950 shadow-[0_0_12px_rgba(6,182,212,0.4)]'
+                    : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
                 }`}
               >
                 {tab.label}
@@ -200,36 +200,36 @@ export default function QuizView() {
         <section className="w-full px-margin py-space-xl flex flex-col">
           <div className="max-w-7xl mx-auto w-full space-y-space-xl">
             {/* Anti-Unstop Announcement Banner */}
-            <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-surface-container-lowest via-surface-container-low to-surface-container-lowest border border-carbon-border p-space-lg shadow-2xl">
-              <div className="absolute -right-16 -top-16 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
-              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg relative z-10">
-                <div className="space-y-2 max-w-3xl">
-                  <div className="flex flex-wrap items-center gap-space-sm">
-                    <span className="px-2.5 py-0.5 rounded bg-alert-crimson/15 border border-alert-crimson text-alert-crimson font-label-sm text-label-sm uppercase font-bold tracking-wider">
-                      DECOMMISSIONED: UNSTOP / GOOGLE FORMS
+            <div className="relative overflow-hidden rounded-2xl glass-card border border-white/10 p-6 sm:p-8 shadow-2xl">
+              <div className="absolute -right-16 -top-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+                <div className="space-y-3 max-w-3xl">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 font-mono-code text-[11px] uppercase font-bold tracking-wider">
+                      DECOMMISSIONED: UNSTOP / FORMS
                     </span>
-                    <span className="px-2.5 py-0.5 rounded bg-verified-emerald/15 border border-verified-emerald text-verified-emerald font-label-sm text-label-sm uppercase font-bold tracking-wider">
+                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono-code text-[11px] uppercase font-bold tracking-wider">
                       PROPRIETARY ENGINE v2.4 ONLINE
                     </span>
                   </div>
-                  <h1 className="font-headline-xl text-3xl sm:text-headline-xl text-text-bright tracking-tight uppercase leading-tight">
+                  <h1 className="font-heading text-3xl sm:text-4xl text-white font-black tracking-tight uppercase leading-tight">
                     Tesseract In-House MCQ Arena
                   </h1>
-                  <p className="font-body-md text-body-md text-text-dim">
+                  <p className="text-sm font-body text-slate-300 leading-relaxed">
                     High-frequency competitive testing engine with sub-20ms telemetry, real-time focus sentinels, negative scoring calibration, and millisecond tie-breaker precision built natively for IIT Madras BS students.
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row lg:flex-col gap-2 shrink-0 bg-surface-container-lowest/80 p-space-md rounded-xl border border-carbon-border font-label-sm text-label-sm">
-                  <div className="flex items-center gap-2 text-text-bright">
-                    <span className="w-2 h-2 rounded-full bg-verified-emerald animate-pulse"></span>
+                <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0 glass-panel p-4 rounded-xl border border-white/10 font-mono-code text-xs">
+                  <div className="flex items-center gap-2 text-white">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>&lt; 18ms Webhook Edge Sync</span>
                   </div>
-                  <div className="flex items-center gap-2 text-text-bright">
-                    <span className="material-symbols-outlined text-primary-container text-[14px]">security</span>
+                  <div className="flex items-center gap-2 text-white">
+                    <span className="material-symbols-outlined text-cyan-400 text-[15px]">security</span>
                     <span>Anti-Tab Switch Sentinel Active</span>
                   </div>
-                  <div className="flex items-center gap-2 text-text-bright">
-                    <span className="material-symbols-outlined text-admin-amber text-[14px]">lock_clock</span>
+                  <div className="flex items-center gap-2 text-white">
+                    <span className="material-symbols-outlined text-amber-400 text-[15px]">lock_clock</span>
                     <span>Zero External Latency Leakage</span>
                   </div>
                 </div>
@@ -237,8 +237,8 @@ export default function QuizView() {
             </div>
 
             {/* Filter Controls & Search */}
-            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md">
-              <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+            <div className="glass-panel p-2.5 rounded-2xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 md:pb-0">
                 {[
                   { id: 'all', label: `All Quizzes (${quizzes.length})` },
                   { id: 'fps', label: 'Tactical Shooter Meta' },
@@ -248,10 +248,10 @@ export default function QuizView() {
                   <button
                     key={tab.id}
                     onClick={() => setCatalogFilter(tab.id)}
-                    className={`px-3.5 py-1.5 rounded-lg font-label-md text-label-md whitespace-nowrap cursor-pointer transition-colors ${
+                    className={`whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono-code uppercase font-semibold transition-all cursor-pointer ${
                       catalogFilter === tab.id
-                        ? 'bg-primary-container text-on-primary-container font-bold shadow-[0_0_12px_rgba(0,240,255,0.25)]'
-                        : 'bg-surface-container-low hover:bg-surface-container text-text-dim hover:text-text-bright border border-carbon-border'
+                        ? 'bg-cyan-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(0,240,255,0.3)]'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                     }`}
                   >
                     {tab.label}
@@ -259,10 +259,10 @@ export default function QuizView() {
                 ))}
               </div>
 
-              <div className="relative w-full md:w-72 shrink-0">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-dim text-[18px]">search</span>
+              <div className="relative w-full md:w-64 shrink-0">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[16px]">search</span>
                 <input
-                  className="w-full pl-9 pr-3 py-1.5 rounded-lg bg-surface-container-low border border-carbon-border text-body-sm text-text-bright placeholder-text-dim focus:outline-none focus:border-primary-container transition-all"
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-900/60 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-all font-body"
                   placeholder="Search trials, games, tags..."
                   type="text"
                 />
@@ -270,61 +270,61 @@ export default function QuizView() {
             </div>
 
             {/* Quiz Catalog Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {quizzes.map((quiz) => (
                 <div
                   key={quiz.id}
-                  className="relative rounded-xl bg-surface-container-low border-2 border-primary-container/80 p-space-lg flex flex-col justify-between shadow-[0_0_24px_rgba(0,240,255,0.15)] group hover:border-primary-container transition-all"
+                  className="relative rounded-2xl glass-card glass-card-hover border border-white/10 p-6 flex flex-col justify-between group"
                 >
-                  <div className="space-y-space-md">
-                    <div className="flex items-center justify-between gap-space-sm">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-alert-crimson/20 border border-alert-crimson text-alert-crimson font-label-sm text-label-sm font-bold uppercase tracking-wider">
-                        <span className="w-1.5 h-1.5 rounded-full bg-alert-crimson animate-pulse"></span>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 font-mono-code text-[10px] font-bold uppercase tracking-wider">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
                         ACTIVE • S03 INTER-HOUSE TRIAL
                       </span>
-                      <span className="font-label-sm text-label-sm text-primary-container bg-primary-container/10 px-2 py-0.5 rounded border border-primary-container/30">
+                      <span className="font-mono-code text-[11px] text-cyan-300 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-400/20 font-bold">
                         HOUSE POINTS x2
                       </span>
                     </div>
 
                     <div>
-                      <h2 className="font-headline-lg text-headline-lg text-text-bright group-hover:text-primary transition-colors uppercase">
+                      <h2 className="font-heading text-xl text-white group-hover:text-cyan-400 transition-colors uppercase font-bold">
                         {quiz.title}
                       </h2>
-                      <p className="font-body-sm text-body-sm text-text-dim mt-1">
+                      <p className="text-xs font-body text-slate-300 mt-1 leading-relaxed">
                         {quiz.description}
                       </p>
                     </div>
 
                     {/* Telemetry Matrix */}
-                    <div className="grid grid-cols-3 gap-2 bg-surface-container-lowest/90 p-space-sm rounded-lg border border-carbon-border font-label-sm text-label-sm">
+                    <div className="grid grid-cols-3 gap-2 glass-panel p-3 rounded-xl border border-white/10 font-mono-code text-xs">
                       <div className="flex flex-col">
-                        <span className="text-text-dim">DURATION</span>
-                        <span className="text-text-bright font-bold">{quiz.durationMinutes || 15} Mins</span>
+                        <span className="text-slate-400 text-[10px] uppercase">DURATION</span>
+                        <span className="text-white font-bold">{quiz.durationMinutes || 15} Mins</span>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-text-dim">QUESTIONS</span>
-                        <span className="text-text-bright font-bold">{quiz.questions?.length || 20} MCQs</span>
+                        <span className="text-slate-400 text-[10px] uppercase">QUESTIONS</span>
+                        <span className="text-white font-bold">{quiz.questions?.length || 20} MCQs</span>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-text-dim">MARKING</span>
-                        <span className="text-alert-crimson font-bold">+4 / -1</span>
+                        <span className="text-slate-400 text-[10px] uppercase">MARKING</span>
+                        <span className="text-rose-400 font-bold">+4 / -1</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-label-sm font-label-sm pt-1">
-                      <span className="text-verified-emerald flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[16px]">military_tech</span>
+                    <div className="flex items-center justify-between text-xs font-mono-code pt-1">
+                      <span className="text-emerald-400 flex items-center gap-1 font-semibold">
+                        <span className="material-symbols-outlined text-[15px]">military_tech</span>
                         Prize: ₹2,500 Cash + House Standings
                       </span>
-                      <span className="text-text-dim">428 Attempts Logged</span>
+                      <span className="text-slate-400">428 Attempts Logged</span>
                     </div>
                   </div>
 
-                  <div className="pt-space-lg">
+                  <div className="pt-6">
                     <button
                       onClick={() => handleSelectQuizForBriefing(quiz)}
-                      className="w-full py-2.5 px-space-md rounded-lg bg-primary-container text-on-primary-container hover:bg-primary font-label-md text-label-md font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(0,240,255,0.3)] cursor-pointer"
+                      className="w-full py-2.5 px-4 rounded-xl bg-cyan-400 text-slate-950 hover:bg-cyan-300 font-heading text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(6,182,212,0.3)] cursor-pointer"
                     >
                       <span>Enter Pre-Flight Briefing</span>
                       <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -341,137 +341,137 @@ export default function QuizView() {
       {/* STATE 2: PRE-FLIGHT BRIEFING & ANTI-CHEAT PROTOCOL           */}
       {/* ============================================================ */}
       {activeState === 2 && (
-        <section className="w-full px-margin py-space-xl flex flex-col">
-          <div className="max-w-4xl mx-auto w-full space-y-space-lg">
-            <div className="flex items-center gap-2 font-label-sm text-label-sm text-text-dim">
-              <button onClick={() => setActiveState(1)} className="hover:text-primary-container flex items-center gap-1 cursor-pointer">
+        <section className="w-full px-margin py-8 flex flex-col">
+          <div className="max-w-4xl mx-auto w-full space-y-6">
+            <div className="flex items-center gap-2 font-mono-code text-xs text-slate-400">
+              <button onClick={() => setActiveState(1)} className="hover:text-cyan-400 flex items-center gap-1 cursor-pointer transition-colors">
                 <span className="material-symbols-outlined text-[14px]">arrow_back</span>
                 Catalog
               </button>
-              <span>/</span>
-              <span className="text-text-bright uppercase">Pre-Flight Briefing Protocol</span>
+              <span className="text-slate-600">/</span>
+              <span className="text-white uppercase font-semibold">Pre-Flight Briefing Protocol</span>
             </div>
 
             {/* Main Protocol Card */}
-            <div className="rounded-xl bg-surface-container-low border border-carbon-border p-space-lg md:p-space-xl shadow-2xl space-y-space-lg">
-              <div className="border-b border-carbon-border pb-space-md space-y-2">
+            <div className="rounded-2xl glass-card border border-white/10 p-6 md:p-8 shadow-2xl space-y-6">
+              <div className="border-b border-white/10 pb-5 space-y-2">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-alert-crimson animate-pulse"></span>
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-alert-crimson font-bold">
+                  <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                  <span className="font-mono-code text-[11px] uppercase tracking-widest text-rose-400 font-bold">
                     IITM ES-AUTH // SECURE BROWSER ENVIRONMENT CHECK
                   </span>
                 </div>
-                <h1 className="font-headline-xl text-2xl sm:text-headline-xl text-text-bright tracking-tight uppercase">
+                <h1 className="font-heading text-2xl sm:text-3xl text-white tracking-tight uppercase font-bold">
                   PRE-FLIGHT BRIEFING &amp; ANTI-CHEAT PROTOCOL
                 </h1>
-                <p className="font-body-md text-body-md text-text-dim">
-                  Assessment: <strong className="text-text-bright">{selectedQuiz?.title}</strong>
+                <p className="font-body text-sm text-slate-300">
+                  Assessment: <strong className="text-cyan-300">{selectedQuiz?.title}</strong>
                 </p>
               </div>
 
               {/* Verified Student Identity Card */}
-              <div className="p-space-md rounded-lg bg-surface-container-lowest border border-carbon-border flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
-                <div className="flex items-center gap-space-md">
-                  <div className="w-12 h-12 rounded-lg bg-surface-container-high border border-carbon-border flex items-center justify-center font-headline-md text-primary-container font-bold">
+              <div className="p-4 rounded-xl glass-panel border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center font-heading text-cyan-400 font-bold text-lg">
                     {user?.name?.slice(0, 2).toUpperCase() || 'AS'}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-label-lg text-label-lg text-text-bright">{user?.name}</span>
-                      <span className="material-symbols-outlined text-verified-emerald text-[16px]">verified</span>
-                      <span className="px-1.5 py-0.2 rounded bg-verified-emerald/10 text-verified-emerald font-label-sm text-[10px] uppercase font-bold">Active Student</span>
+                      <span className="font-heading text-sm text-white font-bold">{user?.name || 'Active Student'}</span>
+                      <span className="material-symbols-outlined text-emerald-400 text-[16px]">verified</span>
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono-code text-[10px] uppercase font-bold border border-emerald-500/20">Active Student</span>
                     </div>
-                    <div className="font-label-sm text-label-sm text-text-dim flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5">
-                      <span>Roll: {user?.rollNumber}</span>
+                    <div className="font-mono-code text-xs text-slate-400 flex flex-wrap gap-x-3 gap-y-0.5 mt-1">
+                      <span>Roll: {user?.rollNumber || '21F1000000'}</span>
                       <span>•</span>
-                      <span>{user?.email}</span>
+                      <span>{user?.email || 'student@study.iitm.ac.in'}</span>
                       <span>•</span>
-                      <span className="text-primary-container">{user?.house}</span>
+                      <span className="text-cyan-300">{user?.house || 'House Turing'}</span>
                     </div>
                   </div>
                 </div>
-                <div className="text-left sm:text-right font-label-sm text-label-sm">
-                  <span className="text-text-dim block">SESSION IP ENCRYPTION</span>
-                  <span className="text-verified-emerald font-mono">10.24.89.12 // TLS 1.3 OK</span>
+                <div className="text-left sm:text-right font-mono-code text-xs">
+                  <span className="text-slate-400 block text-[10px] uppercase tracking-wider">SESSION IP ENCRYPTION</span>
+                  <span className="text-emerald-400 font-bold">10.24.89.12 // TLS 1.3 OK</span>
                 </div>
               </div>
 
               {/* Mandatory Rules Matrix */}
-              <div className="space-y-space-md">
-                <h2 className="font-label-lg text-label-lg text-text-bright uppercase tracking-wider flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary-container text-[18px]">gavel</span>
+              <div className="space-y-4">
+                <h2 className="font-heading text-sm text-white uppercase tracking-wider flex items-center gap-2 font-bold">
+                  <span className="material-symbols-outlined text-cyan-400 text-[18px]">gavel</span>
                   Mandatory Arena Competition Rules
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-space-md font-body-sm text-body-sm">
-                  <div className="p-space-md rounded-lg bg-surface-container border border-carbon-border space-y-1">
-                    <div className="flex items-center gap-2 text-primary-container font-label-md text-label-md uppercase font-bold">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-body text-xs">
+                  <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-cyan-400 font-mono-code uppercase font-bold">
                       <span className="material-symbols-outlined text-[18px]">timer</span>
                       1. Strict Server Clock ({selectedQuiz?.durationMinutes || 15}:00)
                     </div>
-                    <p className="text-text-dim">
+                    <p className="text-slate-300 leading-relaxed">
                       The timer runs continuously upon initialization. The clock cannot be paused, delayed, or restarted.
                     </p>
                   </div>
-                  <div className="p-space-md rounded-lg bg-surface-container border border-carbon-border space-y-1">
-                    <div className="flex items-center gap-2 text-alert-crimson font-label-md text-label-md uppercase font-bold">
+                  <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-rose-400 font-mono-code uppercase font-bold">
                       <span className="material-symbols-outlined text-[18px]">balance</span>
                       2. Negative Marking Calibration
                     </div>
-                    <p className="text-text-dim">
-                      <strong className="text-verified-emerald">+4 Marks</strong> for every correct option. <strong className="text-alert-crimson">-1 Mark</strong> deduction for wrong answers. <strong className="text-text-bright">0 Marks</strong> for skipped questions.
+                    <p className="text-slate-300 leading-relaxed">
+                      <strong className="text-emerald-400">+4 Marks</strong> for every correct option. <strong className="text-rose-400">-1 Mark</strong> deduction for wrong answers. <strong className="text-white">0 Marks</strong> for skipped questions.
                     </p>
                   </div>
-                  <div className="p-space-md rounded-lg bg-surface-container border border-carbon-border space-y-1">
-                    <div className="flex items-center gap-2 text-admin-amber font-label-md text-label-md uppercase font-bold">
+                  <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-amber-400 font-mono-code uppercase font-bold">
                       <span className="material-symbols-outlined text-[18px]">bolt</span>
                       3. Millisecond Tie-Breaker Engine
                     </div>
-                    <p className="text-text-dim">
+                    <p className="text-slate-300 leading-relaxed">
                       Ties are broken first by overall net score, second by least incorrect answers, and finally by absolute submission timestamp.
                     </p>
                   </div>
-                  <div className="p-space-md rounded-lg bg-surface-container border border-carbon-border space-y-1">
-                    <div className="flex items-center gap-2 text-alert-crimson font-label-md text-label-md uppercase font-bold">
+                  <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-1.5">
+                    <div className="flex items-center gap-2 text-rose-400 font-mono-code uppercase font-bold">
                       <span className="material-symbols-outlined text-[18px]">warning</span>
                       4. Anti-Tab Switch Sentinel
                     </div>
-                    <p className="text-text-dim">
-                      Switching browser tabs or defocusing the window triggers <strong className="text-alert-crimson">1 Strike Warning</strong>. A 2nd trigger causes instant forfeit.
+                    <p className="text-slate-300 leading-relaxed">
+                      Switching browser tabs or defocusing the window triggers <strong className="text-rose-400">1 Strike Warning</strong>. A 2nd trigger causes instant forfeit.
                     </p>
                   </div>
                 </div>
               </div>
 
               {/* Acknowledgement Checkbox */}
-              <div className="pt-space-sm border-t border-carbon-border">
+              <div className="pt-2 border-t border-white/10">
                 <label className="flex items-center gap-3 cursor-pointer group select-none">
                   <input
                     type="checkbox"
                     checked={charterAgreed}
                     onChange={(e) => setCharterAgreed(e.target.checked)}
-                    className="w-4 h-4 rounded bg-surface-container border-carbon-border text-primary-container focus:ring-0 cursor-pointer"
+                    className="w-4 h-4 rounded bg-slate-900 border-white/20 text-cyan-400 focus:ring-0 cursor-pointer accent-cyan-400"
                   />
-                  <span className="font-body-sm text-body-sm text-text-dim group-hover:text-text-bright transition-colors">
-                    I acknowledge and agree to abide by the <strong className="text-text-bright">Tesseract Esports Academic Integrity Charter</strong> &amp; Anti-Cheat Code.
+                  <span className="font-body text-xs text-slate-300 group-hover:text-white transition-colors">
+                    I acknowledge and agree to abide by the <strong className="text-cyan-400">Tesseract Esports Academic Integrity Charter</strong> &amp; Anti-Cheat Code.
                   </span>
                 </label>
               </div>
 
               {/* Action CTAs */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-sm">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                 <button
                   onClick={() => setActiveState(1)}
-                  className="w-full sm:w-auto px-space-lg py-2.5 rounded-lg bg-surface-container border border-carbon-border hover:bg-surface-container-high text-text-dim hover:text-text-bright font-label-md text-label-md uppercase tracking-wider transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl glass-panel border border-white/10 hover:bg-white/10 text-slate-300 hover:text-white font-heading text-xs uppercase tracking-wider transition-all cursor-pointer"
                 >
                   Cancel &amp; Return
                 </button>
                 <button
                   disabled={!charterAgreed}
                   onClick={startQuizExam}
-                  className={`w-full sm:w-auto px-space-xl py-3 rounded-lg font-label-md text-label-md font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full sm:w-auto px-6 py-3 rounded-xl font-heading text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
                     charterAgreed
-                      ? 'bg-primary-container text-on-primary-container hover:bg-primary shadow-[0_0_16px_rgba(0,240,255,0.4)] cursor-pointer'
-                      : 'bg-surface-container-highest text-text-dim cursor-not-allowed opacity-60'
+                      ? 'bg-cyan-400 text-slate-950 hover:bg-cyan-300 shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer'
+                      : 'bg-slate-800 text-slate-500 cursor-not-allowed opacity-60'
                   }`}
                 >
                   <span className="material-symbols-outlined text-[18px]">rocket_launch</span>
@@ -489,7 +489,7 @@ export default function QuizView() {
       {activeState === 3 && (
         <section className="w-full flex-col">
           {/* Sticky Exam Telemetry Bar */}
-          <div className="sticky top-[104px] z-40 w-full bg-surface-glass backdrop-blur-xl border-b border-carbon-border px-margin py-2 shadow-lg">
+          <div className="sticky top-[68px] z-40 w-full bg-[#0a0e18]/90 backdrop-blur-xl border-b border-white/10 px-margin py-3 shadow-lg">
             <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-space-md">
               <div className="flex items-center gap-space-md">
                 <div className="flex flex-col">
@@ -547,38 +547,38 @@ export default function QuizView() {
           </div>
 
           {/* Main Exam Arena Canvas (Split Layout 70% / 30%) */}
-          <div className="max-w-7xl mx-auto w-full px-margin py-space-lg">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+          <div className="max-w-7xl mx-auto w-full px-margin py-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* LEFT COLUMN: QUESTION & OPTIONS */}
-              <div className="lg:col-span-8 space-y-space-md">
-                <div className="rounded-xl bg-surface-container-low border border-carbon-border p-space-lg space-y-space-lg shadow-xl">
+              <div className="lg:col-span-8 space-y-6">
+                <div className="rounded-2xl glass-card border border-white/10 p-6 md:p-8 space-y-6 shadow-2xl">
                   {/* Metadata Pill */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-carbon-border pb-space-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded bg-surface-container-highest text-primary-container font-label-sm text-label-sm uppercase font-bold tracking-wider">
+                      <span className="px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 font-mono-code text-[11px] uppercase font-bold tracking-wider border border-cyan-400/20">
                         QUESTION #{currentQuestionIndex + 1}
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-surface-container-highest text-alert-crimson font-label-sm text-label-sm uppercase font-bold">
+                      <span className="px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 font-mono-code text-[11px] uppercase font-bold border border-rose-500/20">
                         DIFFICULTY: RATED
                       </span>
                     </div>
-                    <div className="font-label-sm text-label-sm text-text-dim">
-                      <span className="text-verified-emerald font-bold">+4</span> CORRECT / <span className="text-alert-crimson font-bold">-1</span> WRONG
+                    <div className="font-mono-code text-xs text-slate-400">
+                      <span className="text-emerald-400 font-bold">+4</span> CORRECT / <span className="text-rose-400 font-bold">-1</span> WRONG
                     </div>
                   </div>
 
                   {/* Statement */}
                   <div className="space-y-2">
-                    <span className="font-label-sm text-label-sm text-text-dim uppercase tracking-wider">
+                    <span className="font-mono-code text-xs text-slate-500 uppercase tracking-wider">
                       QUESTION {currentQuestionIndex + 1 < 10 ? `0${currentQuestionIndex + 1}` : currentQuestionIndex + 1}
                     </span>
-                    <p className="font-headline-lg text-lg sm:text-headline-lg text-text-bright leading-relaxed">
+                    <p className="font-heading text-lg sm:text-xl text-white leading-relaxed font-bold">
                       {currentQ.question}
                     </p>
                   </div>
 
                   {/* 4 Interactive Option Tiles */}
-                  <div className="space-y-space-sm pt-space-xs">
+                  <div className="space-y-3 pt-2">
                     {currentQ.options.map((option, optIdx) => {
                       const isSelected = userAnswers[currentQuestionIndex] === optIdx;
                       const letter = String.fromCharCode(65 + optIdx);
@@ -587,30 +587,30 @@ export default function QuizView() {
                         <div
                           key={optIdx}
                           onClick={() => selectOption(optIdx)}
-                          className={`cursor-pointer rounded-xl p-space-md border transition-all flex items-center justify-between group ${
+                          className={`cursor-pointer rounded-xl p-4 border transition-all flex items-center justify-between group ${
                             isSelected
-                              ? 'border-2 border-primary-container bg-primary-container/10 shadow-[0_0_16px_rgba(0,240,255,0.2)]'
-                              : 'border-carbon-border bg-surface-container hover:bg-surface-container-high'
+                              ? 'border-cyan-400 bg-cyan-500/15 shadow-[0_0_20px_rgba(6,182,212,0.25)]'
+                              : 'glass-panel border-white/10 hover:border-cyan-400/30 hover:bg-white/[0.04]'
                           }`}
                         >
-                          <div className="flex items-center gap-space-md">
+                          <div className="flex items-center gap-3">
                             <div
-                              className={`w-8 h-8 rounded-lg border font-label-md text-label-md font-bold flex items-center justify-center transition-colors ${
+                              className={`w-8 h-8 rounded-lg border font-heading text-xs font-bold flex items-center justify-center transition-colors ${
                                 isSelected
-                                  ? 'bg-primary-container text-on-primary-container shadow-[0_0_8px_rgba(0,240,255,0.4)] border-primary-container'
-                                  : 'bg-surface-container-lowest border-carbon-border text-text-dim group-hover:text-primary-container'
+                                  ? 'bg-cyan-400 text-slate-950 shadow-[0_0_10px_rgba(6,182,212,0.5)] border-cyan-400'
+                                  : 'bg-slate-900 border-white/10 text-slate-400 group-hover:text-cyan-400'
                               }`}
                             >
                               {letter}
                             </div>
-                            <span className="font-body-md text-body-md text-text-bright">
+                            <span className="font-body text-sm text-slate-200 group-hover:text-white transition-colors">
                               {option}
                             </span>
                           </div>
                           <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                            isSelected ? 'border-primary-container' : 'border-carbon-border'
+                            isSelected ? 'border-cyan-400' : 'border-white/20'
                           }`}>
-                            <div className={`w-2 h-2 rounded-full ${isSelected ? 'bg-primary-container' : 'bg-transparent'}`}></div>
+                            <div className={`w-2 h-2 rounded-full ${isSelected ? 'bg-cyan-400' : 'bg-transparent'}`}></div>
                           </div>
                         </div>
                       );
@@ -618,14 +618,14 @@ export default function QuizView() {
                   </div>
 
                   {/* Action Bar Under Question */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-md border-t border-carbon-border">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-white/10">
                     <div className="flex items-center gap-2 w-full sm:w-auto">
                       <button
                         onClick={toggleFlagCurrentQuestion}
-                        className={`flex-1 sm:flex-none px-3 py-2 rounded-lg border font-label-sm text-label-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
+                        className={`flex-1 sm:flex-none px-3.5 py-2 rounded-xl border font-mono-code text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
                           flaggedQuestions[currentQuestionIndex]
-                            ? 'bg-secondary-container text-secondary border-secondary/40'
-                            : 'bg-surface-container hover:bg-surface-container-high border-carbon-border text-secondary'
+                            ? 'bg-purple-500/20 text-purple-300 border-purple-400/40'
+                            : 'glass-panel hover:bg-white/10 border-white/10 text-slate-300'
                         }`}
                       >
                         <span className="material-symbols-outlined text-[16px]">flag</span>
@@ -633,7 +633,7 @@ export default function QuizView() {
                       </button>
                       <button
                         onClick={clearCurrentResponse}
-                        className="px-3 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high border border-carbon-border text-text-dim hover:text-alert-crimson font-label-sm text-label-sm uppercase tracking-wider transition-colors cursor-pointer"
+                        className="px-3.5 py-2 rounded-xl glass-panel hover:bg-white/10 border border-white/10 text-slate-400 hover:text-rose-400 font-mono-code text-xs uppercase tracking-wider transition-colors cursor-pointer"
                       >
                         Clear Choice
                       </button>
@@ -643,7 +643,7 @@ export default function QuizView() {
                       <button
                         disabled={currentQuestionIndex === 0}
                         onClick={() => navigateQuestion(-1)}
-                        className="flex-1 sm:flex-none px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high border border-carbon-border text-text-bright font-label-md text-label-md uppercase tracking-wider transition-colors flex items-center justify-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="flex-1 sm:flex-none px-4 py-2 rounded-xl glass-panel hover:bg-white/10 border border-white/10 text-white font-heading text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-1 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         <span className="material-symbols-outlined text-[16px]">chevron_left</span>
                         <span>Previous</span>
@@ -651,7 +651,7 @@ export default function QuizView() {
                       <button
                         disabled={currentQuestionIndex === questions.length - 1}
                         onClick={() => navigateQuestion(1)}
-                        className="flex-1 sm:flex-none px-5 py-2 rounded-lg bg-primary-container text-on-primary-container hover:bg-primary font-label-md text-label-md font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1 shadow-[0_0_12px_rgba(0,240,255,0.3)] cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="flex-1 sm:flex-none px-5 py-2 rounded-xl bg-cyan-400 text-slate-950 hover:bg-cyan-300 font-heading text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1 shadow-[0_0_15px_rgba(6,182,212,0.3)] cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                       >
                         <span>Next Question</span>
                         <span className="material-symbols-outlined text-[16px]">chevron_right</span>
@@ -661,64 +661,64 @@ export default function QuizView() {
                 </div>
 
                 {/* Anti-Cheat Status Ticker */}
-                <div className="rounded-lg bg-surface-container-low border border-carbon-border p-space-sm flex items-center justify-between text-label-sm font-label-sm text-text-dim">
+                <div className="rounded-xl glass-panel border border-white/10 p-3 flex items-center justify-between text-xs font-mono-code text-slate-400">
                   <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-verified-emerald"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>FOCUS SENTINEL: LOCKED ON ACTIVE WINDOW</span>
                   </div>
-                  <div className="text-text-bright font-mono">
+                  <div className="text-white font-bold">
                     STRIKES: 0 / 2
                   </div>
                 </div>
               </div>
 
               {/* RIGHT COLUMN: QUESTION NAVIGATOR PALETTE */}
-              <div className="lg:col-span-4 space-y-space-md">
-                <div className="rounded-xl bg-surface-container-low border border-carbon-border p-space-md space-y-space-md shadow-xl sticky top-[180px]">
-                  <div className="flex items-center justify-between border-b border-carbon-border pb-space-sm">
-                    <span className="font-label-md text-label-md font-bold uppercase tracking-wider text-text-bright flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-primary-container text-[18px]">grid_view</span>
+              <div className="lg:col-span-4 space-y-4">
+                <div className="rounded-2xl glass-card border border-white/10 p-5 space-y-5 shadow-xl sticky top-[88px]">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <span className="font-heading text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2">
+                      <span className="material-symbols-outlined text-cyan-400 text-[18px]">grid_view</span>
                       Question Navigator
                     </span>
-                    <span className="font-label-sm text-label-sm text-text-dim">{questions.length} Total</span>
+                    <span className="font-mono-code text-xs text-slate-400">{questions.length} Total</span>
                   </div>
 
                   {/* Legend */}
-                  <div className="grid grid-cols-2 gap-2 text-label-sm font-label-sm">
-                    <div className="flex items-center gap-1.5 text-text-dim">
-                      <div className="w-3 h-3 rounded bg-verified-emerald shrink-0"></div>
+                  <div className="grid grid-cols-2 gap-2 font-mono-code text-[11px]">
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <div className="w-2.5 h-2.5 rounded bg-emerald-500 shrink-0"></div>
                       <span>Answered ({answeredCount})</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-text-dim">
-                      <div className="w-3 h-3 rounded bg-secondary-container text-secondary shrink-0 flex items-center justify-center text-[8px] font-bold">⚑</div>
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <div className="w-2.5 h-2.5 rounded bg-purple-500 text-white shrink-0 flex items-center justify-center text-[7px] font-bold">⚑</div>
                       <span>Flagged ({Object.values(flaggedQuestions).filter(Boolean).length})</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-text-dim">
-                      <div className="w-3 h-3 rounded border-2 border-primary-container bg-primary-container/20 shrink-0"></div>
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <div className="w-2.5 h-2.5 rounded border border-cyan-400 bg-cyan-400/20 shrink-0"></div>
                       <span>Current (Q{currentQuestionIndex + 1})</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-text-dim">
-                      <div className="w-3 h-3 rounded bg-surface-container-highest shrink-0"></div>
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <div className="w-2.5 h-2.5 rounded bg-white/10 shrink-0"></div>
                       <span>Unattempted ({questions.length - answeredCount})</span>
                     </div>
                   </div>
 
                   {/* Question Button Grid */}
-                  <div className="grid grid-cols-5 gap-2 pt-space-xs">
+                  <div className="grid grid-cols-5 gap-2 pt-1">
                     {questions.map((_, qIdx) => {
                       const isCurrent = qIdx === currentQuestionIndex;
                       const isAnswered = userAnswers[qIdx] !== undefined;
                       const isFlagged = flaggedQuestions[qIdx];
 
-                      let btnClasses = "h-10 rounded-lg font-label-sm font-bold flex items-center justify-center transition-all cursor-pointer ";
+                      let btnClasses = "h-9 rounded-xl font-mono-code text-xs font-bold flex items-center justify-center transition-all cursor-pointer ";
                       if (isCurrent) {
-                        btnClasses += "bg-primary-container/20 border-2 border-primary-container text-primary-container ring-2 ring-primary-container/40 shadow-[0_0_12px_rgba(0,240,255,0.4)]";
+                        btnClasses += "bg-cyan-500/20 border-2 border-cyan-400 text-cyan-300 ring-2 ring-cyan-400/30 shadow-[0_0_12px_rgba(6,182,212,0.4)]";
                       } else if (isFlagged) {
-                        btnClasses += "bg-secondary-container text-secondary border border-secondary/40";
+                        btnClasses += "bg-purple-500/30 text-purple-200 border border-purple-400/50";
                       } else if (isAnswered) {
-                        btnClasses += "bg-verified-emerald text-on-tertiary-fixed";
+                        btnClasses += "bg-emerald-500/30 text-emerald-300 border border-emerald-400/40";
                       } else {
-                        btnClasses += "bg-surface-container-highest hover:bg-surface-container-high text-text-dim hover:text-text-bright";
+                        btnClasses += "bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border border-white/5";
                       }
 
                       return (
@@ -735,9 +735,9 @@ export default function QuizView() {
                   </div>
 
                   {/* Quick Stats Ticker */}
-                  <div className="bg-surface-container-lowest p-space-sm rounded-lg border border-carbon-border font-label-sm text-label-sm flex items-center justify-between text-text-dim">
-                    <span>Answered: <strong className="text-verified-emerald">{answeredCount}</strong></span>
-                    <span>Remaining: <strong className="text-text-bright">{questions.length - answeredCount}</strong></span>
+                  <div className="glass-panel p-3 rounded-xl border border-white/10 font-mono-code text-xs flex items-center justify-between text-slate-400">
+                    <span>Answered: <strong className="text-emerald-400">{answeredCount}</strong></span>
+                    <span>Remaining: <strong className="text-white">{questions.length - answeredCount}</strong></span>
                   </div>
                 </div>
               </div>
@@ -748,38 +748,38 @@ export default function QuizView() {
 
       {/* ================= SUBMIT CONFIRMATION MODAL ================= */}
       {isSubmitModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-space-md">
-          <div className="max-w-md w-full rounded-xl bg-surface-container-low border border-carbon-border p-space-lg space-y-space-md shadow-2xl">
-            <div className="flex items-center gap-space-sm text-alert-crimson">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="max-w-md w-full rounded-2xl glass-card border border-white/10 p-6 md:p-8 space-y-5 shadow-2xl">
+            <div className="flex items-center gap-3 text-rose-400">
               <span className="material-symbols-outlined text-[28px]">crisis_alert</span>
-              <h3 className="font-headline-md text-headline-md font-bold uppercase text-text-bright">Submit Assessment?</h3>
+              <h3 className="font-heading text-lg font-bold uppercase text-white">Submit Assessment?</h3>
             </div>
-            <p className="font-body-md text-body-md text-text-dim">
-              You are about to lock your submission for <strong className="text-text-bright">{selectedQuiz?.title}</strong>. Once finalized, responses cannot be amended.
+            <p className="font-body text-xs text-slate-300 leading-relaxed">
+              You are about to lock your submission for <strong className="text-cyan-300">{selectedQuiz?.title}</strong>. Once finalized, responses cannot be amended.
             </p>
-            <div className="p-space-sm rounded-lg bg-surface-container-lowest border border-carbon-border space-y-1 font-label-sm text-label-sm">
-              <div className="flex justify-between text-text-dim">
+            <div className="p-3.5 rounded-xl glass-panel border border-white/10 space-y-1.5 font-mono-code text-xs">
+              <div className="flex justify-between text-slate-400">
                 <span>Answered Questions:</span>
-                <span className="text-verified-emerald font-bold">{answeredCount} / {questions.length}</span>
+                <span className="text-emerald-400 font-bold">{answeredCount} / {questions.length}</span>
               </div>
-              <div className="flex justify-between text-text-dim">
+              <div className="flex justify-between text-slate-400">
                 <span>Flagged for Review:</span>
-                <span className="text-secondary font-bold">{Object.values(flaggedQuestions).filter(Boolean).length}</span>
+                <span className="text-purple-300 font-bold">{Object.values(flaggedQuestions).filter(Boolean).length}</span>
               </div>
-              <div className="flex justify-between text-text-dim">
+              <div className="flex justify-between text-slate-400">
                 <span>Unattempted (0 Marks):</span>
-                <span className="text-text-bright font-bold">{questions.length - answeredCount}</span>
+                <span className="text-white font-bold">{questions.length - answeredCount}</span>
               </div>
             </div>
-            <div className="flex items-center justify-end gap-2 pt-2">
+            <div className="flex items-center justify-end gap-3 pt-2">
               <button
-                className="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-text-dim hover:text-text-bright font-label-md text-label-md uppercase cursor-pointer"
+                className="px-4 py-2 rounded-xl glass-panel hover:bg-white/10 text-slate-300 hover:text-white font-heading text-xs uppercase cursor-pointer transition-colors"
                 onClick={() => setIsSubmitModalOpen(false)}
               >
                 Resume Test
               </button>
               <button
-                className="px-5 py-2 rounded-lg bg-alert-crimson text-white hover:bg-alert-crimson/90 font-label-md text-label-md font-bold uppercase tracking-wider shadow-[0_0_12px_rgba(255,51,102,0.4)] cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-rose-500 text-white hover:bg-rose-400 font-heading text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(244,63,94,0.4)] cursor-pointer transition-all"
                 onClick={executeFinalSubmit}
               >
                 Confirm Lock &amp; Submit
@@ -793,20 +793,20 @@ export default function QuizView() {
       {/* STATE 4: CELEBRATION & RESULTS REVIEW SCREEN                 */}
       {/* ============================================================ */}
       {activeState === 4 && (
-        <section className="w-full px-margin py-space-xl flex flex-col">
-          <div className="max-w-5xl mx-auto w-full space-y-space-xl">
+        <section className="w-full px-margin py-8 flex flex-col">
+          <div className="max-w-5xl mx-auto w-full space-y-8">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 font-label-sm text-label-sm text-text-dim">
-                <button onClick={() => setActiveState(1)} className="hover:text-primary-container flex items-center gap-1 cursor-pointer">
+              <div className="flex items-center gap-2 font-mono-code text-xs text-slate-400">
+                <button onClick={() => setActiveState(1)} className="hover:text-cyan-400 flex items-center gap-1 cursor-pointer transition-colors">
                   <span className="material-symbols-outlined text-[14px]">arrow_back</span>
                   Catalog
                 </button>
-                <span>/</span>
-                <span className="text-text-bright uppercase">Official Telemetry Results</span>
+                <span className="text-slate-600">/</span>
+                <span className="text-white uppercase font-semibold">Official Telemetry Results</span>
               </div>
               <button
                 onClick={() => setActiveState(1)}
-                className="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high border border-carbon-border text-text-bright font-label-sm text-label-sm uppercase flex items-center gap-1 cursor-pointer"
+                className="px-4 py-2 rounded-xl glass-panel hover:bg-white/10 border border-white/10 text-white font-heading text-xs uppercase flex items-center gap-1.5 cursor-pointer transition-colors"
               >
                 <span className="material-symbols-outlined text-[16px]">grid_view</span>
                 Back to Quiz Catalog
@@ -814,73 +814,73 @@ export default function QuizView() {
             </div>
 
             {/* Victory Score Hero Card */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-surface-container via-surface-container-low to-surface-container-lowest border-2 border-verified-emerald/60 p-space-lg md:p-space-xl shadow-[0_0_36px_rgba(0,230,118,0.15)] space-y-space-lg">
-              <div className="absolute -right-20 -top-20 w-80 h-80 bg-verified-emerald/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="relative overflow-hidden rounded-2xl glass-card border border-emerald-500/30 p-6 md:p-8 shadow-[0_0_40px_rgba(16,185,129,0.15)] space-y-6">
+              <div className="absolute -right-20 -top-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-space-md border-b border-carbon-border pb-space-md">
-                <div className="space-y-1">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-verified-emerald/20 border border-verified-emerald text-verified-emerald font-label-sm text-label-sm uppercase font-bold tracking-wider">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-5">
+                <div className="space-y-1.5">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-mono-code text-[11px] uppercase font-bold tracking-wider">
                     <span className="material-symbols-outlined text-[14px]">verified</span>
                     SUBMISSION VERIFIED &amp; RECORDED ON-CHAIN
                   </span>
-                  <h1 className="font-headline-xl text-2xl sm:text-headline-xl text-text-bright uppercase">
+                  <h1 className="font-heading text-2xl sm:text-3xl text-white uppercase font-bold">
                     {selectedQuiz?.title}
                   </h1>
-                  <p className="font-body-sm text-body-sm text-text-dim">
-                    Candidate: <strong className="text-text-bright">{user?.name}</strong> ({user?.rollNumber}) • Millisecond Telemetry Logged
+                  <p className="font-body text-xs text-slate-300">
+                    Candidate: <strong className="text-white">{user?.name}</strong> ({user?.rollNumber}) • Millisecond Telemetry Logged
                   </p>
                 </div>
-                <div className="flex flex-col items-start md:items-end font-label-sm text-label-sm">
-                  <span className="text-text-dim">HOUSE CHAMPIONSHIP ALLOCATION</span>
-                  <span className="font-headline-md text-headline-md text-primary-container font-bold">+150 HOUSE POINTS</span>
-                  <span className="text-text-dim">Credited to {user?.house}</span>
+                <div className="flex flex-col items-start md:items-end font-mono-code text-xs">
+                  <span className="text-slate-400 text-[10px] uppercase">HOUSE CHAMPIONSHIP ALLOCATION</span>
+                  <span className="font-heading text-xl text-cyan-400 font-bold">+150 HOUSE POINTS</span>
+                  <span className="text-slate-400 text-[11px]">Credited to {user?.house}</span>
                 </div>
               </div>
 
               {/* Big Score Telemetry Display */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-space-md items-center">
-                <div className="md:col-span-2 p-space-lg rounded-xl bg-surface-container-lowest border border-carbon-border flex items-center justify-between">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                <div className="md:col-span-2 p-5 rounded-xl glass-panel border border-white/10 flex items-center justify-between">
                   <div className="space-y-1">
-                    <span className="font-label-sm text-label-sm text-text-dim uppercase tracking-wider">AGGREGATE SCORE</span>
+                    <span className="font-mono-code text-[10px] text-slate-400 uppercase tracking-wider">AGGREGATE SCORE</span>
                     <div className="flex items-baseline gap-2">
-                      <span className="font-headline-xl text-[44px] leading-none font-bold text-verified-emerald">
+                      <span className="font-heading text-4xl leading-none font-bold text-emerald-400">
                         {quizResult?.score !== undefined ? quizResult.score : 64}
                       </span>
-                      <span className="font-headline-md text-headline-md text-text-dim">
+                      <span className="font-heading text-lg text-slate-400">
                         / {quizResult?.maxScore !== undefined ? quizResult.maxScore : 80}
                       </span>
                     </div>
-                    <span className="font-label-sm text-label-sm text-verified-emerald font-bold">
+                    <span className="font-mono-code text-xs text-emerald-400 font-bold block pt-1">
                       {quizResult?.percentage !== undefined ? `${quizResult.percentage}%` : '80.0%'} OVERALL ACCURACY
                     </span>
                   </div>
-                  <div className="w-16 h-16 rounded-full border-4 border-verified-emerald/30 border-t-verified-emerald flex items-center justify-center font-label-md text-label-md text-text-bright font-bold">
+                  <div className="w-16 h-16 rounded-full border-4 border-emerald-500/30 border-t-emerald-400 flex items-center justify-center font-mono-code text-xs text-white font-bold bg-emerald-500/10">
                     TOP 1%
                   </div>
                 </div>
 
-                <div className="p-space-md rounded-xl bg-surface-container-lowest border border-carbon-border space-y-1">
-                  <span className="font-label-sm text-label-sm text-text-dim uppercase">INSTITUTIONAL RANK</span>
-                  <div className="font-headline-lg text-headline-lg text-text-bright font-bold flex items-center gap-1.5">
+                <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-1">
+                  <span className="font-mono-code text-[10px] text-slate-400 uppercase">INSTITUTIONAL RANK</span>
+                  <div className="font-heading text-2xl text-white font-bold flex items-center gap-1.5">
                     <span>#03</span>
-                    <span className="text-body-sm font-body-sm text-text-dim font-normal">/ 428 Squads</span>
+                    <span className="text-xs font-normal text-slate-400 font-mono-code">/ 428 Squads</span>
                   </div>
-                  <span className="font-label-sm text-label-sm text-verified-emerald">Podium Placement Achieved</span>
+                  <span className="font-mono-code text-[11px] text-emerald-400 font-semibold block">Podium Placement Achieved</span>
                 </div>
 
-                <div className="p-space-md rounded-xl bg-surface-container-lowest border border-carbon-border space-y-1">
-                  <span className="font-label-sm text-label-sm text-text-dim uppercase">PRECISION TIME ELAPSED</span>
-                  <div className="font-label-lg text-label-lg font-mono text-primary-container font-bold">
+                <div className="p-4 rounded-xl glass-panel border border-white/10 space-y-1">
+                  <span className="font-mono-code text-[10px] text-slate-400 uppercase">PRECISION TIME ELAPSED</span>
+                  <div className="font-mono-code text-2xl text-cyan-400 font-bold">
                     {formatTime(totalTimeElapsed || 522)}
                   </div>
-                  <span className="font-label-sm text-label-sm text-text-dim">Tie-breaker benchmark verified</span>
+                  <span className="font-mono-code text-[11px] text-slate-400 block">Tie-breaker benchmark verified</span>
                 </div>
               </div>
 
               {/* Question Solutions Review Section */}
-              <div className="space-y-space-md pt-space-md border-t border-carbon-border">
-                <h3 className="font-headline-md text-headline-md uppercase text-text-bright flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary-container text-[20px]">fact_check</span>
+              <div className="space-y-4 pt-4 border-t border-white/10">
+                <h3 className="font-heading text-base uppercase text-white flex items-center gap-2 font-bold">
+                  <span className="material-symbols-outlined text-cyan-400 text-[20px]">fact_check</span>
                   Telemetry Response Review &amp; Solutions
                 </h3>
 
@@ -892,39 +892,39 @@ export default function QuizView() {
                     return (
                       <div
                         key={q.id}
-                        className="p-space-md rounded-xl bg-surface-container-lowest border border-carbon-border space-y-2"
+                        className="p-4 rounded-xl glass-panel border border-white/10 space-y-2.5"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-label-sm text-label-sm text-text-dim uppercase">QUESTION {qIndex + 1}</span>
-                          <span className={`font-label-sm text-label-sm font-bold uppercase px-2 py-0.5 rounded ${
+                          <span className="font-mono-code text-[11px] text-slate-400 uppercase">QUESTION {qIndex + 1}</span>
+                          <span className={`font-mono-code text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full border ${
                             candidateAns === undefined
-                              ? 'bg-surface-container text-text-dim'
+                              ? 'bg-white/5 text-slate-400 border-white/10'
                               : isCorrect
-                              ? 'bg-verified-emerald/20 text-verified-emerald'
-                              : 'bg-alert-crimson/20 text-alert-crimson'
+                              ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                              : 'bg-rose-500/15 text-rose-300 border-rose-500/30'
                           }`}>
                             {candidateAns === undefined ? 'SKIPPED (0)' : isCorrect ? 'CORRECT (+4)' : 'INCORRECT (-1)'}
                           </span>
                         </div>
-                        <p className="font-body-md text-body-md text-text-bright font-medium">
+                        <p className="font-heading text-sm text-white font-semibold">
                           {q.question}
                         </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-body-sm pt-1">
-                          <div className="p-2 rounded bg-surface-container border border-carbon-border">
-                            <span className="font-label-sm text-[10px] text-text-dim block uppercase">Your Selection</span>
-                            <span className={isCorrect ? 'text-verified-emerald font-bold' : 'text-alert-crimson font-bold'}>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+                          <div className="p-2.5 rounded-lg bg-black/30 border border-white/5">
+                            <span className="font-mono-code text-[10px] text-slate-400 block uppercase">Your Selection</span>
+                            <span className={`font-semibold ${isCorrect ? 'text-emerald-400' : 'text-rose-400'}`}>
                               {candidateAns !== undefined ? q.options[candidateAns] : 'None (Skipped)'}
                             </span>
                           </div>
-                          <div className="p-2 rounded bg-surface-container border border-carbon-border">
-                            <span className="font-label-sm text-[10px] text-text-dim block uppercase">Official Validated Answer</span>
-                            <span className="text-verified-emerald font-bold">
+                          <div className="p-2.5 rounded-lg bg-black/30 border border-white/5">
+                            <span className="font-mono-code text-[10px] text-slate-400 block uppercase">Official Validated Answer</span>
+                            <span className="text-emerald-400 font-semibold">
                               {q.options[q.correctAnswer]}
                             </span>
                           </div>
                         </div>
-                        <p className="font-body-sm text-text-dim text-[12px] pt-1">
-                          <strong className="text-primary-container">Explanation:</strong> {q.explanation}
+                        <p className="font-body text-xs text-slate-300 pt-1 leading-relaxed">
+                          <strong className="text-cyan-400 font-mono-code">Explanation:</strong> {q.explanation}
                         </p>
                       </div>
                     );
